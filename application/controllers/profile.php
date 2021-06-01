@@ -21,7 +21,7 @@ class Profile extends CI_Controller {
         $data['content'] = 'profile/selection_pusat';
 		$this->load->view('layout2',$data);
     }
-
+//llllll
     function loadAllUsers(){
         $mode = $this->input->post('mode');
         $resultObj = $this->Profile_model->getloadAllUsers($mode);
