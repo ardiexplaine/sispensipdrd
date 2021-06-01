@@ -208,19 +208,43 @@ class Ranperda extends CI_Controller {
 
 			$cek = $this->db->get_where('ranperda', array('wfnum' => $wfnum));
 			if($cek->num_rows() == 0){
+// wfnum
+// wfcat
+// zdate
+// ztime
+// zuser
+// curst
+// iscls
+// group_user
+// kategori
+// jns_pad
+// jns_pajak
+// no_surat_ke_gubernur
+// tgl_surat_ke_gubernur
+// file_surat_ke_gubernur
+// no_surat_ke_mendagri
+// tgl_surat_ke_mendagri
+// file_surat_ke_mendagri
+// no_surat_ke_menkeu
+// tgl_surat_ke_menkeu
+// file_surat_ke_menkeu
+// file_ltr_blkng
+// file_berita_acara
+// file_ranperda
+// file_lampiran_ranperda
+
 				$ranperda = array(
 					"wfnum"=> $wfnum,
 					"wfcat"=> $this->_wfcategory(),
-					"sp_walikota" => $this->input->post("txtSPBupati"),
-					"sp_walikota_tgl" => $this->input->post("datetglSP1"),
-					"kab_desc" => $this->input->post("txtKabDesc"),
-					"kab_isisurat" => $this->input->post("txtKabIsiSurat"),
-					"zdate" => date('Y-m-d'),
-					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
+					"date" => date('Y-m-d'),
+					"time" => date('H:i:s'),
+					"user" => $this->session->userdata('usrcd'),
 					"curst"=> $this->input->post("curst"),
+					"iscls"=> '',
 					"group_user" => $this->session->userdata('group_user'),
-					"iscls"=> ''
+					"kategori"=> $this->input->post('kategori'),
+					"jns_pad"=> $this->input->post('jns_pad'),
+					"jns_pajak"=> $this->input->post('jns_pajak')	
 				);
 				$this->db->insert('ranperda',$ranperda);
 			}else{
@@ -451,6 +475,35 @@ class Ranperda extends CI_Controller {
 		$config['upload_path']   = './assets/uploads/'; 
 		$config['allowed_types'] = implode("|",$ext_allow);
 		$config['encrypt_name'] = true;
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+		if ( ! $this->upload->do_upload($objName)) {
+			if(isset($_FILES[$objName]['name'])){
+				$status = 1;
+				$message = strip_tags($this->upload->display_errors());
+				$resultObj = array('status'=> $status, 'message' => $message, 'notif' =>  $this->Global_model->getNotif($status,$message) ); 
+				echo json_encode($resultObj);
+				exit();
+			}else{
+				$status = array('status'=>1, 'message' => 'ok');
+			}
+			
+		}else { 
+		   $status = array('status'=>0, 'message' => 'ok', 'upload_data' => $this->upload->data()); 
+		}
+		return $status;
+	}
+
+	public function single_upload($ext_allow,$objName) {
+		$fdate = './assets/uploads/'.date('Ym').'/';
+
+		$config['upload_path']   = $fdate.$this->input->post('wfnum').'/'; 
+		$config['allowed_types'] = implode("|",$ext_allow);
+		$config['encrypt_name'] = true;
+
+		if(!is_dir($fdate)) mkdir($fdate, 0777, TRUE);
+		if(!is_dir($config['upload_path'])) mkdir($config['upload_path'], 0777, TRUE);
+
 		$this->load->library('upload', $config);
 		$this->upload->initialize($config);
 		if ( ! $this->upload->do_upload($objName)) {
@@ -1039,6 +1092,22 @@ class Ranperda extends CI_Controller {
 		}
 		header("Content-type:application/json");
 		echo json_encode($resultObj);
+	}
+
+	function douploads(){
+		// echo '<pre>'; print_r($_POST);
+		// echo '<pre>'; print_r($_FILES);
+		// exit();
+		$attr_name = $this->input->post('attr_name');
+		$file1 = $this->single_upload(array('pdf','jpg','png'),$attr_name);
+		if($file1["status"]==0) {
+			$data = array(
+				$attr_name => $file1["upload_data"]["orig_name"],
+				$attr_name."_path" => strstr($file1["upload_data"]["full_path"], '/assets')
+			);
+			$this->db->update('ranperda',$data, array('wfnum' => $this->input->post('wfnum')));
+		}
+		echo json_encode($file1);
 	}
 }
 

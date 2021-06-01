@@ -6,7 +6,6 @@
             loaddata();
         }else{
             workflow();
-            //$('#txtWfnum').val(getCodeNOS('KAB-',9));
             getCodeNDI();
             loadStatus('RNA1');
             roleScreen('RNA1','');
@@ -34,76 +33,83 @@
         });
         
         
-
+        $('#file_surat_ke_gubernur').on("change", function(){ doUploads('file_surat_ke_gubernur'); });
+        $('#file_surat_ke_mendagri').on("change", function(){ doUploads('file_surat_ke_mendagri'); });
+        $('#file_surat_ke_menkeu').on("change", function(){ doUploads('file_surat_ke_menkeu'); });
         
-        
+        datepic('tgl_surat_ke_gubernur','yyyy-mm-dd');
+        datepic('tgl_surat_ke_mendagri','yyyy-mm-dd');
+        datepic('tgl_surat_ke_menkeu','yyyy-mm-dd');
 
-        $('#tglSP1').datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(ev){
-            var dateText = $(this).data('date');
-            $('#datetglSP1').val(dateText);
-            $('#tglSP1').datepicker('hide');
-        });
-        $('#tglSP2').datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(ev){
-            var dateText = $(this).data('date');
-            $('#datetglSP2').val(dateText);
-            $('#tglSP2').datepicker('hide');
-        });
-        $('#tglSP3').datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(ev){
-            var dateText = $(this).data('date');
-            $('#datetglSP3').val(dateText);
-            $('#tglSP3').datepicker('hide');
-        });
-        $('#tglSP4').datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(ev){
-            var dateText = $(this).data('date');
-            $('#datetglSP4').val(dateText);
-            $('#tglSP4').datepicker('hide');
-        });
-        $('#tglSP5').datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(ev){
-            var dateText = $(this).data('date');
-            $('#datetglSP5').val(dateText);
-            $('#tglSP5').datepicker('hide');
-        });
-        $('#tglSP6').datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(ev){
-            var dateText = $(this).data('date');
-            $('#datetglSP6').val(dateText);
-            $('#tglSP6').datepicker('hide');
-        });
-        $('#tglSP7').datepicker({format: "yyyy-mm-dd"}).on('changeDate', function(ev){
-            var dateText = $(this).data('date');
-            $('#datetglSP7').val(dateText);
-            $('#tglSP7').datepicker('hide');
+        $('#jns_pad').on('change', function() {
+            funcSelectAttr('PAD','','jns_pajak');
         });
 
     });
 </script>
-<h3 class="heading">RANPERDA > <i>KABUPATEN KOTA </i></h3>
+<h3 class="heading"><strong>RANPERDA > <i>KABUPATEN KOTA </i></strong>
+    <div class="pull-right" id="lblStatus">
+</h3>
 
 <div class="row">
-    <div class="col-sm-8 col-md-8">
+    <div class="col-sm-9 col-md-9">
         <div id="zbtnAction" class="form-actions"></div>
     </div>
-    <div class="col-sm-4 col-md-4">
+    <div class="col-sm-3 col-md-3">
         <div id="ztxtAppsMsg"></div>
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="tabHeader">
     <div class="col-sm-10 col-md-10">
-        <div id="divslcJenisPR" class="form-group">
-            <label for="inputEmail1" class="col-lg-3 control-label"><h4>No. Dokumen Input (NDI)</h4></label>
-            <div class="col-lg-2">
-                <input type="text" class="input-sm form-control" id="txtWfnum" readonly="readonly" value="<?php echo isset($wfnum) ? $wfnum : ''; ?>">
-            </div>
-            <label for="inputEmail1" class="col-lg-2 control-label"><h4>Status Dokumen</h4></label>
-            <div class="col-lg-4">
-                <input type="hidden" id="txtStatusCd" readonly="readonly">
-                <input type="text" class="input-sm form-control" id="txtStatusNm" readonly="readonly">
-            </div>
-        </div>
+        <table style="width:60%">
+            <tr>
+                <td style="width:30%"><h4>No. Dokumen Input (NDI)</h4></td>
+                <td style="width:70%">
+                    <input type="text" class="input-sm form-control" id="txtWfnum" readonly="readonly" value="<?php echo isset($wfnum) ? $wfnum : ''; ?>">
+                    <input type="hidden" id="txtStatusCd" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td><h4>Kategori Permohonan</h4></td>
+                <td>
+                    <select  class="input-sm form-control" name="kategori" id="kategori">
+                        <option value=""></option>
+                        <?php 
+                            $query = $this->db->get_where('attr',array('slctype'=>'KTR'));
+                            foreach($query->result() as $row) :
+                        ?>
+                        <option value="<?php echo $row->code;?>"><?php echo $row->description;?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>Kelompok PAD</h4></td>
+                <td>
+                    <select  class="input-sm form-control" name="jns_pad" id="jns_pad" >
+                        <option value=""></option>
+                        <?php 
+                            $query = $this->db->get_where('attr',array('slctype'=>'PAD'));
+                            foreach($query->result() as $row) :
+                        ?>
+                        <option value="<?php echo $row->code;?>"><?php echo $row->description;?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><h4>Jenis PDRD</h4></td>
+                <td>
+                    <select  class="input-sm form-control" name="jns_pajak" id="jns_pajak"></select>
+                </td>
+            </tr>
+
+        </table> 
     </div>	
 </div>
 
-<div class="row">
+<div class="row" id="tabBody">
     <div class="col-sm-12 col-md-12">
         <div class="tabbable tabbable-bordered">
             <ul class="nav nav-tabs">
@@ -132,118 +138,77 @@
                                         <div id="collapsekab1" class="panel-collapse collapse in">
                                             <div class="panel-body">
 
-                                            <h4>Klasifikasi</h4><br/>
-                                                <div id="divtxtSPBupati" class="form-group">
-                                                    <label for="txtSPBupati" class="col-lg-2 control-label">Kategori Permohonan</label>
-                                                  
-                                                    <div class="col-lg-2">
-                                                    <select  class="input-sm form-control" name="slcJenisPinjaman" id="slcJenisPinjaman" onchange="formPersyaratanDataTable()" >
-                                                        <?php 
-                                                          //  $query = $this->db->get('m_kat_pinjaman');
-                                                          //  foreach($query->result() as $row) :
-                                                        ?>
-                                                        <option value="test<?php // echo $row->id_kat_pinjaman;?>">Rancangan Baru<?php // echo $row->nama_kategori;?></option>
-                                                        <option value="test<?php // echo $row->id_kat_pinjaman;?>">Perubahan Perda<?php // echo $row->nama_kategori;?></option>
-                                                        <?php // endforeach; ?>
-                                                    </select>
-                                                    </div>
-
-                                                    <label for="datetglSP1" class="col-lg-1 control-label">Kelompok PAD</label>
-                                                    <div class="col-lg-2">
-                                                    <select  class="input-sm form-control" name="slcJenisPinjaman" id="slcJenisPinjaman" onchange="formPersyaratanDataTable()" >
-                                                        <?php 
-                                                          //  $query = $this->db->get('m_kat_pinjaman');
-                                                          //  foreach($query->result() as $row) :
-                                                        ?>
-                                                        <option value="test<?php // echo $row->id_kat_pinjaman;?>">Pajak<?php // echo $row->nama_kategori;?></option>
-                                                        <option value="test<?php // echo $row->id_kat_pinjaman;?>">Retribusi Perda<?php // echo $row->nama_kategori;?></option>
-                                                        <?php // endforeach; ?>
-                                                    </select>
-                                                    </div>
-                                                    <label for="fileFL02" class="col-lg-1 control-label">Jenis PDRD</label>
-                                                    <div class="col-lg-2">
-                                                    <select  class="input-sm form-control" name="slcJenisPinjaman" id="slcJenisPinjaman" onchange="formPersyaratanDataTable()" >
-                                                        <?php 
-                                                          //  $query = $this->db->get('m_kat_pinjaman');
-                                                          //  foreach($query->result() as $row) :
-                                                        ?>
-                                                        <option value="test<?php // echo $row->id_kat_pinjaman;?>">Hotel<?php // echo $row->nama_kategori;?></option>
-                                                        <option value="test<?php // echo $row->id_kat_pinjaman;?>">Restoran<?php // echo $row->nama_kategori;?></option>
-                                                        <?php // endforeach; ?>
-                                                    </select>
-                                                        
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <div class="formSep"></div>
                                                 <h4>Surat Permohonan</h4><br/>
-                                                <div id="divtxtSPBupati" class="form-group">
-                                                    <label for="txtSPBupati" class="col-lg-2 control-label">No. Surat Permohonan Ke Gubernur</label>
+
+                                                <div class="form-group">
+                                                    <label for="no_surat_ke_gubernur" class="col-lg-2 control-label">No. Surat Permohonan Ke Gubernur</label>
                                                     <div class="col-lg-2">
-                                                        <input type="text" class="input-sm form-control" id="txtSPBupati" >
+                                                        <input type="text" class="input-sm form-control" id="no_surat_ke_gubernur" >
                                                     </div>
 
-                                                    <label for="datetglSP1" class="col-lg-1 control-label">Tanggal Surat</label>
+                                                    <label for="tgl_surat_ke_gubernur" class="col-lg-1 control-label">Tanggal Surat</label>
                                                     <div class="col-lg-2">
-                                                        <div class="input-group date" id="tglSP1" data-date-format="yyyy-mm-dd">
-                                                            <input class="input-sm form-control" id="datetglSP1" type="text">
+                                                        <div class="input-group date" id="tgl_surat_ke_gubernur_date" data-date-format="yyyy-mm-dd">
+                                                            <input class="input-sm form-control" id="tgl_surat_ke_gubernur" type="text">
                                                             <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
                                                         </div>
                                                     </div>
-                                                    <label for="fileFL02" class="col-lg-1 control-label">File <span style="color:#FF0000;">(.pdf)</span></label>
+
+                                                    <label class="col-lg-1 control-label">File <span style="color:#FF0000;">(.pdf)</span></label>
                                                     <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" name="filex1" id="fileFL01">
-                                                        
+                                                        <input type="file" class="input-sm form-control" name="file_surat_ke_gubernur" id="file_surat_ke_gubernur">      
                                                     </div>
+
                                                     <div class="col-lg-1">
-                                                        <div id="btnFL01"></div>
+                                                        <div id="btn_file_surat_ke_gubernur"></div>
                                                     </div>
                                                 </div>
 
-                                                <div id="divtxtSPBupati" class="form-group">
-                                                    <label for="txtSPBupati" class="col-lg-2 control-label">No. Surat Permohonan Ke Mendagri</label>
+                                                <div class="form-group">
+                                                    <label for="no_surat_ke_mendagri" class="col-lg-2 control-label">No. Surat Permohonan Ke Mendagri</label>
                                                     <div class="col-lg-2">
-                                                        <input type="text" class="input-sm form-control" id="txtSPBupati" >
+                                                        <input type="text" class="input-sm form-control" id="no_surat_ke_mendagri" >
                                                     </div>
 
-                                                    <label for="datetglSP1" class="col-lg-1 control-label">Tanggal Surat</label>
+                                                    <label for="tgl_surat_ke_mendagri" class="col-lg-1 control-label">Tanggal Surat</label>
                                                     <div class="col-lg-2">
-                                                        <div class="input-group date" id="tglSP1" data-date-format="yyyy-mm-dd">
-                                                            <input class="input-sm form-control" id="datetglSP1" type="text">
+                                                        <div class="input-group date" id="tgl_surat_ke_mendagri_date" data-date-format="yyyy-mm-dd">
+                                                            <input class="input-sm form-control" id="tgl_surat_ke_mendagri" type="text">
                                                             <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
                                                         </div>
                                                     </div>
-                                                    <label for="fileFL02" class="col-lg-1 control-label">File <span style="color:#FF0000;">(.pdf)</span></label>
-                                                    <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
 
+                                                    <label class="col-lg-1 control-label">File <span style="color:#FF0000;">(.pdf)</span></label>
+                                                    <div class="col-lg-2">
+                                                        <input type="file" class="input-sm form-control" name="file_surat_ke_mendagri" id="file_surat_ke_mendagri">      
                                                     </div>
+
                                                     <div class="col-lg-1">
-                                                        <div id="btnFL01"></div>
+                                                        <div id="btn_file_surat_ke_mendagri"></div>
                                                     </div>
                                                 </div>
 
-                                                <div id="divtxtSPBupati" class="form-group">
-                                                    <label for="txtSPBupati" class="col-lg-2 control-label">No. Surat Permohonan Ke Menkeu</label>
+                                                <div class="form-group">
+                                                    <label for="no_surat_ke_menkeu" class="col-lg-2 control-label">No. Surat Permohonan Ke Menkeu</label>
                                                     <div class="col-lg-2">
-                                                        <input type="text" class="input-sm form-control" id="txtSPBupati" >
+                                                        <input type="text" class="input-sm form-control" id="no_surat_ke_menkeu" >
                                                     </div>
 
-                                                    <label for="datetglSP1" class="col-lg-1 control-label">Tanggal Surat</label>
+                                                    <label for="tgl_surat_ke_menkeu" class="col-lg-1 control-label">Tanggal Surat</label>
                                                     <div class="col-lg-2">
-                                                        <div class="input-group date" id="tglSP1" data-date-format="yyyy-mm-dd">
-                                                            <input class="input-sm form-control" id="datetglSP1" type="text">
+                                                        <div class="input-group date" id="tgl_surat_ke_menkeu_date" data-date-format="yyyy-mm-dd">
+                                                            <input class="input-sm form-control" id="tgl_surat_ke_menkeu" type="text">
                                                             <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
                                                         </div>
                                                     </div>
-                                                    <label for="fileFL02" class="col-lg-1 control-label">File <span style="color:#FF0000;">(.pdf)</span></label>
+
+                                                    <label class="col-lg-1 control-label">File <span style="color:#FF0000;">(.pdf)</span></label>
                                                     <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
-                                                                        
+                                                        <input type="file" class="input-sm form-control" name="file_surat_ke_menkeu" id="file_surat_ke_menkeu">      
                                                     </div>
+
                                                     <div class="col-lg-1">
-                                                        <div id="btnFL01"></div>
+                                                        <div id="btn_file_surat_ke_menkeu"></div>
                                                     </div>
                                                 </div>
 
@@ -296,69 +261,6 @@
                                                 </div>
                                                 
                                                 
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                <!-- <div id="divdatetglSP1" class="form-group">
-                                                    <label for="datetglSP1" class="col-lg-2 control-label">Tanggal Surat Pengantar</label>
-                                                    <div class="col-lg-2">
-                                                        <div class="input-group date" id="tglSP1" data-date-format="yyyy-mm-dd">
-                                                            <input class="input-sm form-control" id="datetglSP1" type="text">
-                                                            <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>                           
-
-                                                <div id="divtxtKabDesc" class="form-group">
-                                                    <label for="txtKabDesc" class="col-lg-2 control-label">Prihal Surat</label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="input-sm form-control" id="txtKabDesc" >
-                                                    </div>
-                                                </div>
-
-                                                <div id="divtxtKabIsiSurat" class="form-group">
-                                                    <label for="txtKabIsiSurat" class="col-lg-2 control-label">Isi Surat/Rincian Ranperda</label>
-                                                    <div class="col-lg-6">
-                                                        <textarea class="input-sm form-control" rows="4" cols="50" id="txtKabIsiSurat" ></textarea>
-                                                    </div>
-                                                </div>
-
-
-                                                <div id="divfileFL01" class="form-group">
-                                                    <label for="fileFL01" class="col-lg-2 control-label">Surat Pengantar</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
-                                                        <span class="help-block" style="color:#FF0000;">* Wajib isi, File yang diperbolehkan hanya pdf, jpg, png</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div id="btnFL01"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div id="divfileFL02" class="form-group">
-                                                    <label for="fileFL02" class="col-lg-2 control-label">Kesepakatan DPRD</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" id="fileFL02">
-                                                        <span class="help-block" style="color:#FF0000;">* Wajib isi, File yang diperbolehkan hanya pdf, jpg, png</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div id="btnFL02"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="formSep"></div>
-                                                <h4>Dokumen Rancangan Perda</h4><br/>
-                                                
-                                                
-                                                <div id="divtxtDescFiles" class="form-group">
-                                                    <label for="txtDescFiles" class="col-lg-2 control-label">Induk Perda </label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="input-sm form-control" id="txtDescFiles" >
-                                                    </div>
-                                                </div>
-                                                -->
 
                                                 <div id="divfileRancanganPerda" class="form-group">
                                                     <label for="fileRancanganPerda" class="col-lg-2 control-label">Induk Perda dan Lampiran</label>
@@ -458,7 +360,7 @@
                                         <div id="collapsepro1" class="panel-collapse collapse in">
                                             <div class="panel-body">
 
-                                                <div id="divtxtSPBupati" class="form-group">
+                                                <div class="form-group">
                                                     <label for="txtSPBupati" class="col-lg-2 control-label">No. Surat Pengantar ke Bupati/Walikota</label>
                                                     <div class="col-lg-4">
                                                         <input type="text" class="input-sm form-control" id="txtSPBupati-prov" disabled>
@@ -572,7 +474,7 @@
                                                         <input type="text" class="input-sm form-control" id="txtProDescSekda" >
                                                     </div>
                                                 </div> -->
-<!-- 
+                                                <!-- 
                                                 <div id="divtxtProIsiSuratSekda" class="form-group">
                                                     <label for="txtProIsiSuratSekda" class="col-lg-2 control-label">Isi Surat/Rincian Ranperda</label>
                                                     <div class="col-lg-6">
@@ -863,13 +765,7 @@
                                                         <input type="text" class="input-sm form-control" id="txtSPGubernur-kem" disabled>
                                                     </div>
                                                 </div>
-<!-- 
-                                                <div id="divtxtSpMdn" class="form-group">
-                                                    <label for="txtSpMdn" class="col-lg-2 control-label">No. Surat </label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="input-sm form-control" id="txtSpMdn">
-                                                    </div>
-                                                </div> -->
+
 
                                                 <div id="divdatetglSP3" class="form-group">
                                                     <label for="datetglSP3" class="col-lg-2 control-label">Tanggal Surat Pengantar</label>
@@ -881,19 +777,6 @@
                                                     </div>
                                                 </div>                           
 
-                                                <!-- <div id="divtxtKemDesc" class="form-group">
-                                                    <label for="txtKemDesc" class="col-lg-2 control-label">Prihal Surat</label>
-                                                    <div class="col-lg-6">
-                                                        <input type="text" class="input-sm form-control" id="txtKemDesc" >
-                                                    </div>
-                                                </div>
-
-                                                <div id="divtxtKemIsiSurat" class="form-group">
-                                                    <label for="txtKemIsiSurat" class="col-lg-2 control-label">Isi Surat/Rincian Ranperda</label>
-                                                    <div class="col-lg-6">
-                                                        <textarea class="input-sm form-control" rows="4" cols="50" id="txtKemIsiSurat" ></textarea>
-                                                    </div>
-                                                </div> -->
 
                                                 <div id="divfileFL04" class="form-group">
                                                     <label for="fileFL04" class="col-lg-2 control-label">Upload File Surat Pengantar</label>
@@ -928,31 +811,6 @@
                                                         <span class="help-block" style="color:#FF0000;">* Jenis file .doc "untuk mempermudah proses selanjutnya"</span>
                                                     </div>
                                                 </div>
-
-
-
-                                                <!-- <div class="formSep"></div>
-                                                <h4>Matrik Hasil Konsultasi Ranperda</h4><br/>
-
-                                                <div id="divtxtDescFilesKM01" class="form-group">
-                                                    <label for="txtDescFilesKM01" class="col-lg-2 control-label">Deskripsi File </label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="input-sm form-control" id="txtDescFilesKM01" >
-                                                    </div>
-                                                </div>
-
-                                                <div id="divfileRancanganPerdaKM01" class="form-group">
-                                                    <label for="fileRancanganPerdaKM01" class="col-lg-2 control-label">Upload File </label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="fileRancanganPerdaKM01" id="fileRancanganPerdaKM01">
-                                                        <span class="help-block" style="color:#FF0000;">* Wajib isi, File yang diperbolehkan hanya .pdf</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <button class="btn btn-sm btn-default" id="BTN_ADDITEM_KEM01"><i class="splashy-add_small"></i> Tambah Data</button>
-                                                    </div>
-                                                </div>
-
-                                                <div id="tblKM01"></div>
  -->
                                             </div>
                                         </div>

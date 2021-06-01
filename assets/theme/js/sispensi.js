@@ -6,12 +6,13 @@ $('#menuChangePassword').click(function() {
 });
 
 
-$('#fileFL01').on("change", function(){ uploadFilez('fileFL01'); });
-
-function uploadFilez(name){
-    alert(name);
+function datepic(attr,formatdate){
+    $('#'+attr+'_date').datepicker({format: formatdate}).on('changeDate', function(ev){
+        var dateText = $(this).data('date');
+        $('#'+attr).val(dateText);
+        $('#'+attr+'_date').datepicker('hide');
+    });
 }
-
 
 
 
@@ -45,6 +46,7 @@ function loadStatus(stscd){
         success : function(data){
             $('#txtStatusCd').val(data.stscd);
             $('#txtStatusNm').val(data.stsnm); 
+            $('#lblStatus').text(data.stsnm);
         },
         error: function(xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
@@ -107,40 +109,40 @@ function loaddata() {
 
             var head = data.header;
 
-            $("#txtSPBupati").val(head.sp_walikota);
-            $("#txtSPBupati-prov").val(head.sp_walikota);
-            $("#datetglSP1").val(head.sp_walikota_tgl);
-            $("#txtKabDesc").val(head.kab_desc);
-            $("#txtKabIsiSurat").val(head.kab_isisurat);
+            // $("#txtSPBupati").val(head.sp_walikota);
+            // $("#txtSPBupati-prov").val(head.sp_walikota);
+            // $("#datetglSP1").val(head.sp_walikota_tgl);
+            // $("#txtKabDesc").val(head.kab_desc);
+            // $("#txtKabIsiSurat").val(head.kab_isisurat);
 
-            loadItem('KP01',wfnum);
+            // loadItem('KP01',wfnum);
 
-            // Evaluasi
-            $("#txtSPGubernur").val(head.sp_gubernur);
-            $("#txtSPGubernur-kem").val(head.sp_gubernur);
-            $("#datetglSP2").val(head.sp_gubernur_tgl);
-            $("#txtProDesc").val(head.pro_desc);
-            $("#txtProIsisurat").val(head.pro_isisurat);
+            // // Evaluasi
+            // $("#txtSPGubernur").val(head.sp_gubernur);
+            // $("#txtSPGubernur-kem").val(head.sp_gubernur);
+            // $("#datetglSP2").val(head.sp_gubernur_tgl);
+            // $("#txtProDesc").val(head.pro_desc);
+            // $("#txtProIsisurat").val(head.pro_isisurat);
 
-            // kepGUb
-            $("#txtSPGubernur-prov").val(head.sp_gubernur);
-            $("#txtSPSekda").val(head.sp_sekda);
-            $("#datetglSP4").val(head.sp_sekda_tgl);
-            $("#txtProDescSekda").val(head.pro_descsekda);
-            $("#txtProIsiSuratSekda").val(head.pro_isisuratsekda);
+            // // kepGUb
+            // $("#txtSPGubernur-prov").val(head.sp_gubernur);
+            // $("#txtSPSekda").val(head.sp_sekda);
+            // $("#datetglSP4").val(head.sp_sekda_tgl);
+            // $("#txtProDescSekda").val(head.pro_descsekda);
+            // $("#txtProIsiSuratSekda").val(head.pro_isisuratsekda);
 
-            loadItem('PR01',wfnum);
-            loadItem('PR02',wfnum);
+            // loadItem('PR01',wfnum);
+            // loadItem('PR02',wfnum);
 
-            $("#txtSpMdn").val(head.sp_mdn);
-            $("#datetglSP3").val(head.sp_mdn_tgl);
-            $("#txtKemDesc").val(head.kem_desc);
-            $("#txtKemIsiSurat").val(head.kem_isisurat);
+            // $("#txtSpMdn").val(head.sp_mdn);
+            // $("#datetglSP3").val(head.sp_mdn_tgl);
+            // $("#txtKemDesc").val(head.kem_desc);
+            // $("#txtKemIsiSurat").val(head.kem_isisurat);
 
-            loadItem('KM01',wfnum);
+            // loadItem('KM01',wfnum);
 
-            loadItem('KP02',wfnum);
-            
+            // loadItem('KP02',wfnum);
+            funcSelectAttr('PAD',head.jns_pajak,'jns_pajak');
             loadStatus(head.curst);
             loadHistory();
             roleScreen(head.curst,''),
@@ -176,55 +178,35 @@ function saveData(butmo,curst,nexst,iscls,isrea){
 
     if(nexst.substring(0, 2) == 'RN'){
         data.append('wfnum', $('#txtWfnum').val());
-        data.append('txtSPBupati', $('#txtSPBupati').val());
-        data.append('datetglSP1', $("#datetglSP1").val()); 
-        data.append('txtKabDesc', $("#txtKabDesc").val()); 
-        data.append('txtKabIsiSurat', $("#txtKabIsiSurat").val());
-        data.append('txtSPGubernur', $("#txtSPGubernur").val());
-        data.append('datetglSP2', $("#datetglSP2").val());
-        data.append('txtProDesc', $("#txtProDesc").val());
-        data.append('txtProIsisurat', $("#txtProIsisurat").val());
-        data.append('txtSpMdn', $("#txtSpMdn").val());
-        data.append('datetglSP3', $("#datetglSP3").val());
-        data.append('txtKemDesc', $("#txtKemDesc").val());
-        data.append('txtKemIsiSurat', $("#txtKemIsiSurat").val());
-        data.append('txtSPSekda', $("#txtSPSekda").val());
-        data.append('datetglSP4', $("#datetglSP4").val());
-        data.append('txtProDescSekda', $("#txtProDescSekda").val());
-        data.append('txtProIsiSuratSekda', $("#txtProIsiSuratSekda").val());
-
-        data.append('fileFL01', $("#fileFL01")[0].files[0]);
-        data.append('fileFL02', $("#fileFL02")[0].files[0]);
-        data.append('fileFL03', $("#fileFL03")[0].files[0]);
-        data.append('fileFL04', $("#fileFL04")[0].files[0]);
-        data.append('fileFL05', $("#fileFL05")[0].files[0]);
-
+        data.append('kategori', $('#kategori').val());
+        data.append('jns_pad', $("#jns_pad").val()); 
+        data.append('jns_pajak', $("#jns_pajak").val()); 
     }
 
-    if(nexst.substring(0, 2) == 'PV'){
-        data.append('wfnum', $('#txtWfnum').val());
-        data.append('txtSPBupati', $('#txtSPBupati').val());
-        data.append('datetglSP1', $("#datetglSP1").val()); 
-        data.append('txtKabDesc', $("#txtKabDesc").val()); 
-        data.append('txtKabIsiSurat', $("#txtKabIsiSurat").val());
-        data.append('txtSPGubernur', $("#txtSPGubernur").val());
-        data.append('datetglSP2', $("#datetglSP2").val());
-        data.append('txtProDesc', $("#txtProDesc").val());
-        data.append('txtProIsisurat', $("#txtProIsisurat").val());
-        data.append('txtSpMdn', $("#txtSpMdn").val());
-        data.append('datetglSP3', $("#datetglSP3").val());
-        data.append('txtKemDesc', $("#txtKemDesc").val());
-        data.append('txtKemIsiSurat', $("#txtKemIsiSurat").val());
-        data.append('txtSPSekda', $("#txtSPSekda").val());
-        data.append('datetglSP4', $("#datetglSP4").val());
-        data.append('txtProDescSekda', $("#txtProDescSekda").val());
-        data.append('txtProIsiSuratSekda', $("#txtProIsiSuratSekda").val());
+    // if(nexst.substring(0, 2) == 'PV'){
+    //     data.append('wfnum', $('#txtWfnum').val());
+    //     data.append('txtSPBupati', $('#txtSPBupati').val());
+    //     data.append('datetglSP1', $("#datetglSP1").val()); 
+    //     data.append('txtKabDesc', $("#txtKabDesc").val()); 
+    //     data.append('txtKabIsiSurat', $("#txtKabIsiSurat").val());
+    //     data.append('txtSPGubernur', $("#txtSPGubernur").val());
+    //     data.append('datetglSP2', $("#datetglSP2").val());
+    //     data.append('txtProDesc', $("#txtProDesc").val());
+    //     data.append('txtProIsisurat', $("#txtProIsisurat").val());
+    //     data.append('txtSpMdn', $("#txtSpMdn").val());
+    //     data.append('datetglSP3', $("#datetglSP3").val());
+    //     data.append('txtKemDesc', $("#txtKemDesc").val());
+    //     data.append('txtKemIsiSurat', $("#txtKemIsiSurat").val());
+    //     data.append('txtSPSekda', $("#txtSPSekda").val());
+    //     data.append('datetglSP4', $("#datetglSP4").val());
+    //     data.append('txtProDescSekda', $("#txtProDescSekda").val());
+    //     data.append('txtProIsiSuratSekda', $("#txtProIsiSuratSekda").val());
 
-        data.append('fileFL01', $("#fileFL01")[0].files[0]);
-        data.append('fileFL02', $("#fileFL02")[0].files[0]);
-        data.append('fileFL04', $("#fileFL04")[0].files[0]);
-        // data.append('fileFL05', $("#fileFL05")[0].files[0]);
-    }
+    //     data.append('fileFL01', $("#fileFL01")[0].files[0]);
+    //     data.append('fileFL02', $("#fileFL02")[0].files[0]);
+    //     data.append('fileFL04', $("#fileFL04")[0].files[0]);
+    //     // data.append('fileFL05', $("#fileFL05")[0].files[0]);
+    // }
 
     $("#txtTentang").prop('required',true);
     
@@ -263,6 +245,30 @@ function saveData(butmo,curst,nexst,iscls,isrea){
         error: function(xhr, ajaxOptions, thrownError){
             alert(xhr.responseText);
             $('body').css('cursor','default');			
+        }
+    });
+}
+
+function doUploads(attrs){
+
+    var data = new FormData();
+
+    data.append('wfnum', $('#txtWfnum').val());
+    data.append('attr_name', attrs);
+    data.append(attrs, $("#"+attrs)[0].files[0]);
+    
+    $.ajax({
+        url: baseurl+"ranperda/douploads",
+        type: 'POST', 
+        data: data, 
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        beforeSend: function() {
+			$('#btn_'+attrs).html("<img src='../assets/theme/img/upload-wait.gif' />");
+		},
+        success: function(data){
+            $('#btn_'+attrs).html('<button onclick="fdownload('+"'"+data.attrs+'_path'+"'"+','+"'"+data.attrs+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+data.attrs+'</button>');
         }
     });
 }
@@ -397,7 +403,14 @@ function roleScreen(curst,nexst){
     // RNKX	Sanksi Administrasi
     if(curst.substring(0, 2) == 'RN'){
 
-        if(curst=='RNA1' || curst=='RNB1' || curst=='RNBX'){
+        if (curst == 'RNA1') {
+            $('#tabBody').hide();
+        } 
+        
+
+        if(curst=='RNB1' || curst=='RNBX'){
+            $('#tabBody').show();
+            $('#tabHeader *').attr('disabled', true);
             $('#tabkab').show();
             $('#tabpro, #tabkem, #divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda').hide();
         }
@@ -806,3 +819,27 @@ function delItem(filety,wfnum,filecd){
         }
     });
 }
+
+
+function funcSelectAttr(type,val,attr) {
+
+    var formData = {
+        'type': type,
+        'param': val,
+        'pad': $('#jns_pad').val()
+    };
+    $.ajax({
+        url: baseurl+"attr/dropdown",
+        type: 'POST', 
+        data: formData, 
+        dataType: "json",
+        success: function(data){
+            $('#'+attr).html(data.html);
+            if(val != ""){
+                $('#'+attr).val(val);
+            }		
+        }
+    });
+}
+
+
