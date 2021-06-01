@@ -193,7 +193,7 @@
                                                     </div>
                                                     <label for="fileFL02" class="col-lg-1 control-label">File <span style="color:#FF0000;">(.pdf)</span></label>
                                                     <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
+                                                        <input type="file" class="input-sm form-control" name="filex1" id="fileFL01">
                                                         
                                                     </div>
                                                     <div class="col-lg-1">

@@ -1,10 +1,17 @@
-
 $('#zbtnModalNotification').click(function() {
     loadModal('NOTIF');
 });
 $('#menuChangePassword').click(function() {
     loadModal('CHANGEPASS');
 });
+
+
+$('#fileFL01').on("change", function(){ uploadFilez('fileFL01'); });
+
+function uploadFilez(name){
+    alert(name);
+}
+
 
 
 
@@ -54,7 +61,7 @@ function authButton(butmo,curst,nexst,iscls,isrea){
     }
     switch(butmo){
         case 'BTN_BACK_SELECT':
-            location.href = '/sispensi/ranperda';
+            location.href = baseurl+'ranperda';
         break;
 
         case 'BTN_SAVE_DATA':
