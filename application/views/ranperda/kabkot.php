@@ -36,13 +36,17 @@
         $('#file_surat_ke_gubernur').on("change", function(){ doUploads('file_surat_ke_gubernur'); });
         $('#file_surat_ke_mendagri').on("change", function(){ doUploads('file_surat_ke_mendagri'); });
         $('#file_surat_ke_menkeu').on("change", function(){ doUploads('file_surat_ke_menkeu'); });
+        $('#file_ltr_blkng').on("change", function(){ doUploads('file_ltr_blkng'); });
+        $('#file_berita_acara').on("change", function(){ doUploads('file_berita_acara'); });
+        $('#file_ranperda').on("change", function(){ doUploads('file_ranperda'); });
+        $('#file_lampiran_ranperda').on("change", function(){ doUploads('file_lampiran_ranperda'); });
         
         datepic('tgl_surat_ke_gubernur','yyyy-mm-dd');
         datepic('tgl_surat_ke_mendagri','yyyy-mm-dd');
         datepic('tgl_surat_ke_menkeu','yyyy-mm-dd');
 
         $('#jns_pad').on('change', function() {
-            funcSelectAttr('PAD','','jns_pajak');
+            funcSelectAttr('PAD','','jns_pajak',$(this).val());
         });
 
     });
@@ -218,11 +222,11 @@
                                                 <div id="divfileFL01" class="form-group">
                                                     <label for="fileFL01" class="col-lg-2 control-label">Latar belakang dan Penjelasan </label>
                                                     <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
+                                                        <input type="file" class="input-sm form-control" name="file_ltr_blkng" id="file_ltr_blkng">
                                                         <span class="help-block" style="color:#FF0000;">* Jenis file pdf</span>
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <div id="btnFL01"></div>
+                                                        <div id="btn_file_ltr_blkng"></div>
                                                     </div>
                                                 </div>
                                                 
@@ -230,33 +234,33 @@
                                                     <label for="fileFL01" class="col-lg-2 control-label">Berita Acara/Naskah Pesetujuan 
                                                         Bersama DPRD dan KDH</label>
                                                     <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
+                                                        <input type="file" class="input-sm form-control" name="file_berita_acara" id="file_berita_acara">
                                                         <span class="help-block" style="color:#FF0000;">* Jenis file pdf</span>
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <div id="btnFL01"></div>
+                                                        <div id="btn_file_berita_acara"></div>
                                                     </div>
                                                 </div>
                                               
                                                 <div id="divfileFL01" class="form-group">
                                                     <label for="fileFL01" class="col-lg-2 control-label">Batang Tubuh Ranperda/Perda</label>
                                                     <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
+                                                        <input type="file" class="input-sm form-control" name="file_ranperda" id="file_ranperda">
                                                         <span class="help-block" style="color:#FF0000;">* Jenis file .doc, docx</span>
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <div id="btnFL01"></div>
+                                                        <div id="btn_file_ranperda"></div>
                                                     </div>
                                                 </div>
 
                                                 <div id="divfileFL01" class="form-group">
                                                     <label for="fileFL01" class="col-lg-2 control-label">Lampiran Batang Tubuh</label>
                                                     <div class="col-lg-2">
-                                                        <input type="file" class="input-sm form-control" id="fileFL01">
+                                                        <input type="file" class="input-sm form-control" name="file_lampiran_ranperda" id="file_lampiran_ranperda">
                                                         <span class="help-block" style="color:#FF0000;">* Jenis file .doc, docx</span>
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <div id="btnFL01"></div>
+                                                        <div id="btn_file_lampiran_ranperda"></div>
                                                     </div>
                                                 </div>
                                                 

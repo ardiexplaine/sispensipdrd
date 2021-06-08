@@ -236,9 +236,9 @@ class Ranperda extends CI_Controller {
 				$ranperda = array(
 					"wfnum"=> $wfnum,
 					"wfcat"=> $this->_wfcategory(),
-					"date" => date('Y-m-d'),
-					"time" => date('H:i:s'),
-					"user" => $this->session->userdata('usrcd'),
+					"zdate" => date('Y-m-d'),
+					"ztime" => date('H:i:s'),
+					"zuser" => $this->session->userdata('usrcd'),
 					"curst"=> $this->input->post("curst"),
 					"iscls"=> '',
 					"group_user" => $this->session->userdata('group_user'),
@@ -249,152 +249,169 @@ class Ranperda extends CI_Controller {
 				$this->db->insert('ranperda',$ranperda);
 			}else{
 
-				$ranperda = array(	
-					"sp_walikota" => $this->input->post("txtSPBupati"),
-					"sp_walikota_tgl" => $this->input->post("datetglSP1"),
-					"kab_desc" => $this->input->post("txtKabDesc"),
-					"kab_isisurat" => $this->input->post("txtKabIsiSurat"),
-					"sp_gubernur" => $this->input->post("txtSPGubernur"),
-					"sp_gubernur_tgl" => $this->input->post("datetglSP2"),
-					"pro_desc" => $this->input->post("txtProDesc"),
-					"pro_isisurat" => $this->input->post("txtProIsisurat"),
-					"sp_mdn" => $this->input->post("txtSpMdn"),
-					"sp_mdn_tgl" => $this->input->post("datetglSP3"),
-					"kem_desc" => $this->input->post("txtKemDesc"),
-					"kem_isisurat" => $this->input->post("txtKemIsiSurat"),
-					"sp_sekda" => $this->input->post("txtSPSekda"),
-					"sp_sekda_tgl" => $this->input->post("datetglSP3"),
-					"pro_descsekda" => $this->input->post("txtProDescSekda"),
-					"pro_isisuratsekda" => $this->input->post("txtProIsiSuratSekda"),
+				// $ranperda = array(	
+				// 	"sp_walikota" => $this->input->post("txtSPBupati"),
+				// 	"sp_walikota_tgl" => $this->input->post("datetglSP1"),
+				// 	"kab_desc" => $this->input->post("txtKabDesc"),
+				// 	"kab_isisurat" => $this->input->post("txtKabIsiSurat"),
+				// 	"sp_gubernur" => $this->input->post("txtSPGubernur"),
+				// 	"sp_gubernur_tgl" => $this->input->post("datetglSP2"),
+				// 	"pro_desc" => $this->input->post("txtProDesc"),
+				// 	"pro_isisurat" => $this->input->post("txtProIsisurat"),
+				// 	"sp_mdn" => $this->input->post("txtSpMdn"),
+				// 	"sp_mdn_tgl" => $this->input->post("datetglSP3"),
+				// 	"kem_desc" => $this->input->post("txtKemDesc"),
+				// 	"kem_isisurat" => $this->input->post("txtKemIsiSurat"),
+				// 	"sp_sekda" => $this->input->post("txtSPSekda"),
+				// 	"sp_sekda_tgl" => $this->input->post("datetglSP3"),
+				// 	"pro_descsekda" => $this->input->post("txtProDescSekda"),
+				// 	"pro_isisuratsekda" => $this->input->post("txtProIsiSuratSekda"),
+				// 	"zdate" => date('Y-m-d'),
+				// 	"ztime" => date('H:i:s'),
+				// 	"curst"=> $this->input->post("curst"),
+				// 	"iscls"=> $this->input->post("iscls")
+				// );
+
+				$ranperda = array(
+					"wfnum"=> $wfnum,
+					"wfcat"=> $this->_wfcategory(),
 					"zdate" => date('Y-m-d'),
 					"ztime" => date('H:i:s'),
+					"zuser" => $this->session->userdata('usrcd'),
 					"curst"=> $this->input->post("curst"),
-					"iscls"=> $this->input->post("iscls")
+					"iscls"=> '',
+					"group_user" => $this->session->userdata('group_user'),
+					"no_surat_ke_gubernur"=> $this->input->post('no_surat_ke_gubernur'),
+					"tgl_surat_ke_gubernur"=> $this->input->post('tgl_surat_ke_gubernur'),
+					"no_surat_ke_mendagri"=> $this->input->post('no_surat_ke_mendagri'),
+					"tgl_surat_ke_mendagri"=> $this->input->post('tgl_surat_ke_mendagri'),
+					"no_surat_ke_menkeu"=> $this->input->post('no_surat_ke_menkeu'),
+					"tgl_surat_ke_menkeu"=> $this->input->post('tgl_surat_ke_menkeu')	
 				);
 				$this->db->update('ranperda',$ranperda, array("wfnum"=>$wfnum));
 			}
 			
-			$file1 = $this->do_upload(array('pdf','jpg','png'),'fileSuratPengantar');
-			if($file1["status"]==0) {
-				$item1 = array(
-					"wfnum"=> $wfnum,
-					"fcode"=> 'FL01',
-					"zdate" => date('Y-m-d'),
-					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
-					"original_name"=> $file1["upload_data"]["orig_name"],
-					"encrypt_name" => $file1["upload_data"]["file_name"]
-				);
+			// $file1 = $this->do_upload(array('pdf','jpg','png'),'fileSuratPengantar');
+			// if($file1["status"]==0) {
+			// 	$item1 = array(
+			// 		"wfnum"=> $wfnum,
+			// 		"fcode"=> 'FL01',
+			// 		"zdate" => date('Y-m-d'),
+			// 		"ztime" => date('H:i:s'),
+			// 		"zuser" => $this->session->userdata('usrcd'),
+			// 		"original_name"=> $file1["upload_data"]["orig_name"],
+			// 		"encrypt_name" => $file1["upload_data"]["file_name"]
+			// 	);
 
-				$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL01'));
-				if($cek->num_rows() == 0){
-					$this->db->insert('item_files', $item1);
-				}else{
-					$this->db->update('item_files',$item1, array('wfnum' => $wfnum, "fcode"=> 'FL01'));
-				}
-			}
+			// 	$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL01'));
+			// 	if($cek->num_rows() == 0){
+			// 		$this->db->insert('item_files', $item1);
+			// 	}else{
+			// 		$this->db->update('item_files',$item1, array('wfnum' => $wfnum, "fcode"=> 'FL01'));
+			// 	}
+			// }
 
-			$file1 = $this->do_upload(array('pdf','jpg','png'),'fileFL01');
-			if($file1["status"]==0) {
-				$item1 = array(
-					"wfnum"=> $wfnum,
-					"fcode"=> 'FL01',
-					"zdate" => date('Y-m-d'),
-					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
-					"original_name"=> $file1["upload_data"]["orig_name"],
-					"encrypt_name" => $file1["upload_data"]["file_name"]
-				);
+			// $file1 = $this->do_upload(array('pdf','jpg','png'),'fileFL01');
+			// if($file1["status"]==0) {
+			// 	$item1 = array(
+			// 		"wfnum"=> $wfnum,
+			// 		"fcode"=> 'FL01',
+			// 		"zdate" => date('Y-m-d'),
+			// 		"ztime" => date('H:i:s'),
+			// 		"zuser" => $this->session->userdata('usrcd'),
+			// 		"original_name"=> $file1["upload_data"]["orig_name"],
+			// 		"encrypt_name" => $file1["upload_data"]["file_name"]
+			// 	);
 
-				$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL01'));
-				if($cek->num_rows() == 0){
-					$this->db->insert('item_files', $item1);
-				}else{
-					$this->db->update('item_files',$item1, array('wfnum' => $wfnum, "fcode"=> 'FL01'));
-				}
-			}
+			// 	$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL01'));
+			// 	if($cek->num_rows() == 0){
+			// 		$this->db->insert('item_files', $item1);
+			// 	}else{
+			// 		$this->db->update('item_files',$item1, array('wfnum' => $wfnum, "fcode"=> 'FL01'));
+			// 	}
+			// }
 
 
 
-			$file2 = $this->do_upload(array('pdf','jpg','png'),'fileFL02');
-			if($file2["status"]==0) {
-				$item2 = array(
-					"wfnum"=> $wfnum,
-					"fcode"=> 'FL02',
-					"zdate" => date('Y-m-d'),
-					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
-					"original_name"=> $file2["upload_data"]["orig_name"],
-					"encrypt_name" => $file2["upload_data"]["file_name"]
-				);
+			// $file2 = $this->do_upload(array('pdf','jpg','png'),'fileFL02');
+			// if($file2["status"]==0) {
+			// 	$item2 = array(
+			// 		"wfnum"=> $wfnum,
+			// 		"fcode"=> 'FL02',
+			// 		"zdate" => date('Y-m-d'),
+			// 		"ztime" => date('H:i:s'),
+			// 		"zuser" => $this->session->userdata('usrcd'),
+			// 		"original_name"=> $file2["upload_data"]["orig_name"],
+			// 		"encrypt_name" => $file2["upload_data"]["file_name"]
+			// 	);
 
-				$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL02'));
-				if($cek->num_rows() == 0){
-					$this->db->insert('item_files', $item2);
-				}else{
-					$this->db->update('item_files',$item2, array('wfnum' => $wfnum, "fcode"=> 'FL02'));
-				}
-			}
+			// 	$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL02'));
+			// 	if($cek->num_rows() == 0){
+			// 		$this->db->insert('item_files', $item2);
+			// 	}else{
+			// 		$this->db->update('item_files',$item2, array('wfnum' => $wfnum, "fcode"=> 'FL02'));
+			// 	}
+			// }
 
-			$file3 = $this->do_upload(array('pdf'),'fileFL03');
-			if($file3["status"]==0) {
-				$item3 = array(
-					"wfnum"=> $wfnum,
-					"fcode"=> 'FL03',
-					"zdate" => date('Y-m-d'),
-					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
-					"original_name"=> $file3["upload_data"]["orig_name"],
-					"encrypt_name" => $file3["upload_data"]["file_name"]
-				);
+			// $file3 = $this->do_upload(array('pdf'),'fileFL03');
+			// if($file3["status"]==0) {
+			// 	$item3 = array(
+			// 		"wfnum"=> $wfnum,
+			// 		"fcode"=> 'FL03',
+			// 		"zdate" => date('Y-m-d'),
+			// 		"ztime" => date('H:i:s'),
+			// 		"zuser" => $this->session->userdata('usrcd'),
+			// 		"original_name"=> $file3["upload_data"]["orig_name"],
+			// 		"encrypt_name" => $file3["upload_data"]["file_name"]
+			// 	);
 
-				$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL03'));
-				if($cek->num_rows() == 0){
-					$this->db->insert('item_files', $item3);
-				}else{
-					$this->db->update('item_files',$item3, array('wfnum' => $wfnum, "fcode"=> 'FL03'));
-				}
-			}
+			// 	$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL03'));
+			// 	if($cek->num_rows() == 0){
+			// 		$this->db->insert('item_files', $item3);
+			// 	}else{
+			// 		$this->db->update('item_files',$item3, array('wfnum' => $wfnum, "fcode"=> 'FL03'));
+			// 	}
+			// }
 
-			$file4 = $this->do_upload(array('pdf'),'fileFL04');
-			if($file4["status"]==0) {
-				$item4 = array(
-					"wfnum"=> $wfnum,
-					"fcode"=> 'FL04',
-					"zdate" => date('Y-m-d'),
-					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
-					"original_name"=> $file4["upload_data"]["orig_name"],
-					"encrypt_name" => $file4["upload_data"]["file_name"]
-				);
+			// $file4 = $this->do_upload(array('pdf'),'fileFL04');
+			// if($file4["status"]==0) {
+			// 	$item4 = array(
+			// 		"wfnum"=> $wfnum,
+			// 		"fcode"=> 'FL04',
+			// 		"zdate" => date('Y-m-d'),
+			// 		"ztime" => date('H:i:s'),
+			// 		"zuser" => $this->session->userdata('usrcd'),
+			// 		"original_name"=> $file4["upload_data"]["orig_name"],
+			// 		"encrypt_name" => $file4["upload_data"]["file_name"]
+			// 	);
 
-				$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL04'));
-				if($cek->num_rows() == 0){
-					$this->db->insert('item_files', $item4);
-				}else{
-					$this->db->update('item_files',$item4, array('wfnum' => $wfnum, "fcode"=> 'FL04'));
-				}
-			}
+			// 	$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL04'));
+			// 	if($cek->num_rows() == 0){
+			// 		$this->db->insert('item_files', $item4);
+			// 	}else{
+			// 		$this->db->update('item_files',$item4, array('wfnum' => $wfnum, "fcode"=> 'FL04'));
+			// 	}
+			// }
 
-			$file5 = $this->do_upload(array('pdf','jpg','png'),'fileFL05');
-			if($file5["status"]==0) {
-				$item5 = array(
-					"wfnum"=> $wfnum,
-					"fcode"=> 'FL05',
-					"zdate" => date('Y-m-d'),
-					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
-					"original_name"=> $file5["upload_data"]["orig_name"],
-					"encrypt_name" => $file5["upload_data"]["file_name"]
-				);
+			// $file5 = $this->do_upload(array('pdf','jpg','png'),'fileFL05');
+			// if($file5["status"]==0) {
+			// 	$item5 = array(
+			// 		"wfnum"=> $wfnum,
+			// 		"fcode"=> 'FL05',
+			// 		"zdate" => date('Y-m-d'),
+			// 		"ztime" => date('H:i:s'),
+			// 		"zuser" => $this->session->userdata('usrcd'),
+			// 		"original_name"=> $file5["upload_data"]["orig_name"],
+			// 		"encrypt_name" => $file5["upload_data"]["file_name"]
+			// 	);
 
-				$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL05'));
-				if($cek->num_rows() == 0){
-					$this->db->insert('item_files', $item5);
-				}else{
-					$this->db->update('item_files',$item5, array('wfnum' => $wfnum, "fcode"=> 'FL05'));
-				}
-			}
+			// 	$cek = $this->db->get_where('item_files', array('wfnum' => $wfnum, "fcode"=> 'FL05'));
+			// 	if($cek->num_rows() == 0){
+			// 		$this->db->insert('item_files', $item5);
+			// 	}else{
+			// 		$this->db->update('item_files',$item5, array('wfnum' => $wfnum, "fcode"=> 'FL05'));
+			// 	}
+			// }
 
 			// input History
 			$history = array(
@@ -528,7 +545,47 @@ class Ranperda extends CI_Controller {
 		$header = $this->db->get_where('ranperda', array('wfnum' => $wfnum));
 		$detail = $this->db->get_where('item_files', array('wfnum' => $wfnum));
 
-		$resultObj = array("status" =>0, "message" =>'', "header"=> $header->row(), "item" => $detail->result_array());
+		$fls = $header->row();
+		$fileDownload = array(
+			array(
+				"fcode" => "file_surat_ke_gubernur",
+				"oriname" => $fls->file_surat_ke_gubernur,
+				"path" => $fls->file_surat_ke_gubernur_path
+			),
+			array(
+				"fcode" => "file_surat_ke_mendagri",
+				"oriname" => $fls->file_surat_ke_mendagri,
+				"path" => $fls->file_surat_ke_mendagri_path
+			),
+			array(
+				"fcode" => "file_surat_ke_menkeu",
+				"oriname" => $fls->file_surat_ke_menkeu,
+				"path" => $fls->file_surat_ke_menkeu_path
+			),
+			array(
+				"fcode" => "file_ltr_blkng",
+				"oriname" => $fls->file_ltr_blkng,
+				"path" => $fls->file_ltr_blkng_path
+			),
+			array(
+				"fcode" => "file_berita_acara",
+				"oriname" => $fls->file_berita_acara,
+				"path" => $fls->file_berita_acara_path
+			),
+			array(
+				"fcode" => "file_ranperda",
+				"oriname" => $fls->file_ranperda,
+				"path" => $fls->file_ranperda_path
+			),	
+			array(
+				"fcode" => "file_lampiran_ranperda",
+				"oriname" => $fls->file_lampiran_ranperda,
+				"path" => $fls->file_lampiran_ranperda_path
+			)	
+		);
+
+
+		$resultObj = array("status" =>0, "message" =>'', "header"=> $fls, "item" => $detail->result_array(), "btnFiles" => $fileDownload);
 		echo json_encode($resultObj);
 	}
 
@@ -539,6 +596,36 @@ class Ranperda extends CI_Controller {
 
 		$data = array("stscd"=>$row->stscd,"stsnm"=>$row->stsnm);
 		echo json_encode($data);
+	}
+
+	function singlelink()
+    {
+		$path = '.'.$_GET['path']; 
+		$name = $_GET['fname']; 
+     	if(is_file($path))
+      	{
+			// required for IE
+			if(ini_get('zlib.output_compression')) { ini_set('zlib.output_compression', 'Off'); }
+
+			// get the file mime type using the file extension
+			$this->load->helper('file');
+
+			$mime = get_mime_by_extension($path);
+
+			// Build the headers to push out the file properly.
+			header('Pragma: public');     // required
+			header('Expires: 0');         // no cache
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($path)).' GMT');
+			header('Cache-Control: private',false);
+			header('Content-Type: '.$mime);  // Add the mime type from Code igniter.
+			header('Content-Disposition: attachment; filename="'.basename($name).'"');  // Add the file name
+			header('Content-Transfer-Encoding: binary');
+			header('Content-Length: '.filesize($path)); // provide file size
+			header('Connection: close');
+			readfile($path); // push it out
+			exit();
+		}
 	}
 
 	function push_file($path, $name)
@@ -636,10 +723,6 @@ class Ranperda extends CI_Controller {
 						"wfcat" => $row->wfcat,
 						"zuser" => $this->Ranperda_model->getdesc('hirarki','namakab',array("id"=>$row->group_user)) ,
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
-						"spkab" => $this->cekKosong($row->sp_walikota),
-						"spgub" => $this->cekKosong($row->sp_gubernur),
-						"spmnd" => $this->cekKosong($row->sp_mdn),
-						"spskd" => $this->cekKosong($row->sp_sekda)
 					);
 				}else{
 					$data[] = array(
@@ -647,10 +730,6 @@ class Ranperda extends CI_Controller {
 						"wfcat" => $row->wfcat,
 						"zuser" => $this->Ranperda_model->getdesc('hirarki','namakab',array("id"=>$row->group_user)) ,
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
-						"spkab" => '-',
-						"spgub" => $this->cekKosong($row->sp_walikota),
-						"spmnd" => $this->cekKosong($row->sp_mdn),
-						"spskd" => '-'
 					);
 				}
 				
@@ -708,7 +787,7 @@ class Ranperda extends CI_Controller {
 			$filetype = array('doc','docx');
 		}
 
-		$file1 = $this->do_upload($filetype,'fileid');
+		$file1 = $this->single_upload($filetype,'fileid');
 		if($file1["status"]==0) {
 			
 			$data = array(
@@ -724,7 +803,7 @@ class Ranperda extends CI_Controller {
 				"perdano" => $perdano,
 				"perdatgl" => $perdatgl,
 				"original_name"=> $file1["upload_data"]["orig_name"],
-				"encrypt_name" => $file1["upload_data"]["file_name"]
+				"encrypt_name" => strstr($file1["upload_data"]["full_path"], '/assets')
 			);
 			$this->db->insert('ranperda_files', $data);
 			
@@ -771,7 +850,6 @@ class Ranperda extends CI_Controller {
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Name</th>
 								<th>File Uploads</th>
 								<th>#</th>
 							</tr>
@@ -781,8 +859,7 @@ class Ranperda extends CI_Controller {
 					foreach($query->result() as $row){
 					$html .='<tr class="rowlink">
 								<td>'.$no.'</td>
-								<td>'.$row->title.'</td>
-								<td><a onclick="fdownload('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
+								<td><a onclick="singlelink('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
 								<td><button '.$disabled.' onclick="delItem('."'".$row->filetype."'".','."'".$row->wfnum."'".','."'".$row->filecd."'".');"></i> Hapus</button></td>
 							</tr>';
 						$no++;
@@ -1058,7 +1135,7 @@ class Ranperda extends CI_Controller {
 
 		$where = array("wfnum"=>$wfnum, "filecd"=>$filecd, "filetype"=>$filety);
 		$row = $this->db->get_where('ranperda_files', $where)->row();
-		unlink('./assets/uploads/'.$row->encrypt_name);
+		unlink('.'.$row->encrypt_name);
 
 		$this->db->delete('ranperda_files', $where);
 			
@@ -1106,8 +1183,13 @@ class Ranperda extends CI_Controller {
 				$attr_name."_path" => strstr($file1["upload_data"]["full_path"], '/assets')
 			);
 			$this->db->update('ranperda',$data, array('wfnum' => $this->input->post('wfnum')));
+
+			echo json_encode(array(
+				'orig_name' => $file1["upload_data"]["orig_name"],
+				'full_path' => strstr($file1["upload_data"]["full_path"], '/assets')
+			));
 		}
-		echo json_encode($file1);
+		
 	}
 }
 

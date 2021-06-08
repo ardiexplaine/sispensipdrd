@@ -109,20 +109,20 @@ function loaddata() {
 
             var head = data.header;
 
-            // $("#txtSPBupati").val(head.sp_walikota);
-            // $("#txtSPBupati-prov").val(head.sp_walikota);
-            // $("#datetglSP1").val(head.sp_walikota_tgl);
-            // $("#txtKabDesc").val(head.kab_desc);
-            // $("#txtKabIsiSurat").val(head.kab_isisurat);
+            $("#kategori").val(head.kategori);
+            $("#jns_pad").val(head.jns_pad);
+            funcSelectAttr('PAD',head.jns_pajak,'jns_pajak',head.jns_pad);
 
-            // loadItem('KP01',wfnum);
+            loadItem('KP01',wfnum);
 
-            // // Evaluasi
-            // $("#txtSPGubernur").val(head.sp_gubernur);
-            // $("#txtSPGubernur-kem").val(head.sp_gubernur);
-            // $("#datetglSP2").val(head.sp_gubernur_tgl);
-            // $("#txtProDesc").val(head.pro_desc);
-            // $("#txtProIsisurat").val(head.pro_isisurat);
+            // Kab Kota
+            $("#no_surat_ke_gubernur").val(head.no_surat_ke_gubernur);
+            $("#tgl_surat_ke_gubernur").val(head.tgl_surat_ke_gubernur);
+            $("#no_surat_ke_mendagri").val(head.no_surat_ke_mendagri);
+            $("#tgl_surat_ke_mendagri").val(head.tgl_surat_ke_mendagri);
+            $("#no_surat_ke_menkeu").val(head.no_surat_ke_menkeu);
+            $("#tgl_surat_ke_menkeu").val(head.tgl_surat_ke_menkeu);
+            
 
             // // kepGUb
             // $("#txtSPGubernur-prov").val(head.sp_gubernur);
@@ -142,15 +142,22 @@ function loaddata() {
             // loadItem('KM01',wfnum);
 
             // loadItem('KP02',wfnum);
-            funcSelectAttr('PAD',head.jns_pajak,'jns_pajak');
+            
             loadStatus(head.curst);
             loadHistory();
             roleScreen(head.curst,''),
             workflow();
 
-            $.each( data.item, function( key, value ) { 
-                $('#btn'+value.fcode).html('<button onclick="fdownload('+"'"+value.encrypt_name+"'"+','+"'"+value.original_name+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+value.original_name+'</button>');
-                //alert( key + ": " + value.wfnum );
+            if(head.kategori == "PP"){
+                $('#divfileRancanganPerda').show();
+            }else{
+                $('#divfileRancanganPerda').hide();
+            }
+
+            $.each( data.btnFiles, function( key, value ) { 
+                if(value.oriname != null){
+                    $('#btn_'+value.fcode).html('<button onclick="singlelink('+"'"+value.path+"'"+','+"'"+value.oriname+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+value.oriname+'</button>');
+                }
             });
         },
         error: function(xhr, ajaxOptions, thrownError){
@@ -158,6 +165,11 @@ function loaddata() {
             $('body').css('cursor','default');			
         }
     });
+}
+
+function singlelink(encrypt,original){
+    //alert(encrypt)
+    location.href = baseurl+'ranperda/singlelink/?path='+encrypt+'&fname='+original;
 }
 
 function fdownload(encrypt,original){
@@ -181,6 +193,13 @@ function saveData(butmo,curst,nexst,iscls,isrea){
         data.append('kategori', $('#kategori').val());
         data.append('jns_pad', $("#jns_pad").val()); 
         data.append('jns_pajak', $("#jns_pajak").val()); 
+
+        data.append('no_surat_ke_gubernur', $('#no_surat_ke_gubernur').val());
+        data.append('tgl_surat_ke_gubernur', $('#tgl_surat_ke_gubernur').val());
+        data.append('no_surat_ke_mendagri', $("#no_surat_ke_mendagri").val()); 
+        data.append('tgl_surat_ke_mendagri', $("#tgl_surat_ke_mendagri").val());
+        data.append('no_surat_ke_menkeu', $("#no_surat_ke_menkeu").val()); 
+        data.append('tgl_surat_ke_menkeu', $("#tgl_surat_ke_menkeu").val()); 
     }
 
     // if(nexst.substring(0, 2) == 'PV'){
@@ -268,7 +287,8 @@ function doUploads(attrs){
 			$('#btn_'+attrs).html("<img src='../assets/theme/img/upload-wait.gif' />");
 		},
         success: function(data){
-            $('#btn_'+attrs).html('<button onclick="fdownload('+"'"+data.attrs+'_path'+"'"+','+"'"+data.attrs+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+data.attrs+'</button>');
+            $('#'+attrs).val('');
+            $('#btn_'+attrs).html('<button onclick="singlelink('+"'"+data.full_path+"'"+','+"'"+data.orig_name+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+data.orig_name+'</button>');
         }
     });
 }
@@ -796,37 +816,33 @@ function loadItem(filety,wfnum){
 
 function delItem(filety,wfnum,filecd){
 
-    var data = new FormData();
-
-    data.append('wfnum', wfnum);
-    data.append('filety', filety);
-    data.append('filecd', filecd);
-
-
+    var formData = {
+        'wfnum': wfnum,
+        'filety': filety,
+        'filecd': filecd
+    };
     $.ajax({
         url: baseurl+"ranperda/delitem",
         type: 'POST', 
-        data: data, 
-        processData: false,
-        contentType: false,
+        data: formData, 
         dataType: "json",
-        beforeSend: function(e) {
+        beforeSend: function() {
             $('.page-loader').show();
         },
         success: function(data){
-           $('.page-loader').hide();
-           loadItem(filety,wfnum);		
+            $('.page-loader').hide();
+            loadItem(filety,wfnum);	
         }
     });
 }
 
 
-function funcSelectAttr(type,val,attr) {
+function funcSelectAttr(type,val,attr,pad) {
 
     var formData = {
         'type': type,
         'param': val,
-        'pad': $('#jns_pad').val()
+        'pad': pad
     };
     $.ajax({
         url: baseurl+"attr/dropdown",
