@@ -94,7 +94,7 @@ function authButton(butmo,curst,nexst,iscls,isrea){
     }
 }
 
-function loaddata() {
+ async function loaddata() {
     var wfnum = $('#txtWfnum').val();
 
     var formData = {
@@ -122,6 +122,20 @@ function loaddata() {
             $("#tgl_surat_ke_mendagri").val(head.tgl_surat_ke_mendagri);
             $("#no_surat_ke_menkeu").val(head.no_surat_ke_menkeu);
             $("#tgl_surat_ke_menkeu").val(head.tgl_surat_ke_menkeu);
+
+            $("#no_surat_menkeu_ke_mendagri").val(head.no_surat_menkeu_ke_mendagri);
+            $("#tgl_surat_menkeu_ke_mendagri").val(head.tgl_surat_menkeu_ke_mendagri);
+            $("#no_kepmenkeu").val(head.no_kepmenkeu);
+            $("#tgl_kepmenkeu").val(head.tgl_kepmenkeu);
+            $("#no_surat_gub_ke_kabkota").val(head.no_surat_gub_ke_kabkota);
+            $("#tgl_surat_gub_ke_kabkota").val(head.tgl_surat_gub_ke_kabkota);
+            $("#hasil_evaluasi").val(head.hasil_evaluasi);
+            $("#no_kepgub").val(head.no_kepgub);
+            $("#tgl_kepgub").val(head.tgl_kepgub);
+            $("#no_surat_mendagri_kegub").val(head.no_surat_mendagri_kegub);
+            $("#tgl_surat_mendagri_kegub").val(head.tgl_surat_mendagri_kegub);
+            $("#no_kepmendagri").val(head.no_kepmendagri);
+            $("#tgl_kepmendagri").val(head.tgl_kepmendagri);
             
 
             // // kepGUb
@@ -141,12 +155,13 @@ function loaddata() {
 
             // loadItem('KM01',wfnum);
 
-            // loadItem('KP02',wfnum);
+            loadItem('KP02',wfnum);
             
             loadStatus(head.curst);
             loadHistory();
-            roleScreen(head.curst,''),
+            roleScreen(head.curst,data.user_type),
             workflow();
+            hasilEvaluasi(head.hasil_evaluasi);
 
             if(head.kategori == "PP"){
                 $('#divfileRancanganPerda').show();
@@ -200,6 +215,20 @@ function saveData(butmo,curst,nexst,iscls,isrea){
         data.append('tgl_surat_ke_mendagri', $("#tgl_surat_ke_mendagri").val());
         data.append('no_surat_ke_menkeu', $("#no_surat_ke_menkeu").val()); 
         data.append('tgl_surat_ke_menkeu', $("#tgl_surat_ke_menkeu").val()); 
+        data.append('no_surat_menkeu_ke_mendagri', $("#no_surat_menkeu_ke_mendagri").val()); 
+        data.append('tgl_surat_menkeu_ke_mendagri', $("#tgl_surat_menkeu_ke_mendagri").val()); 
+        data.append('no_kepmenkeu', $("#no_kepmenkeu").val()); 
+        data.append('tgl_kepmenkeu', $("#tgl_kepmenkeu").val()); 
+        data.append('no_surat_gub_ke_kabkota', $("#no_surat_gub_ke_kabkota").val()); 
+        data.append('tgl_surat_gub_ke_kabkota', $("#tgl_surat_gub_ke_kabkota").val()); 
+        data.append('hasil_evaluasi', $("#hasil_evaluasi").val()); 
+        data.append('no_kepgub', $("#no_kepgub").val()); 
+        data.append('tgl_kepgub', $("#tgl_kepgub").val()); 
+        data.append('no_surat_mendagri_kegub', $("#no_surat_mendagri_kegub").val()); 
+        data.append('tgl_surat_mendagri_kegub', $("#tgl_surat_mendagri_kegub").val()); 
+        data.append('no_kepmendagri', $("#no_kepmendagri").val()); 
+        data.append('tgl_kepmendagri', $("#tgl_kepmendagri").val()); 
+
     }
 
     // if(nexst.substring(0, 2) == 'PV'){
@@ -268,12 +297,12 @@ function saveData(butmo,curst,nexst,iscls,isrea){
     });
 }
 
-function doUploads(attrs){
-
+function doUploads(attrs,fileext){
     var data = new FormData();
 
     data.append('wfnum', $('#txtWfnum').val());
     data.append('attr_name', attrs);
+    data.append('fileext', fileext);
     data.append(attrs, $("#"+attrs)[0].files[0]);
     
     $.ajax({
@@ -284,11 +313,18 @@ function doUploads(attrs){
         contentType: false,
         dataType: "json",
         beforeSend: function() {
-			$('#btn_'+attrs).html("<img src='../assets/theme/img/upload-wait.gif' />");
+			$('#btn_'+attrs).html("<img src='"+baseurl+"/assets/theme/img/upload-wait.gif' />");
 		},
         success: function(data){
-            $('#'+attrs).val('');
-            $('#btn_'+attrs).html('<button onclick="singlelink('+"'"+data.full_path+"'"+','+"'"+data.orig_name+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+data.orig_name+'</button>');
+            if(data.status == 0){
+                $('#'+attrs).val('');
+                $('#btn_'+attrs).html('<button onclick="singlelink('+"'"+data.full_path+"'"+','+"'"+data.orig_name+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+data.orig_name+'</button>');
+            }else{
+                $('#btn_'+attrs).html("<span class='help-block' style='color:#FF0000;'>"+data.message+"</span>");
+                $('#'+attrs).val('');
+                $('#'+attrs).focus();
+            }
+            
         }
     });
 }
@@ -406,7 +442,7 @@ function jenisStatus(){
     });
 }
 
-function roleScreen(curst,nexst){
+function roleScreen(curst,user_type){
     // RNA1	New Ranperda
     // RNB1	Ranperda Saved
     // RNBX	Ranperda Saved (Reject By Provinsi)
@@ -423,14 +459,57 @@ function roleScreen(curst,nexst){
     // RNKX	Sanksi Administrasi
     if(curst.substring(0, 2) == 'RN'){
 
+        switch (user_type) {
+            case "KAB":
+                $('#tab1 *').attr('disabled', false);
+                $('#tab2 *').attr('disabled', true);
+                $('#tab3 *').attr('disabled', true);
+                $('#tab4 *').attr('disabled', true);
+
+                $('#tabpro,#tab2, #tabkeu,#tab3, #tabkem,#tab4').removeClass('active');
+                $('#tabkab,#tab1').addClass('active');
+                break;
+            case "PRO":
+                $('#tab1 *').attr('disabled', true);
+                $('#tab2 *').attr('disabled', false);
+                $('#tab3 *').attr('disabled', true);
+                $('#tab4 *').attr('disabled', true);
+
+                $('#tabkab,#tab1, #tabkeu,#tab3, #tabkem,#tab4').removeClass('active');
+                $('#tabpro,#tab2').addClass('active');
+                break;
+            case "KEU":
+                $('#tab1 *').attr('disabled', true);
+                $('#tab2 *').attr('disabled', true);
+                $('#tab3 *').attr('disabled', false);
+                $('#tab4 *').attr('disabled', true);
+
+                $('#tabkab,#tab1, #tabpro,#tab2, #tabkem,#tab4').removeClass('active');
+                $('#tabkeu,#tab3').addClass('active');
+                break;
+            case "KEM":
+                $('#tab1 *').attr('disabled', true);
+                $('#tab2 *').attr('disabled', true);
+                $('#tab3 *').attr('disabled', true);
+                $('#tab4 *').attr('disabled', false);
+                
+                $('#tabkab,#tab1, #tabpro,#tab2, #tabkeu,#tab3').removeClass('active');
+                $('#tabkem,#tab4').addClass('active');
+                break;
+        
+            default:
+                break;
+        }
+
         if (curst == 'RNA1') {
             $('#tabBody').hide();
+            $('#tabHeader *').attr('disabled', false);
+        }else{
+            $('#tabHeader *').attr('disabled', true);
         } 
         
-
         if(curst=='RNB1' || curst=='RNBX'){
             $('#tabBody').show();
-            $('#tabHeader *').attr('disabled', true);
             $('#tabkab').show();
             $('#tabpro, #tabkem, #divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda').hide();
         }
@@ -442,89 +521,31 @@ function roleScreen(curst,nexst){
         }
 
         if(curst=='RND1' || curst=='RNE1' || curst=='RNEX'){
-            $('#tabkab, #tabpro').show();
-            $('#tabkem, #divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda, #accKepGub').hide();
+            $('#tabkab, #tabpro, #tabkem, #tabkeu').show();
+            $('#divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda, #accKepGub').hide();
             $('#tab1 *').attr('disabled', true);
-
-            $('#tabkab, #tab1').removeClass('active');
-            $('#tabpro, #tab2').addClass('active');
         }
 
         if(curst=='RNF1'){
-            $('#tabkab, #tabpro').show();
-            $('#tabkem, #divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda, #accKepGub').hide();
+            /// ini kondisi belum kelar
             $('#tab1 *').attr('disabled', true);
             $('#tab2 *').attr('disabled', true);
+            $('#tab3 *').attr('disabled', true);
+            $('#tab4 *').attr('disabled', true);
+            $('#divRevisi *').attr('disabled', false);
+            $('#divPenetapanPerda *').attr('disabled', false);
+            
 
-            $('#tabkab, #tab1').removeClass('active');
-            $('#tabpro, #tab2').addClass('active');
+            
         }
 
         if(curst=='RNG1'){
-            $('#tabkab, #tabpro, #tabkem').show();
-            $('#divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda, #accKepGub').hide();
-            
-            $('#tab1 *').attr('disabled', true);
-            $('#tab2 *').attr('disabled', true);
-
-            $('#tabkab, #tabpro, #tab1, #tab2').removeClass('active');
-            $('#tabkem, #tab3').addClass('active');
-        }
-
-        if(curst=='RNH1'){
-            $('#tabkab, #tabpro, #tabkem, #divfileKepGubEvaluasi').show();
-            $('#divtxtRegNo, #divtxtPerdaNo, #divfilePerda, #accUploadPerda').hide();
-            
-            $('#tab1 *').attr('disabled', true);
-            $('#accEvaluasi *').attr('disabled', true); // tab 2
-            $('#tab3 *').attr('disabled', true);     
-
-            $('#collapsepro1').collapse("hide");
-            $('#collapsepro2').collapse("show");
-            
-
-            $('#tabkab, #tabkem, #tab1, #tab3').removeClass('active');
-            $('#tabpro, #tab2').addClass('active');
-        }
-
-        if(curst=='RNI1' || curst=='RNIX'){
-            $('#tabkab, #tabpro, #tabkem, #divtxtRegNo, #divtxtPerdaNo, #divfilePerda').show();
-            $('#slcJenisPR, #slcJenisPRnm, #txtTentang, #fileSuratPengantar, #fileKesepakatanDPRD, #fileRancanganPerda').attr('disabled', true); // tab 1
-            $('#accRancanganPerda *').attr('disabled', true);
-            $('#tab2 *').attr('disabled', true);
-            $('#tab3 *').attr('disabled', true);
-            
-            $('#collapsekab1').collapse("hide");
-            $('#collapsekab2').collapse("show");
-
-            $('#collapsepro1').collapse("show");
-            $('#collapsepro2').collapse("show");
-
-            $('#tabpro, #tabkem, #tab2, #tab3').removeClass('active');
-            $('#tabkab, #tab1').addClass('active');
-        }
-
-        if(curst=='RNJ1' || curst=='RNK1' || curst=='RNKX'){
-            $('#tab1 *').show();
-            $('#tab2 *').show();
-            $('#tab3 *').show();
-
             $('#tab1 *').attr('disabled', true);
             $('#tab2 *').attr('disabled', true);
             $('#tab3 *').attr('disabled', true);
-            
-            $('#collapsekab1, #collapsekab2').collapse("show");
-            $('#collapsepro1, #collapsepro2').collapse("show");
-
-            $('#tabpro, #tabkem, #tab2, #tab3').removeClass('active');
-            $('#tabkab, #tab1').addClass('active');
+            $('#tab4 *').attr('disabled', true);
         }
 
-        if(curst=='RNXX'){
-            $('#tab1 *').attr('disabled', true);
-            $('#tab2 *').attr('disabled', true);
-            $('#tab3 *').attr('disabled', true);
-        }
     }
 
     // 15	WF02	PVA1	New Ranperda	PVA1
@@ -856,6 +877,25 @@ function funcSelectAttr(type,val,attr,pad) {
             }		
         }
     });
+}
+
+function hasilEvaluasi(hasil_evaluasi){
+    if(hasil_evaluasi == 'S'){
+        $('#provH4').text('Persetujuan Gubernur dalam bentuk Keputusan Gubernur');
+        $('#no_kepgub_label').text('No. Keputusan Gubernur');
+        $('#tgl_kepgub_label').text('Tanggal Keputusan Gubernur');
+        $('#file_kepgub_label').text('File Keputusan Gubernur'); 
+        $('#divRevisi').hide();
+    }
+
+    if(hasil_evaluasi == 'P'){
+        $('#provH4').text('Penolakan Gubernur dalam bentuk Surat Rekomendasi Perbaikan');
+        $('#no_kepgub_label').text('No. Surat Rekomendasi');
+        $('#tgl_kepgub_label').text('Tanggal Surat Rekomendasi');
+        $('#file_kepgub_label').text('File Surat Rekomendasi');
+        $('#divRevisi').show();
+    }
+
 }
 
 

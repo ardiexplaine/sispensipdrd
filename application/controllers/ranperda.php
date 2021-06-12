@@ -204,34 +204,10 @@ class Ranperda extends CI_Controller {
 		$wfnum = $this->input->post('wfnum');
 		$nexst = $this->input->post('nexst');
 
-		if($this->validationData($wfnum, $nexst)) { // Blok Role Vlidasi Form
+		//if($this->validationData($wfnum, $nexst)) { // Blok Role Vlidasi Form
 
 			$cek = $this->db->get_where('ranperda', array('wfnum' => $wfnum));
 			if($cek->num_rows() == 0){
-// wfnum
-// wfcat
-// zdate
-// ztime
-// zuser
-// curst
-// iscls
-// group_user
-// kategori
-// jns_pad
-// jns_pajak
-// no_surat_ke_gubernur
-// tgl_surat_ke_gubernur
-// file_surat_ke_gubernur
-// no_surat_ke_mendagri
-// tgl_surat_ke_mendagri
-// file_surat_ke_mendagri
-// no_surat_ke_menkeu
-// tgl_surat_ke_menkeu
-// file_surat_ke_menkeu
-// file_ltr_blkng
-// file_berita_acara
-// file_ranperda
-// file_lampiran_ranperda
 
 				$ranperda = array(
 					"wfnum"=> $wfnum,
@@ -249,35 +225,10 @@ class Ranperda extends CI_Controller {
 				$this->db->insert('ranperda',$ranperda);
 			}else{
 
-				// $ranperda = array(	
-				// 	"sp_walikota" => $this->input->post("txtSPBupati"),
-				// 	"sp_walikota_tgl" => $this->input->post("datetglSP1"),
-				// 	"kab_desc" => $this->input->post("txtKabDesc"),
-				// 	"kab_isisurat" => $this->input->post("txtKabIsiSurat"),
-				// 	"sp_gubernur" => $this->input->post("txtSPGubernur"),
-				// 	"sp_gubernur_tgl" => $this->input->post("datetglSP2"),
-				// 	"pro_desc" => $this->input->post("txtProDesc"),
-				// 	"pro_isisurat" => $this->input->post("txtProIsisurat"),
-				// 	"sp_mdn" => $this->input->post("txtSpMdn"),
-				// 	"sp_mdn_tgl" => $this->input->post("datetglSP3"),
-				// 	"kem_desc" => $this->input->post("txtKemDesc"),
-				// 	"kem_isisurat" => $this->input->post("txtKemIsiSurat"),
-				// 	"sp_sekda" => $this->input->post("txtSPSekda"),
-				// 	"sp_sekda_tgl" => $this->input->post("datetglSP3"),
-				// 	"pro_descsekda" => $this->input->post("txtProDescSekda"),
-				// 	"pro_isisuratsekda" => $this->input->post("txtProIsiSuratSekda"),
-				// 	"zdate" => date('Y-m-d'),
-				// 	"ztime" => date('H:i:s'),
-				// 	"curst"=> $this->input->post("curst"),
-				// 	"iscls"=> $this->input->post("iscls")
-				// );
-
 				$ranperda = array(
 					"wfnum"=> $wfnum,
-					"wfcat"=> $this->_wfcategory(),
 					"zdate" => date('Y-m-d'),
 					"ztime" => date('H:i:s'),
-					"zuser" => $this->session->userdata('usrcd'),
 					"curst"=> $this->input->post("curst"),
 					"iscls"=> '',
 					"group_user" => $this->session->userdata('group_user'),
@@ -286,7 +237,20 @@ class Ranperda extends CI_Controller {
 					"no_surat_ke_mendagri"=> $this->input->post('no_surat_ke_mendagri'),
 					"tgl_surat_ke_mendagri"=> $this->input->post('tgl_surat_ke_mendagri'),
 					"no_surat_ke_menkeu"=> $this->input->post('no_surat_ke_menkeu'),
-					"tgl_surat_ke_menkeu"=> $this->input->post('tgl_surat_ke_menkeu')	
+					"tgl_surat_ke_menkeu"=> $this->input->post('tgl_surat_ke_menkeu'),
+					"no_surat_menkeu_ke_mendagri"=> $this->input->post('no_surat_menkeu_ke_mendagri'),
+					"tgl_surat_menkeu_ke_mendagri"=> $this->input->post('tgl_surat_menkeu_ke_mendagri'),
+					"no_kepmenkeu"=> $this->input->post('no_kepmenkeu'),
+					"tgl_kepmenkeu"=> $this->input->post('tgl_kepmenkeu'),
+					"no_surat_gub_ke_kabkota"=> $this->input->post('no_surat_gub_ke_kabkota'),
+					"tgl_surat_gub_ke_kabkota"=> $this->input->post('tgl_surat_gub_ke_kabkota'),
+					"hasil_evaluasi"=> $this->input->post('hasil_evaluasi'),
+					"no_kepgub"=> $this->input->post('no_kepgub'),
+					"tgl_kepgub"=> $this->input->post('tgl_kepgub'),
+					"no_surat_mendagri_kegub"=> $this->input->post('no_surat_mendagri_kegub'),
+					"tgl_surat_mendagri_kegub"=> $this->input->post('tgl_surat_mendagri_kegub'),
+					"no_kepmendagri"=> $this->input->post('no_kepmendagri'),
+					"tgl_kepmendagri"=> $this->input->post('tgl_kepmendagri'),	
 				);
 				$this->db->update('ranperda',$ranperda, array("wfnum"=>$wfnum));
 			}
@@ -447,21 +411,21 @@ class Ranperda extends CI_Controller {
 				"group_user" => $this->session->userdata('group_user'),
 				"iscls"=> ''
 			);
-		}else{
-			$ranperdaObj = array(
-				"status" => 1,
-				"message" => "Data masih belum lengkap, harap periksa kembali.",
-				"wfnum"=> $wfnum,
-				"zdate" => date('Y-m-d'),
-				"ztime" => date('H:i:s'),
-				"zuser" => $this->session->userdata('usrcd'),
-				"curst"=> $this->input->post("curst"),
-				//"desc"=> $this->input->post("txtTentang"),
-				"group_user" => $this->session->userdata('group_user'),
-				"iscls"=> '',
-				"notif" => $this->Global_model->getNotif(1,"Data masih belum lengkap, harap periksa kembali.")
-			);
-		}
+		// }else{
+		// 	$ranperdaObj = array(
+		// 		"status" => 1,
+		// 		"message" => "Data masih belum lengkap, harap periksa kembali.",
+		// 		"wfnum"=> $wfnum,
+		// 		"zdate" => date('Y-m-d'),
+		// 		"ztime" => date('H:i:s'),
+		// 		"zuser" => $this->session->userdata('usrcd'),
+		// 		"curst"=> $this->input->post("curst"),
+		// 		//"desc"=> $this->input->post("txtTentang"),
+		// 		"group_user" => $this->session->userdata('group_user'),
+		// 		"iscls"=> '',
+		// 		"notif" => $this->Global_model->getNotif(1,"Data masih belum lengkap, harap periksa kembali.")
+		// 	);
+		// }
 		echo json_encode($ranperdaObj);
 	}
 
@@ -581,11 +545,81 @@ class Ranperda extends CI_Controller {
 				"fcode" => "file_lampiran_ranperda",
 				"oriname" => $fls->file_lampiran_ranperda,
 				"path" => $fls->file_lampiran_ranperda_path
-			)	
+			),	
+			array(
+				"fcode" => "file_surat_menkeu_ke_mendagri",
+				"oriname" => $fls->file_surat_menkeu_ke_mendagri,
+				"path" => $fls->file_surat_menkeu_ke_mendagri_path
+			),	
+			array(
+				"fcode" => "file_kepmenkeu",
+				"oriname" => $fls->file_kepmenkeu,
+				"path" => $fls->file_kepmenkeu_path
+			),	
+			array(
+				"fcode" => "file_ttd_matrik_ev_menkeu",
+				"oriname" => $fls->file_ttd_matrik_ev_menkeu,
+				"path" => $fls->file_ttd_matrik_ev_menkeu_path
+			),	
+			array(
+				"fcode" => "file_edited_matrik_ev_menkeu",
+				"oriname" => $fls->file_edited_matrik_ev_menkeu,
+				"path" => $fls->file_edited_matrik_ev_menkeu_path
+			),	
+			array(
+				"fcode" => "file_surat_gub_ke_kabkota",
+				"oriname" => $fls->file_surat_gub_ke_kabkota,
+				"path" => $fls->file_surat_gub_ke_kabkota_path
+			),	
+			array(
+				"fcode" => "file_kepgub",
+				"oriname" => $fls->file_kepgub,
+				"path" => $fls->file_kepgub_path
+			),	
+			array(
+				"fcode" => "file_ttd_matrik_ev_provinsi",
+				"oriname" => $fls->file_ttd_matrik_ev_provinsi,
+				"path" => $fls->file_ttd_matrik_ev_provinsi_path
+			),	
+			array(
+				"fcode" => "file_edited_matrik_ev_provinsi",
+				"oriname" => $fls->file_edited_matrik_ev_provinsi,
+				"path" => $fls->file_edited_matrik_ev_provinsi_path
+			),	
+			array(
+				"fcode" => "file_surat_mendagri_kegub",
+				"oriname" => $fls->file_surat_mendagri_kegub,
+				"path" => $fls->file_surat_mendagri_kegub_path
+			),	
+			array(
+				"fcode" => "file_kepmendagri",
+				"oriname" => $fls->file_kepmendagri,
+				"path" => $fls->file_kepmendagri_path
+			),	
+			array(
+				"fcode" => "file_ttd_matrik_ev_mendagri",
+				"oriname" => $fls->file_ttd_matrik_ev_mendagri,
+				"path" => $fls->file_ttd_matrik_ev_mendagri_path
+			),	
+			array(
+				"fcode" => "file_edited_matrik_ev_mendagri",
+				"oriname" => $fls->file_edited_matrik_ev_mendagri,
+				"path" => $fls->file_edited_matrik_ev_mendagri_path
+			),	
+			array(
+				"fcode" => "file_revisi_ranperda",
+				"oriname" => $fls->file_revisi_ranperda,
+				"path" => $fls->file_revisi_ranperda_path
+			),	
+			array(
+				"fcode" => "file_revisi_lampiran_ranperda",
+				"oriname" => $fls->file_revisi_lampiran_ranperda,
+				"path" => $fls->file_revisi_lampiran_ranperda_path
+			)						
 		);
 
 
-		$resultObj = array("status" =>0, "message" =>'', "header"=> $fls, "item" => $detail->result_array(), "btnFiles" => $fileDownload);
+		$resultObj = array("status" => 0, "message" =>'', "user_type" => $this->session->userdata('user_type'), "header"=> $fls, "item" => $detail->result_array(), "btnFiles" => $fileDownload);
 		echo json_encode($resultObj);
 	}
 
@@ -868,6 +902,45 @@ class Ranperda extends CI_Controller {
 					$html .='</tbody></table>';
 				}
 
+				if($filety == 'KP02')	{	
+					
+					$btn = $this->Ranperda_model->getdesc('ranperda','curst',array("wfnum"=>$wfnum));
+					if(($btn == "RNF1" || $btn == "RNIX") && $this->session->userdata('user_type') == 'KAB'){
+						$disabled = '';
+					}else{
+						$disabled = 'disabled="disabled"';
+					}
+
+					$html .= '<table id="divtblKP01" class="table table-striped" data-provides="rowlink">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>No Reg Perda</th>
+								<th>No Perda</th>
+								<th>Tanggal</th>
+								<th>Deskripsi File</th>
+								<th>File</th>
+								<th>#</th>
+							</tr>
+						</thead>
+						<tbody>';
+					$no = 1;
+					foreach($query->result() as $row){
+					$html .='<tr class="rowlink">
+								<td>'.$no.'</td>
+								<td>'.$row->perdareg.'</td>
+								<td>'.$row->perdano.'</td>
+								<td>'.$row->perdatgl.'</td>
+								<td>'.$row->title.'</td>
+								<td><a onclick="singlelink('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
+								<td><button '.$disabled.' class="zbtnItem'.$no.'" onclick="delItem('."'".$row->filetype."'".','."'".$row->wfnum."'".','."'".$row->filecd."'".');"></i> Hapus</button></td>
+							</tr>';
+							$no++;
+					}
+					$html .='</tbody>
+						</table>';
+				}
+
 				if($filety == 'PR01')	{
 					
 					$btn = $this->Ranperda_model->getdesc('ranperda','curst',array("wfnum"=>$wfnum));
@@ -961,45 +1034,6 @@ class Ranperda extends CI_Controller {
 								<td>'.$row->title.'</td>
 								<td><a onclick="fdownload('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
 								<td><button '.$disabled.' onclick="delItem('."'".$row->filetype."'".','."'".$row->wfnum."'".','."'".$row->filecd."'".');"></i> Hapus</button></td>
-							</tr>';
-							$no++;
-					}
-					$html .='</tbody>
-						</table>';
-				}
-
-				if($filety == 'KP02')	{	
-					
-					$btn = $this->Ranperda_model->getdesc('ranperda','curst',array("wfnum"=>$wfnum));
-					if(($btn == "RNI1" || $btn == "RNIX") && $this->session->userdata('user_type') == 'KAB'){
-						$disabled = '';
-					}else{
-						$disabled = 'disabled="disabled"';
-					}
-
-					$html .= '<table id="divtblKP01" class="table table-striped" data-provides="rowlink">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>No Reg Perda</th>
-								<th>No Perda</th>
-								<th>Tanggal</th>
-								<th>Deskripsi File</th>
-								<th>File</th>
-								<th>#</th>
-							</tr>
-						</thead>
-						<tbody>';
-					$no = 1;
-					foreach($query->result() as $row){
-					$html .='<tr class="rowlink">
-								<td>'.$no.'</td>
-								<td>'.$row->perdareg.'</td>
-								<td>'.$row->perdano.'</td>
-								<td>'.$row->perdatgl.'</td>
-								<td>'.$row->title.'</td>
-								<td><a onclick="fdownload('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
-								<td><button '.$disabled.' class="zbtnItem'.$no.'" onclick="delItem('."'".$row->filetype."'".','."'".$row->wfnum."'".','."'".$row->filecd."'".');"></i> Hapus</button></td>
 							</tr>';
 							$no++;
 					}
@@ -1176,7 +1210,8 @@ class Ranperda extends CI_Controller {
 		// echo '<pre>'; print_r($_FILES);
 		// exit();
 		$attr_name = $this->input->post('attr_name');
-		$file1 = $this->single_upload(array('pdf','jpg','png'),$attr_name);
+		$fileext = $this->input->post('fileext');
+		$file1 = $this->single_upload(explode(",",$fileext),$attr_name);
 		if($file1["status"]==0) {
 			$data = array(
 				$attr_name => $file1["upload_data"]["orig_name"],
@@ -1185,6 +1220,7 @@ class Ranperda extends CI_Controller {
 			$this->db->update('ranperda',$data, array('wfnum' => $this->input->post('wfnum')));
 
 			echo json_encode(array(
+				'status' => 0,
 				'orig_name' => $file1["upload_data"]["orig_name"],
 				'full_path' => strstr($file1["upload_data"]["full_path"], '/assets')
 			));
