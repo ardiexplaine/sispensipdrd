@@ -159,9 +159,10 @@ function authButton(butmo,curst,nexst,iscls,isrea){
             
             loadStatus(head.curst);
             loadHistory();
+            hasilEvaluasi(head.hasil_evaluasi);
             roleScreen(head.curst,data.user_type),
             workflow();
-            hasilEvaluasi(head.hasil_evaluasi);
+            
 
             if(head.kategori == "PP"){
                 $('#divfileRancanganPerda').show();
@@ -203,7 +204,7 @@ function saveData(butmo,curst,nexst,iscls,isrea){
     data.append('isrea', isrea);
     
 
-    if(nexst.substring(0, 2) == 'RN'){
+    //if(nexst.substring(0, 2) == 'RN'){
         data.append('wfnum', $('#txtWfnum').val());
         data.append('kategori', $('#kategori').val());
         data.append('jns_pad', $("#jns_pad").val()); 
@@ -229,32 +230,7 @@ function saveData(butmo,curst,nexst,iscls,isrea){
         data.append('no_kepmendagri', $("#no_kepmendagri").val()); 
         data.append('tgl_kepmendagri', $("#tgl_kepmendagri").val()); 
 
-    }
-
-    // if(nexst.substring(0, 2) == 'PV'){
-    //     data.append('wfnum', $('#txtWfnum').val());
-    //     data.append('txtSPBupati', $('#txtSPBupati').val());
-    //     data.append('datetglSP1', $("#datetglSP1").val()); 
-    //     data.append('txtKabDesc', $("#txtKabDesc").val()); 
-    //     data.append('txtKabIsiSurat', $("#txtKabIsiSurat").val());
-    //     data.append('txtSPGubernur', $("#txtSPGubernur").val());
-    //     data.append('datetglSP2', $("#datetglSP2").val());
-    //     data.append('txtProDesc', $("#txtProDesc").val());
-    //     data.append('txtProIsisurat', $("#txtProIsisurat").val());
-    //     data.append('txtSpMdn', $("#txtSpMdn").val());
-    //     data.append('datetglSP3', $("#datetglSP3").val());
-    //     data.append('txtKemDesc', $("#txtKemDesc").val());
-    //     data.append('txtKemIsiSurat', $("#txtKemIsiSurat").val());
-    //     data.append('txtSPSekda', $("#txtSPSekda").val());
-    //     data.append('datetglSP4', $("#datetglSP4").val());
-    //     data.append('txtProDescSekda', $("#txtProDescSekda").val());
-    //     data.append('txtProIsiSuratSekda', $("#txtProIsiSuratSekda").val());
-
-    //     data.append('fileFL01', $("#fileFL01")[0].files[0]);
-    //     data.append('fileFL02', $("#fileFL02")[0].files[0]);
-    //     data.append('fileFL04', $("#fileFL04")[0].files[0]);
-    //     // data.append('fileFL05', $("#fileFL05")[0].files[0]);
-    // }
+    //}
 
     $("#txtTentang").prop('required',true);
     
@@ -443,56 +419,233 @@ function jenisStatus(){
 }
 
 function roleScreen(curst,user_type){
-    // RNA1	New Ranperda
-    // RNB1	Ranperda Saved
-    // RNBX	Ranperda Saved (Reject By Provinsi)
-    // RNC1	Ranperda Request Approval Provinsi
-    // RND1	Ranperda Approved Provinsi
-    // RNE1	Ranperda Saved Provinsi
-    // RNEX	Ranperda Saved (Reject By Kemendagri)
-    // RNF1	Ranperda Request Approval Kemendagri
-    // RNG1	Kemendagri Approved (Verifikasi Konsultasi)
-    // RNH1	Provinsi (Evaluasi Ranperda)
-    // RNI1	Pembuatan File Perda
-    // RNJ1	Evaluasi Perda
-    // RNK1	Perda Diterima Provinsi
-    // RNKX	Sanksi Administrasi
+
     if(curst.substring(0, 2) == 'RN'){
 
+        if (curst == 'RNA1') {
+            $('#tabBody').hide();
+            $('#tabHeader *').prop('disabled', false);
+        }else{
+            $('#tabHeader *').prop('disabled', true);
+            $('#divRevisi, #divPenetapanPerda').hide();
+        } 
+        
+        if(curst=='RNB1' || curst=='RNBX'){
+
+            authField(user_type);
+
+            $('#tabBody').show();
+            $('#tabkab').show();
+            $('#tabpro, #tabkem, #tabkeu').hide();
+
+            $('#tabkab,#tab1').addClass('active');
+        }
+
+        if(curst=='RNC1'){
+
+            $('#tabpro, #tabkem, #tabkeu').hide();
+            $('#tabkab,#tab1').addClass('active');
+            authField(user_type);
+            $('#tab1 *').prop('disabled', true);
+        }
+
+        if(curst=='RNC2'){
+            
+            $('#tabpro, #tabkem, #tabkeu').show();
+            authField(curst,user_type);
+            authTab(curst,user_type);
+            $('#tab1 *').prop('disabled', true);
+            $('#tab2 *').prop('disabled', true);
+        }
+
+        if(curst=='RND1'){
+            $('#tabpro, #tabkem, #tabkeu').show();
+            authField(curst,user_type);
+            authTab(curst,user_type);
+            $('#tab3 *').prop('disabled', true);
+            $('#tab4 *').prop('disabled', true);
+            $('#divRevisi, #divPenetapanPerda').hide();
+            $('#tab1 *').prop('disabled', true);
+
+        }
+
+        if(curst=='RNF1'){
+            /// ini kondisi belum kelar
+            $('#tab1 *').prop('disabled', true);
+            $('#tab2 *').prop('readonly', true);
+            $('#tab3 *').prop('disabled', true);
+            $('#tab4 *').prop('disabled', true);
+            $('#divPenetapanPerda').show();
+            if(user_type == "KAB"){
+                $('#divRevisi *').prop('disabled', false);
+                $('#divPenetapanPerda *').prop('disabled', false);
+            }
+
+        }
+
+        if(curst=='RNG1'){
+            $('#tab1 *').prop('disabled', true);
+            $('#tab2 *').prop('disabled', true);
+            $('#tab3 *').prop('disabled', true);
+            $('#tab4 *').prop('disabled', true);
+            $('#divPenetapanPerda').show();
+        }
+
+    }
+
+
+    if(curst.substring(0, 2) == 'PV'){
+        if (curst == 'PVA1') {
+            $('#tabBody').hide();
+            $('#tabHeader *').prop('disabled', false);
+        }else{
+            $('#tabHeader *').prop('disabled', true);
+            $('#divRevisi, #divPenetapanPerda').hide();
+        } 
+        
+        if(curst=='PVB1' || curst=='PVBX'){
+        
+            authField(curst,user_type);
+        
+            $('#tabBody').show();
+            $('#tabkab').show();
+            $('#tabpro, #tabkem, #tabkeu').hide();
+        
+            $('#tabkab,#tab1').addClass('active');
+        }
+        
+        if(curst=='PVC1'){
+        
+            $('#tabpro, #tabkem, #tabkeu').hide();
+            $('#tabkab,#tab1').addClass('active');
+            authField(curst,user_type);
+            $('#tab1 *').prop('disabled', true);
+        }
+        
+        if(curst=='PVC2'){
+            
+            $('#tabpro, #tabkem, #tabkeu').show();
+            authField(curst,user_type);
+            authTab(curst,user_type);
+            $('#tab1 *').prop('disabled', true);
+            $('#tab2 *').prop('disabled', true);
+        }
+        
+        if(curst=='PVD1'){
+            $('#tabpro, #tabkem, #tabkeu').show();
+            authField(curst,user_type);
+            authTab(curst,user_type);
+            $('#tab3 *').prop('disabled', true);
+            $('#divRevisi, #divPenetapanPerda').hide();
+            $('#tab1 *').prop('disabled', true);
+        
+        }
+        
+        if(curst=='PVF1'){
+            /// ini kondisi belum kelar
+            $('#tab1 *').prop('disabled', true);
+            $('#tab2 *').prop('readonly', true);
+            $('#tab3 *').prop('disabled', true);
+            $('#divPenetapanPerda').show();
+            if(user_type == "KAB"){
+                $('#divRevisi *').prop('disabled', false);
+                $('#divPenetapanPerda *').prop('disabled', false);
+            }
+        
+        }
+        
+        if(curst=='PVG1'){
+            $('#tab1 *').prop('disabled', true);
+            $('#tab2 *').prop('disabled', true);
+            $('#tab3 *').prop('disabled', true);
+            $('#divPenetapanPerda').show();
+        }
+    }
+
+}
+
+function authField(curst,user_type){
+
+    if(curst.substring(0, 2) == 'RN'){
+        switch (user_type) {
+                case "KAB":
+                    $('#tab1 *').prop('disabled', false);
+                    $('#tab2 *').prop('disabled', true);
+                    $('#tab3 *').prop('disabled', true);
+                    $('#tab4 *').prop('disabled', true);
+                    break;
+                case "PRO":
+                    $('#tab1 *').prop('disabled', true);
+                    $('#tab2 *').prop('disabled', false);
+                    $('#tab3 *').prop('disabled', true);
+                    $('#tab4 *').prop('disabled', true);
+        
+                    break;
+                case "KEU":
+                    $('#tab1 *').prop('disabled', true);
+                    $('#tab2 *').prop('disabled', true);
+                    $('#tab3 *').prop('disabled', false);
+                    $('#tab4 *').prop('disabled', true);
+        
+                    break;
+                case "KEM":
+                    $('#tab1 *').prop('disabled', true);
+                    $('#tab2 *').prop('disabled', true);
+                    $('#tab3 *').prop('disabled', true);
+                    $('#tab4 *').prop('disabled', false);
+                    break;
+            
+                default:
+                    break;
+        }
+    }
+
+    if(curst.substring(0, 2) == 'PV'){
+        switch (user_type) {
+            case "PRO":
+                $('#tab1 *').prop('disabled', false);
+                $('#tab2 *').prop('disabled', true);
+                $('#tab3 *').prop('disabled', true);
+                break;
+            case "KEM":
+                $('#tab1 *').prop('disabled', true);
+                $('#tab2 *').prop('disabled', false);
+                $('#tab3 *').prop('disabled', true);
+    
+                break;
+            case "KEU":
+                $('#tab1 *').prop('disabled', true);
+                $('#tab2 *').prop('disabled', true);
+                $('#tab3 *').prop('disabled', false);
+                break;
+        
+            default:
+                break;
+        }
+
+    }
+    
+}
+
+    
+
+function authTab(curst,user_type){
+
+    if(curst.substring(0, 2) == 'RN'){
         switch (user_type) {
             case "KAB":
-                $('#tab1 *').attr('disabled', false);
-                $('#tab2 *').attr('disabled', true);
-                $('#tab3 *').attr('disabled', true);
-                $('#tab4 *').attr('disabled', true);
-
                 $('#tabpro,#tab2, #tabkeu,#tab3, #tabkem,#tab4').removeClass('active');
                 $('#tabkab,#tab1').addClass('active');
                 break;
             case "PRO":
-                $('#tab1 *').attr('disabled', true);
-                $('#tab2 *').attr('disabled', false);
-                $('#tab3 *').attr('disabled', true);
-                $('#tab4 *').attr('disabled', true);
-
                 $('#tabkab,#tab1, #tabkeu,#tab3, #tabkem,#tab4').removeClass('active');
                 $('#tabpro,#tab2').addClass('active');
                 break;
             case "KEU":
-                $('#tab1 *').attr('disabled', true);
-                $('#tab2 *').attr('disabled', true);
-                $('#tab3 *').attr('disabled', false);
-                $('#tab4 *').attr('disabled', true);
-
                 $('#tabkab,#tab1, #tabpro,#tab2, #tabkem,#tab4').removeClass('active');
                 $('#tabkeu,#tab3').addClass('active');
                 break;
-            case "KEM":
-                $('#tab1 *').attr('disabled', true);
-                $('#tab2 *').attr('disabled', true);
-                $('#tab3 *').attr('disabled', true);
-                $('#tab4 *').attr('disabled', false);
-                
+            case "KEM": 
                 $('#tabkab,#tab1, #tabpro,#tab2, #tabkeu,#tab3').removeClass('active');
                 $('#tabkem,#tab4').addClass('active');
                 break;
@@ -500,111 +653,26 @@ function roleScreen(curst,user_type){
             default:
                 break;
         }
-
-        if (curst == 'RNA1') {
-            $('#tabBody').hide();
-            $('#tabHeader *').attr('disabled', false);
-        }else{
-            $('#tabHeader *').attr('disabled', true);
-        } 
-        
-        if(curst=='RNB1' || curst=='RNBX'){
-            $('#tabBody').show();
-            $('#tabkab').show();
-            $('#tabpro, #tabkem, #divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda').hide();
-        }
-
-        if(curst=='RNC1'){
-            $('#tabkab').show();
-            $('#tabpro, #tabkem, #divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda').hide();
-            $('#tab1 *').attr('disabled', true);
-        }
-
-        if(curst=='RND1' || curst=='RNE1' || curst=='RNEX'){
-            $('#tabkab, #tabpro, #tabkem, #tabkeu').show();
-            $('#divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda, #accKepGub').hide();
-            $('#tab1 *').attr('disabled', true);
-        }
-
-        if(curst=='RNF1'){
-            /// ini kondisi belum kelar
-            $('#tab1 *').attr('disabled', true);
-            $('#tab2 *').attr('disabled', true);
-            $('#tab3 *').attr('disabled', true);
-            $('#tab4 *').attr('disabled', true);
-            $('#divRevisi *').attr('disabled', false);
-            $('#divPenetapanPerda *').attr('disabled', false);
-            
-
-            
-        }
-
-        if(curst=='RNG1'){
-            $('#tab1 *').attr('disabled', true);
-            $('#tab2 *').attr('disabled', true);
-            $('#tab3 *').attr('disabled', true);
-            $('#tab4 *').attr('disabled', true);
-        }
-
     }
 
-    // 15	WF02	PVA1	New Ranperda	PVA1
-    // 16	WF02	PVB1	Ranperda Saved	PVA1
-    // 17	WF02	PVBX	Ranperda Saved (Reject By Kemendagri)	PVC1
-    // 18	WF02	PVC1	Ranperda Request Approval Kemendagri	PVC1
-    // 19	WF02	PVD1	Kemendagri Approved (Evaluasi Ranperda)	PVD1
-    // 20	WF02	PVE1	Kirim Hasil Kepmen Evaluasi	PVE1
-    // 21	WF02	PVF1	Request Approval File Perda	PVF1
-    // 22	WF02	PVG1	Perda Diterima Kemendagri	PVF1
-    // 23	WF02	PVEX	Sanksi Administrasi	PVEX
     if(curst.substring(0, 2) == 'PV'){
-
-        if(curst=='PVA1' || curst=='PVB1' || curst=='PVBX'){
-            $('#tabpro').show();
-            $('#tabkem, #accUploadPerda').hide();
-        }
-
-        if(curst=='PVC1'){
-            $('#tabpro').show();
-            $('#tabkem, #accUploadPerda').hide();
-            $('#tab1 *').attr('disabled', true);
-        }
-
-        if(curst=='PVD1'){
-            $('#tabpro, #tabkem').show();
-            $('#divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda, #accUploadPerda').hide();
-            $('#tab1 *').attr('disabled', true);
-
-            $('#tabpro, #tab1').removeClass('active');
-            $('#tabkem, #tab2').addClass('active');
-        }
-
-        if(curst=='PVE1' || curst=='PVEX'){
-            $('#tabpro, #tabkem').show();
-            $('#divtxtRegNo, #divtxtPerdaNo, #divfileKepGubEvaluasi, #divfilePerda').show();
-            $('#slcJenisPR, #slcJenisPRnm, #txtTentang, #fileSuratPengantar, #fileKesepakatanDPRD, #fileRancanganPerda').attr('disabled', true);
-            $('#accRancanganPerda *').attr('disabled', true);
-            $('#accUploadPerda *').attr('disabled', false);
-            $('#tab2 *').attr('disabled', true);
-            
-
-            $('#tabkem, #tab2').removeClass('active');
-            $('#tabpro, #tab1').addClass('active');
-        }
-
-        
-        if(curst=='PVF1' || curst=='PVG1'){
-            $('#tabpro, #tabkem').show();
-            $('#tab1 *').attr('disabled', true);
-            $('#tab2 *').attr('disabled', true);
-        }
-
-        if(curst=='PVXX'){
-            $('#tab1 *').attr('disabled', true);
-            $('#tab2 *').attr('disabled', true);
+        switch (user_type) {
+            case "PRO":
+                $('#tabpro,#tab2, #tabkeu,#tab3').removeClass('active');
+                $('#tabkab,#tab1').addClass('active');
+                break;
+            case "KEM":
+                $('#tabkab,#tab1, #tabkeu,#tab3').removeClass('active');
+                $('#tabpro,#tab2').addClass('active');
+                break;
+            case "KEU":
+                $('#tabkab,#tab1, #tabpro,#tab2').removeClass('active');
+                $('#tabkeu,#tab3').addClass('active');
+                break;
+            default:
+                break;
         }
     }
-
 }
 
 function userprofile(mode) {
@@ -880,7 +948,8 @@ function funcSelectAttr(type,val,attr,pad) {
 }
 
 function hasilEvaluasi(hasil_evaluasi){
-    if(hasil_evaluasi == 'S'){
+
+    if(hasil_evaluasi == 'S' || hasil_evaluasi == 'n'){
         $('#provH4').text('Persetujuan Gubernur dalam bentuk Keputusan Gubernur');
         $('#no_kepgub_label').text('No. Keputusan Gubernur');
         $('#tgl_kepgub_label').text('Tanggal Keputusan Gubernur');

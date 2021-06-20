@@ -448,7 +448,7 @@
                                                     <label class="col-lg-2 control-label">Hasil Evaluasi</label>
                                                     <div class="col-lg-4">
                                                         <select  class="input-sm form-control" name="hasil_evaluasi" id="hasil_evaluasi" >
-                                                            <option value="S">Persetujuan Gubernur</option>
+                                                            <option value="S" selected="selected">Persetujuan Gubernur</option>
                                                             <option value="P">Penolakan Gubernur</option>
                                                         </select>
                                                     </div>

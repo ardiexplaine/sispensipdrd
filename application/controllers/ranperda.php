@@ -505,118 +505,122 @@ class Ranperda extends CI_Controller {
 	}
 
 	public function loaddata(){
+		$fileDownload = array();
 		$wfnum = $this->input->post("wfnum");
 		$header = $this->db->get_where('ranperda', array('wfnum' => $wfnum));
 		$detail = $this->db->get_where('item_files', array('wfnum' => $wfnum));
 
 		$fls = $header->row();
-		$fileDownload = array(
-			array(
-				"fcode" => "file_surat_ke_gubernur",
-				"oriname" => $fls->file_surat_ke_gubernur,
-				"path" => $fls->file_surat_ke_gubernur_path
-			),
-			array(
-				"fcode" => "file_surat_ke_mendagri",
-				"oriname" => $fls->file_surat_ke_mendagri,
-				"path" => $fls->file_surat_ke_mendagri_path
-			),
-			array(
-				"fcode" => "file_surat_ke_menkeu",
-				"oriname" => $fls->file_surat_ke_menkeu,
-				"path" => $fls->file_surat_ke_menkeu_path
-			),
-			array(
-				"fcode" => "file_ltr_blkng",
-				"oriname" => $fls->file_ltr_blkng,
-				"path" => $fls->file_ltr_blkng_path
-			),
-			array(
-				"fcode" => "file_berita_acara",
-				"oriname" => $fls->file_berita_acara,
-				"path" => $fls->file_berita_acara_path
-			),
-			array(
-				"fcode" => "file_ranperda",
-				"oriname" => $fls->file_ranperda,
-				"path" => $fls->file_ranperda_path
-			),	
-			array(
-				"fcode" => "file_lampiran_ranperda",
-				"oriname" => $fls->file_lampiran_ranperda,
-				"path" => $fls->file_lampiran_ranperda_path
-			),	
-			array(
-				"fcode" => "file_surat_menkeu_ke_mendagri",
-				"oriname" => $fls->file_surat_menkeu_ke_mendagri,
-				"path" => $fls->file_surat_menkeu_ke_mendagri_path
-			),	
-			array(
-				"fcode" => "file_kepmenkeu",
-				"oriname" => $fls->file_kepmenkeu,
-				"path" => $fls->file_kepmenkeu_path
-			),	
-			array(
-				"fcode" => "file_ttd_matrik_ev_menkeu",
-				"oriname" => $fls->file_ttd_matrik_ev_menkeu,
-				"path" => $fls->file_ttd_matrik_ev_menkeu_path
-			),	
-			array(
-				"fcode" => "file_edited_matrik_ev_menkeu",
-				"oriname" => $fls->file_edited_matrik_ev_menkeu,
-				"path" => $fls->file_edited_matrik_ev_menkeu_path
-			),	
-			array(
-				"fcode" => "file_surat_gub_ke_kabkota",
-				"oriname" => $fls->file_surat_gub_ke_kabkota,
-				"path" => $fls->file_surat_gub_ke_kabkota_path
-			),	
-			array(
-				"fcode" => "file_kepgub",
-				"oriname" => $fls->file_kepgub,
-				"path" => $fls->file_kepgub_path
-			),	
-			array(
-				"fcode" => "file_ttd_matrik_ev_provinsi",
-				"oriname" => $fls->file_ttd_matrik_ev_provinsi,
-				"path" => $fls->file_ttd_matrik_ev_provinsi_path
-			),	
-			array(
-				"fcode" => "file_edited_matrik_ev_provinsi",
-				"oriname" => $fls->file_edited_matrik_ev_provinsi,
-				"path" => $fls->file_edited_matrik_ev_provinsi_path
-			),	
-			array(
-				"fcode" => "file_surat_mendagri_kegub",
-				"oriname" => $fls->file_surat_mendagri_kegub,
-				"path" => $fls->file_surat_mendagri_kegub_path
-			),	
-			array(
-				"fcode" => "file_kepmendagri",
-				"oriname" => $fls->file_kepmendagri,
-				"path" => $fls->file_kepmendagri_path
-			),	
-			array(
-				"fcode" => "file_ttd_matrik_ev_mendagri",
-				"oriname" => $fls->file_ttd_matrik_ev_mendagri,
-				"path" => $fls->file_ttd_matrik_ev_mendagri_path
-			),	
-			array(
-				"fcode" => "file_edited_matrik_ev_mendagri",
-				"oriname" => $fls->file_edited_matrik_ev_mendagri,
-				"path" => $fls->file_edited_matrik_ev_mendagri_path
-			),	
-			array(
-				"fcode" => "file_revisi_ranperda",
-				"oriname" => $fls->file_revisi_ranperda,
-				"path" => $fls->file_revisi_ranperda_path
-			),	
-			array(
-				"fcode" => "file_revisi_lampiran_ranperda",
-				"oriname" => $fls->file_revisi_lampiran_ranperda,
-				"path" => $fls->file_revisi_lampiran_ranperda_path
-			)						
-		);
+		if($header->num_rows()>0){
+			$fileDownload = array(
+				array(
+					"fcode" => "file_surat_ke_gubernur",
+					"oriname" => $fls->file_surat_ke_gubernur,
+					"path" => $fls->file_surat_ke_gubernur_path
+				),
+				array(
+					"fcode" => "file_surat_ke_mendagri",
+					"oriname" => $fls->file_surat_ke_mendagri,
+					"path" => $fls->file_surat_ke_mendagri_path
+				),
+				array(
+					"fcode" => "file_surat_ke_menkeu",
+					"oriname" => $fls->file_surat_ke_menkeu,
+					"path" => $fls->file_surat_ke_menkeu_path
+				),
+				array(
+					"fcode" => "file_ltr_blkng",
+					"oriname" => $fls->file_ltr_blkng,
+					"path" => $fls->file_ltr_blkng_path
+				),
+				array(
+					"fcode" => "file_berita_acara",
+					"oriname" => $fls->file_berita_acara,
+					"path" => $fls->file_berita_acara_path
+				),
+				array(
+					"fcode" => "file_ranperda",
+					"oriname" => $fls->file_ranperda,
+					"path" => $fls->file_ranperda_path
+				),	
+				array(
+					"fcode" => "file_lampiran_ranperda",
+					"oriname" => $fls->file_lampiran_ranperda,
+					"path" => $fls->file_lampiran_ranperda_path
+				),	
+				array(
+					"fcode" => "file_surat_menkeu_ke_mendagri",
+					"oriname" => $fls->file_surat_menkeu_ke_mendagri,
+					"path" => $fls->file_surat_menkeu_ke_mendagri_path
+				),	
+				array(
+					"fcode" => "file_kepmenkeu",
+					"oriname" => $fls->file_kepmenkeu,
+					"path" => $fls->file_kepmenkeu_path
+				),	
+				array(
+					"fcode" => "file_ttd_matrik_ev_menkeu",
+					"oriname" => $fls->file_ttd_matrik_ev_menkeu,
+					"path" => $fls->file_ttd_matrik_ev_menkeu_path
+				),	
+				array(
+					"fcode" => "file_edited_matrik_ev_menkeu",
+					"oriname" => $fls->file_edited_matrik_ev_menkeu,
+					"path" => $fls->file_edited_matrik_ev_menkeu_path
+				),	
+				array(
+					"fcode" => "file_surat_gub_ke_kabkota",
+					"oriname" => $fls->file_surat_gub_ke_kabkota,
+					"path" => $fls->file_surat_gub_ke_kabkota_path
+				),	
+				array(
+					"fcode" => "file_kepgub",
+					"oriname" => $fls->file_kepgub,
+					"path" => $fls->file_kepgub_path
+				),	
+				array(
+					"fcode" => "file_ttd_matrik_ev_provinsi",
+					"oriname" => $fls->file_ttd_matrik_ev_provinsi,
+					"path" => $fls->file_ttd_matrik_ev_provinsi_path
+				),	
+				array(
+					"fcode" => "file_edited_matrik_ev_provinsi",
+					"oriname" => $fls->file_edited_matrik_ev_provinsi,
+					"path" => $fls->file_edited_matrik_ev_provinsi_path
+				),	
+				array(
+					"fcode" => "file_surat_mendagri_kegub",
+					"oriname" => $fls->file_surat_mendagri_kegub,
+					"path" => $fls->file_surat_mendagri_kegub_path
+				),	
+				array(
+					"fcode" => "file_kepmendagri",
+					"oriname" => $fls->file_kepmendagri,
+					"path" => $fls->file_kepmendagri_path
+				),	
+				array(
+					"fcode" => "file_ttd_matrik_ev_mendagri",
+					"oriname" => $fls->file_ttd_matrik_ev_mendagri,
+					"path" => $fls->file_ttd_matrik_ev_mendagri_path
+				),	
+				array(
+					"fcode" => "file_edited_matrik_ev_mendagri",
+					"oriname" => $fls->file_edited_matrik_ev_mendagri,
+					"path" => $fls->file_edited_matrik_ev_mendagri_path
+				),	
+				array(
+					"fcode" => "file_revisi_ranperda",
+					"oriname" => $fls->file_revisi_ranperda,
+					"path" => $fls->file_revisi_ranperda_path
+				),	
+				array(
+					"fcode" => "file_revisi_lampiran_ranperda",
+					"oriname" => $fls->file_revisi_lampiran_ranperda,
+					"path" => $fls->file_revisi_lampiran_ranperda_path
+				)						
+			);
+		}
+		
 
 
 		$resultObj = array("status" => 0, "message" =>'', "user_type" => $this->session->userdata('user_type'), "header"=> $fls, "item" => $detail->result_array(), "btnFiles" => $fileDownload);
