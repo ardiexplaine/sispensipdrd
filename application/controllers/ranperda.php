@@ -761,6 +761,10 @@ class Ranperda extends CI_Controller {
 						"wfcat" => $row->wfcat,
 						"zuser" => $this->Ranperda_model->getdesc('hirarki','namakab',array("id"=>$row->group_user)) ,
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
+						"no_surat_ke_gubernur" => $row->no_surat_ke_gubernur,
+						"no_surat_ke_mendagri" => $row->no_surat_ke_mendagri,
+						"no_surat_ke_menkeu" => $row->no_surat_ke_menkeu,
+						"spskd" => ''
 					);
 				}else{
 					$data[] = array(
@@ -768,6 +772,10 @@ class Ranperda extends CI_Controller {
 						"wfcat" => $row->wfcat,
 						"zuser" => $this->Ranperda_model->getdesc('hirarki','namakab',array("id"=>$row->group_user)) ,
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
+						"no_surat_ke_gubernur" => $row->no_surat_ke_gubernur,
+						"no_surat_ke_mendagri" => $row->no_surat_ke_mendagri,
+						"no_surat_ke_menkeu" => $row->no_surat_ke_menkeu,
+						"spskd" => ''
 					);
 				}
 				
@@ -1067,7 +1075,6 @@ class Ranperda extends CI_Controller {
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Name</th>
 								<th>File Uploads</th>
 								<th>#</th>
 							</tr>
@@ -1077,8 +1084,7 @@ class Ranperda extends CI_Controller {
 					foreach($query->result() as $row){
 					$html .='<tr class="rowlink">
 								<td>'.$no.'</td>
-								<td>'.$row->title.'</td>
-								<td><a onclick="fdownload('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
+								<td><a onclick="singlelink('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
 								<td><button '.$disabled.' onclick="delItem('."'".$row->filetype."'".','."'".$row->wfnum."'".','."'".$row->filecd."'".');"></i> Hapus</button></td>
 							</tr>';
 						$no++;
@@ -1147,7 +1153,7 @@ class Ranperda extends CI_Controller {
 								<td>'.$row->perdano.'</td>
 								<td>'.$row->perdatgl.'</td>
 								<td>'.$row->title.'</td>
-								<td><a onclick="fdownload('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
+								<td><a onclick="singlelink('."'".$row->encrypt_name."'".','."'".$row->original_name."'".');">'.$row->original_name.'</a></td>
 								<td><button '.$disabled.' onclick="delItem('."'".$row->filetype."'".','."'".$row->wfnum."'".','."'".$row->filecd."'".');"></i> Hapus</button></td>
 							</tr>';
 							$no++;
@@ -1191,7 +1197,7 @@ class Ranperda extends CI_Controller {
 
 		if($data->num_rows()>0){
 			$row = $data->row();
-			$tID = $row->kdprov.$row->kdkabkota.date("ymdHis");
+			$tID = $this->session->userdata('user_type').date("ymdHis");
 
 			$status = 0;
 			$message = 'ok';

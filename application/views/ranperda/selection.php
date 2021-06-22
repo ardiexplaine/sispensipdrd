@@ -61,9 +61,9 @@
                                 { "data" : "wfnum" },
                                 { "data" : "zuser" },
                                 { "data" : "stsnm" },
-                                { "data" : "spkab" },
-                                { "data" : "spgub" },
-                                { "data" : "spmnd" },
+                                { "data" : "no_surat_ke_gubernur" },
+                                { "data" : "no_surat_ke_mendagri" },
+                                { "data" : "no_surat_ke_menkeu" },
                                 { "data" : "spskd" },
                             ]
                         });

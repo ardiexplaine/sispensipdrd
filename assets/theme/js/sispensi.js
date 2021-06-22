@@ -431,9 +431,7 @@ function roleScreen(curst,user_type){
         } 
         
         if(curst=='RNB1' || curst=='RNBX'){
-
-            authField(user_type);
-
+            authField(curst,user_type);
             $('#tabBody').show();
             $('#tabkab').show();
             $('#tabpro, #tabkem, #tabkeu').hide();
@@ -445,7 +443,7 @@ function roleScreen(curst,user_type){
 
             $('#tabpro, #tabkem, #tabkeu').hide();
             $('#tabkab,#tab1').addClass('active');
-            authField(user_type);
+            authField(curst,user_type);
             $('#tab1 *').prop('disabled', true);
         }
 
@@ -535,26 +533,26 @@ function roleScreen(curst,user_type){
             $('#tabpro, #tabkem, #tabkeu').show();
             authField(curst,user_type);
             authTab(curst,user_type);
-            $('#tab3 *').prop('disabled', true);
             $('#divRevisi, #divPenetapanPerda').hide();
             $('#tab1 *').prop('disabled', true);
         
         }
         
-        if(curst=='PVF1'){
-            /// ini kondisi belum kelar
+        if(curst=='PVE1'){
+            authTab(curst,user_type);
             $('#tab1 *').prop('disabled', true);
             $('#tab2 *').prop('readonly', true);
             $('#tab3 *').prop('disabled', true);
             $('#divPenetapanPerda').show();
-            if(user_type == "KAB"){
+            if(user_type == "PRO"){
                 $('#divRevisi *').prop('disabled', false);
                 $('#divPenetapanPerda *').prop('disabled', false);
             }
         
         }
         
-        if(curst=='PVG1'){
+        if(curst=='PVF1'){
+            authTab(curst,user_type);
             $('#tab1 *').prop('disabled', true);
             $('#tab2 *').prop('disabled', true);
             $('#tab3 *').prop('disabled', true);
@@ -565,7 +563,6 @@ function roleScreen(curst,user_type){
 }
 
 function authField(curst,user_type){
-
     if(curst.substring(0, 2) == 'RN'){
         switch (user_type) {
                 case "KAB":
@@ -574,7 +571,7 @@ function authField(curst,user_type){
                     $('#tab3 *').prop('disabled', true);
                     $('#tab4 *').prop('disabled', true);
                     break;
-                case "PRO":
+                case "PRO":                 
                     $('#tab1 *').prop('disabled', true);
                     $('#tab2 *').prop('disabled', false);
                     $('#tab3 *').prop('disabled', true);

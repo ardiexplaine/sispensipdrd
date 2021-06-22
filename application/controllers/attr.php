@@ -10,9 +10,12 @@ class Attr extends CI_Controller {
 
     public function dropdown() {	
         $kpad = $this->input->post('pad');
+        $param = $this->input->post('param');
         $usrty = $this->session->userdata('user_type');
         $html = '';
-        //$this->db->like('usrty',$usrty);
+        if($param == ''){
+            $this->db->like('usrty',$usrty);
+        }
 		$query = $this->db->get_where('perda',array('jenis'=>$kpad));
         foreach($query->result() as $row) {
             $html .= "<option value='".$row->docno."'>".$row->docnm."</option>";
