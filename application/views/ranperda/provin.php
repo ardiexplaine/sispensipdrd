@@ -96,7 +96,7 @@
 
     });
 </script>
-<h3 class="heading"><strong>RANPERDA > <i>PROVINSI </i></strong>
+<h3 class="heading"><strong>RANPERDA > <i>PROVINSI </i>  <i id="redLabel"></i></strong>
     <div class="pull-right" id="lblStatus">
 </h3>
 

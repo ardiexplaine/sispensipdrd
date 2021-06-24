@@ -57,11 +57,12 @@
 
 <script type="text/javascript" class="init">
     $(document).ready(function() {
-        loaddashboard();
+        loaddashboardKab();
+        loaddashboardPro();
 
-        function loaddashboard() {
+        function loaddashboardKab() {
             // hapus datatable
-            var table = $('#tblDashboard').DataTable();
+            var table = $('#tblDashboardKab').DataTable();
             table.destroy();
 
             var formData = {
@@ -70,13 +71,21 @@
 
             var cols = [
                 { "data": "no","width": "2%" },
+                { "data": "wfnum" },
+                { "data": "daerah" },
+                { "data": "sp_kab_kota" },
+                { "data": "tglterima" },
+                { "data": "sp_provinsi" },
+                { "data": "sp_kemendagri" },
+                { "data": "sp_kemenkeu" },
                 { "data": "stsnm" },
-                { "data": "jml","width": "20%" }
-            ];   
+                { "data": "jml" }
+            ];  
+            
 
-            $('#tblDashboard').DataTable({
+            $('#tblDashboardKab').DataTable({
                 "ajax": {
-                    "url": baseurl+"dashboard/loadDashboard",
+                    "url": baseurl+"dashboard/loadDashboardKab",
                     "type": "POST",
                     "data": formData,
                     "deferLoading": 57,
@@ -87,6 +96,69 @@
                 },
                 "columns": cols
             });
+
+            $('#tblDashboardKab tbody').on('dblclick', 'tr', function () {
+                var table = $('#tblDashboardKab').DataTable();
+                var data = table.row( this ).data();
+                //alert( 'You clicked on '+data["wfcat"]+'\'s row' );
+                if(data["wfcat"] == 'WF01'){
+                    location.href = 'ranperda/kabkot/'+data["wfnum"];
+                }
+                if(data["wfcat"] == 'WF02'){
+                    location.href = 'ranperda/provin/'+data["wfnum"];
+                }
+            });
+
+        }
+
+        function loaddashboardPro() {
+            // hapus datatable
+            var table = $('#tblDashboardPro').DataTable();
+            table.destroy();
+
+            var formData = {
+                'wfnum': $('#txtWfnum').val(),
+            };
+
+            var cols = [
+                { "data": "no","width": "2%" },
+                { "data": "wfnum" },
+                { "data": "daerah" },
+                { "data": "sp_provinsi" },
+                { "data": "tglterima" },
+                { "data": "sp_kemendagri" },
+                { "data": "sp_kemenkeu" },
+                { "data": "stsnm" },
+                { "data": "jml" }
+            ];  
+            
+
+            $('#tblDashboardPro').DataTable({
+                "ajax": {
+                    "url": baseurl+"dashboard/loadDashboardPro",
+                    "type": "POST",
+                    "data": formData,
+                    "deferLoading": 57,
+                    "scrollY": "200px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    "dataSrc": ""
+                },
+                "columns": cols
+            });
+
+            $('#tblDashboardPro tbody').on('dblclick', 'tr', function () {
+                var table = $('#tblDashboardPro').DataTable();
+                var data = table.row( this ).data();
+                //alert( 'You clicked on '+data["wfcat"]+'\'s row' );
+                if(data["wfcat"] == 'WF01'){
+                    location.href = 'ranperda/kabkot/'+data["wfnum"];
+                }
+                if(data["wfcat"] == 'WF02'){
+                    location.href = 'ranperda/provin/'+data["wfnum"];
+                }
+            });
+
         }
     });
 </script>
@@ -224,23 +296,64 @@
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="tabbable tabbable-bordered">
-                <table id="tblDashboard" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>NDI</th>
-                            <th>Daerah</th>
-                            <th>No.Surat Kab/Kota <br> tanggal surat</th>
-                            <th>tgl Diterima lengkap</th>
-                            <th>Surat Kemenkeu <br> tanggal surat</th>
-                            <th>Surat Kemendagri <br> tanggal surat</th>
-                            <th>Surat Provinsi <br> tanggal surat</th>
-                            <th>Stattus</th>
-                            <th>Sisa Hari kerja</th>
-                            <th>Tgl. Jatuh Tempo</th>
-                        </tr>
-                    </thead>
-                </table>
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Kabupaten / Kota</a></li>
+                    <?php if($this->session->userdata('user_type') != "KAB" ){ ?>
+                    <li><a href="#tab2" data-toggle="tab">Provinsi</a></li>
+                    <?php } ?>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                            <table id="tblDashboardKab" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NDI</th>
+                                        <th>Daerah</th>
+                                        <th>No.Surat Kab/Kota <br> tanggal surat</th>
+                                        <th>Diterima lengkap</br>Jatuh Tempo</th>
+                                        <th>Surat Provinsi <br> tanggal surat</th>
+                                        <th>Surat Kemendagri <br> tanggal surat</th>
+                                        <th>Surat Kemenkeu <br> tanggal surat</th>
+                                        <th>Status</th>
+                                        <th>Sisa Hari kerja</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <?php if($this->session->userdata('user_type') != "KAB" ){ ?>
+                    <div class="tab-pane" id="tab2">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                            <table id="tblDashboardPro" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NDI</th>
+                                        <th>Daerah</th>
+                                        <th>Surat Provinsi <br> tanggal surat</th>
+                                        <th>Diterima lengkap</br>Jatuh Tempo</th>
+                                        <th>Surat Kemendagri <br> tanggal surat</th> 
+                                        <th>Surat Kemenkeu <br> tanggal surat</th>            
+                                        <th>Status</th>
+                                        <th>Sisa Hari kerja</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+
+                
             </div>
         </div>
     </div>

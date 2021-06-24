@@ -109,6 +109,8 @@ function authButton(butmo,curst,nexst,iscls,isrea){
 
             var head = data.header;
 
+            $('#redLabel').text('> '+ data.redlabel);
+
             $("#kategori").val(head.kategori);
             $("#jns_pad").val(head.jns_pad);
             funcSelectAttr('PAD',head.jns_pajak,'jns_pajak',head.jns_pad);

@@ -113,4 +113,34 @@ class Global_model extends CI_Model
 		
 	}
 
+	function number_of_working_days($startDate, $endDate)
+	{
+		if($startDate == NULL || $startDate == '0000-00-00')
+		{
+			$startDate = date('Y-m-d'); // if no date given, use todays date
+		}
+		$workingDays = 0;
+		$startTimestamp = strtotime($startDate);
+		$endTimestamp = strtotime($endDate);
+		for ($i = $startTimestamp; $i <= $endTimestamp; $i = $i + (60 * 60 * 24)) {
+			if (date("N", $i) <= 5) $workingDays = $workingDays + 1;
+		}
+		return $workingDays;
+	}
+
+	function number_of_booking_days($startDate, $endDate)
+	{
+		if($startDate == NULL || $startDate == '0000-00-00')
+		{
+			$startDate = date('Y-m-d'); // if no date given, use todays date
+		}
+		$bookingDays = 0;
+		$startTimestamp = strtotime($startDate);
+		$endTimestamp = strtotime($endDate);
+		for ($i = $startTimestamp; $i <= $endTimestamp; $i = $i + (60 * 60 * 24)) {
+			if (date("N", $i) <= 5) $bookingDays = $bookingDays + 1;
+		}
+		return $bookingDays;
+	}
+
 }

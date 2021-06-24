@@ -61,10 +61,10 @@
                                 { "data" : "wfnum" },
                                 { "data" : "zuser" },
                                 { "data" : "stsnm" },
-                                { "data" : "no_surat_ke_gubernur" },
-                                { "data" : "no_surat_ke_mendagri" },
-                                { "data" : "no_surat_ke_menkeu" },
-                                { "data" : "spskd" },
+                                { "data" : "sp_kab_kota" },
+                                { "data" : "sp_provinsi" },
+                                { "data" : "sp_kemendagri" },
+                                { "data" : "sp_kemenkeu" },
                             ]
                         });
 
@@ -205,9 +205,9 @@
                 <th>Daerah</th>
                 <th>Status</th>
                 <th>SP. Kab/Kota</th>
-                <th>SP. Gubernur</th>
+                <th>SP. Provinsi</th>
                 <th>SP. Kemendagri</th>
-                <th>SP. Sekda</th>
+                <th>SP. Kemenkeu</th>
             </tr>
         </thead>
     </table>

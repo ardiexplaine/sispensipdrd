@@ -231,7 +231,6 @@ class Ranperda extends CI_Controller {
 					"ztime" => date('H:i:s'),
 					"curst"=> $this->input->post("curst"),
 					"iscls"=> '',
-					"group_user" => $this->session->userdata('group_user'),
 					"no_surat_ke_gubernur"=> $this->input->post('no_surat_ke_gubernur'),
 					"tgl_surat_ke_gubernur"=> $this->input->post('tgl_surat_ke_gubernur'),
 					"no_surat_ke_mendagri"=> $this->input->post('no_surat_ke_mendagri'),
@@ -252,6 +251,12 @@ class Ranperda extends CI_Controller {
 					"no_kepmendagri"=> $this->input->post('no_kepmendagri'),
 					"tgl_kepmendagri"=> $this->input->post('tgl_kepmendagri'),	
 				);
+				// echo $this->input->post("curst"); exit;
+				if($nexst == "RNC2" || $nexst == "PVD1"){
+					$ranperda['tgl_diterima'] = date('Y-m-d');
+					$ranperda['jatuh_tempo'] = date('Y-m-d',strtotime(date('Y-m-d').' +9 Weekday'));
+				}
+
 				$this->db->update('ranperda',$ranperda, array("wfnum"=>$wfnum));
 			}
 			
@@ -511,6 +516,7 @@ class Ranperda extends CI_Controller {
 		$detail = $this->db->get_where('item_files', array('wfnum' => $wfnum));
 
 		$fls = $header->row();
+		@$redlabel = $this->db->get_where('users', array('usrcd' => $fls->zuser))->row();
 		if($header->num_rows()>0){
 			$fileDownload = array(
 				array(
@@ -622,8 +628,8 @@ class Ranperda extends CI_Controller {
 		}
 		
 
-
-		$resultObj = array("status" => 0, "message" =>'', "user_type" => $this->session->userdata('user_type'), "header"=> $fls, "item" => $detail->result_array(), "btnFiles" => $fileDownload);
+		
+		$resultObj = array("status" => 0, "message" =>'', "redlabel" => strtoupper(isset($redlabel->nama_lengkap) ? $redlabel->nama_lengkap : ''), "user_type" => $this->session->userdata('user_type'), "header"=> $fls, "item" => $detail->result_array(), "btnFiles" => $fileDownload);
 		echo json_encode($resultObj);
 	}
 
@@ -726,7 +732,7 @@ class Ranperda extends CI_Controller {
 			}	
 		}
 
-		if($usrty == 'KEM'){
+		if($usrty == 'KEM' || $usrty == 'KEU'){
 			if($kabkt != ''){
 				$conds .= "AND group_user=$kabkt ";
 			} else{ 
@@ -761,10 +767,10 @@ class Ranperda extends CI_Controller {
 						"wfcat" => $row->wfcat,
 						"zuser" => $this->Ranperda_model->getdesc('hirarki','namakab',array("id"=>$row->group_user)) ,
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
-						"no_surat_ke_gubernur" => $row->no_surat_ke_gubernur,
-						"no_surat_ke_mendagri" => $row->no_surat_ke_mendagri,
-						"no_surat_ke_menkeu" => $row->no_surat_ke_menkeu,
-						"spskd" => ''
+						"sp_kab_kota" => $row->no_surat_ke_gubernur.'</br>'.$row->no_surat_ke_mendagri.'</br>'.$row->no_surat_ke_menkeu,
+						"sp_provinsi" => $row->no_surat_gub_ke_kabkota.'</br>'.$row->tgl_surat_gub_ke_kabkota,
+						"sp_kemendagri" => $row->no_surat_mendagri_kegub.'</br>'.$row->tgl_surat_mendagri_kegub,
+						"sp_kemenkeu" => $row->no_surat_menkeu_ke_mendagri.'</br>'.$row->tgl_surat_menkeu_ke_mendagri
 					);
 				}else{
 					$data[] = array(
@@ -772,10 +778,10 @@ class Ranperda extends CI_Controller {
 						"wfcat" => $row->wfcat,
 						"zuser" => $this->Ranperda_model->getdesc('hirarki','namakab',array("id"=>$row->group_user)) ,
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
-						"no_surat_ke_gubernur" => $row->no_surat_ke_gubernur,
-						"no_surat_ke_mendagri" => $row->no_surat_ke_mendagri,
-						"no_surat_ke_menkeu" => $row->no_surat_ke_menkeu,
-						"spskd" => ''
+						"sp_kab_kota" => $row->no_surat_ke_gubernur.'</br>'.$row->no_surat_ke_mendagri.'</br>'.$row->no_surat_ke_menkeu,
+						"sp_provinsi" => $row->no_surat_gub_ke_kabkota.'</br>'.$row->tgl_surat_gub_ke_kabkota,
+						"sp_kemendagri" => $row->no_surat_mendagri_kegub.'</br>'.$row->tgl_surat_mendagri_kegub,
+						"sp_kemenkeu" => $row->no_surat_menkeu_ke_mendagri.'</br>'.$row->tgl_surat_menkeu_ke_mendagri
 					);
 				}
 				
@@ -1197,7 +1203,8 @@ class Ranperda extends CI_Controller {
 
 		if($data->num_rows()>0){
 			$row = $data->row();
-			$tID = $this->session->userdata('user_type').date("ymdHis");
+			$tID = $row->kdprov.$row->kdkabkota.date("ymdHis");
+			//$tID = $this->session->userdata('user_type').date("ymdHis");
 
 			$status = 0;
 			$message = 'ok';
