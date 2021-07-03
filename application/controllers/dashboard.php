@@ -6,6 +6,7 @@ class Dashboard extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		$this->auth->checkLogin();
 	}
 
 	public function index() {	
@@ -34,7 +35,8 @@ class Dashboard extends CI_Controller {
 			$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
 		}
 
-		$SQL = "SELECT * FROM wf_status a LEFT JOIN ranperda b ON a.stscd=b.curst WHERE 1=1 AND b.wfcat='WF01' $conds GROUP BY b.curst ORDER BY a.stscd";
+		$SQL = "SELECT * FROM wf_status a LEFT JOIN ranperda b ON a.stscd=b.curst WHERE 1=1 AND b.wfcat='WF01' $conds ORDER BY a.stscd";
+		//echo $SQL; exit;
 		$query = $this->db->query($SQL);
 
 		$data = array();

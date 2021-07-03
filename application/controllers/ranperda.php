@@ -254,7 +254,7 @@ class Ranperda extends CI_Controller {
 				// echo $this->input->post("curst"); exit;
 				if($nexst == "RNC2" || $nexst == "PVD1"){
 					$ranperda['tgl_diterima'] = date('Y-m-d');
-					$ranperda['jatuh_tempo'] = date('Y-m-d',strtotime(date('Y-m-d').' +9 Weekday'));
+					$ranperda['jatuh_tempo'] = date('Y-m-d',strtotime(date('Y-m-d').' +14 Weekday'));
 				}
 
 				$this->db->update('ranperda',$ranperda, array("wfnum"=>$wfnum));
