@@ -438,7 +438,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsepro2">Penyampaian Hasil Evaluasi Gubernur</a>
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsepro2">Penyampaian Hasil Evaluasi Mendagri</a>
                                             </h4>
                                         </div>
                                         <div id="collapsepro2" class="panel-collapse collapse in">
@@ -448,7 +448,7 @@
                                                     <label class="col-lg-2 control-label">Hasil Evaluasi</label>
                                                     <div class="col-lg-4">
                                                         <select  class="input-sm form-control" name="hasil_evaluasi" id="hasil_evaluasi" >
-                                                            <option value="S" selected="selected">Persetujuan Gubernur</option>
+                                                            <option value="S" selected="selected">Persetujuan Mendagri</option>
                                                             <option value="P">Penolakan Gubernur</option>
                                                         </select>
                                                     </div>
@@ -456,7 +456,7 @@
 
 
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 control-label">No. Surat Pengantar Gubernur</label>
+                                                    <label class="col-lg-2 control-label">No. Surat Pengantar Mendagri</label>
                                                     <div class="col-lg-4">
                                                         <input type="text" class="input-sm form-control" name="no_surat_gub_ke_kabkota" id="no_surat_gub_ke_kabkota">
                                                     </div>
@@ -473,7 +473,7 @@
                                                 </div>                           
 
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 control-label">Surat Pengantar Gubernur</label>
+                                                    <label class="col-lg-2 control-label">Surat Pengantar Mendagri</label>
                                                     <div class="col-lg-4">
                                                         <input type="file" class="input-sm form-control" name="file_surat_gub_ke_kabkota" id="file_surat_gub_ke_kabkota">
                                                         <span class="help-block" style="color:#FF0000;">* Wajib isi, File yang diperbolehkan hanya pdf</span>
