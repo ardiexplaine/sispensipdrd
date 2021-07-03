@@ -92,7 +92,7 @@ class Dashboard extends CI_Controller {
 			$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
 		}
 
-		$SQL = "SELECT * FROM wf_status a LEFT JOIN ranperda b ON a.stscd=b.curst WHERE 1=1 AND b.wfcat='WF02' $conds GROUP BY b.curst ORDER BY a.stscd";
+		$SQL = "SELECT * FROM wf_status a LEFT JOIN ranperda b ON a.stscd=b.curst WHERE 1=1 AND b.wfcat='WF02' $conds ORDER BY a.stscd";
 		$query = $this->db->query($SQL);
 
 		$data = array();
