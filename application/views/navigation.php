@@ -24,7 +24,7 @@
                         <li><a href="<?php echo base_url('ranperda');?>"><i class="splashy-view_list"></i> Pencarian Dokumen</a></li>
                     </ul>
                     </li>
-                    <li><a data-toggle="modal" id="zbtnModalNotification" data-backdrop="static" href="#myNotification" data-placement="bottom" data-container="body"><i class="splashy-mail_light"></i> 5. Pemberitahuan</a></li>
+                    <!-- <li><a data-toggle="modal" id="zbtnModalNotification" data-backdrop="static" href="#myNotification" data-placement="bottom" data-container="body"><i class="splashy-mail_light"></i> 5. Pemberitahuan</a></li> -->
                 <?php
                         }
                         if($this->session->userdata('user_type') == 'PRO')
@@ -38,7 +38,7 @@
                         <li><a href="<?php echo base_url('ranperda');?>"><i class="splashy-view_list"></i> Pencarian Dokumen</a></li>
                     </ul>
                     </li>
-                    <li><a data-toggle="modal" id="zbtnModalNotification" data-backdrop="static" href="#myNotification" data-placement="bottom" data-container="body"><i class="splashy-mail_light"></i> 5. Pemberitahuan</a></li>
+                    <!-- <li><a data-toggle="modal" id="zbtnModalNotification" data-backdrop="static" href="#myNotification" data-placement="bottom" data-container="body"><i class="splashy-mail_light"></i> 5. Pemberitahuan</a></li> -->
                 <?php                           
                         }
                         if($this->session->userdata('user_type') == 'KEM' || $this->session->userdata('user_type') == 'KEU')
@@ -51,7 +51,7 @@
                         <li><a href="<?php echo base_url('ranperda');?>"><i class="splashy-view_list"></i> Pencarian Dokumen</a></li>
                     </ul>
                     </li>
-                    <li><a data-toggle="modal" id="zbtnModalNotification" data-backdrop="static" href="#myNotification" data-placement="bottom" data-container="body"><i class="splashy-mail_light"></i> 3. Pemberitahuan</a></li>
+                    <!-- <li><a data-toggle="modal" id="zbtnModalNotification" data-backdrop="static" href="#myNotification" data-placement="bottom" data-container="body"><i class="splashy-mail_light"></i> 3. Pemberitahuan</a></li> -->
                 <?php                           
                         }
                 ?>

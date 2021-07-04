@@ -46,7 +46,7 @@ class Dashboard extends CI_Controller {
 			$redlabel = $this->db->get_where('users', array('usrcd' => $row->zuser))->row();
 
 			$sisahari=$this->Global_model->number_of_working_days(date('Y-m-d'),$row->jatuh_tempo);
-			if($sisahari == 0){
+			if($sisahari == 0 || $row->curst =='RNG1'){
 				$sisahari = '';
 			}
 
@@ -102,7 +102,7 @@ class Dashboard extends CI_Controller {
 			$redlabel = $this->db->get_where('users', array('usrcd' => $row->zuser))->row();
 
 			$sisahari=$this->Global_model->number_of_working_days(date('Y-m-d'),$row->jatuh_tempo);
-			if($sisahari == 0){
+			if($sisahari == 0 || $row->curst =='PVF1'){
 				$sisahari = '';
 			}
 

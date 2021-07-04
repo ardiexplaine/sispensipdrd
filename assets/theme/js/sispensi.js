@@ -161,8 +161,8 @@ function authButton(butmo,curst,nexst,iscls,isrea){
             
             loadStatus(head.curst);
             loadHistory();
-            hasilEvaluasi(head.hasil_evaluasi);
             roleScreen(head.curst,data.user_type),
+            hasilEvaluasi(head.wfcat,head.hasil_evaluasi);
             workflow();
             
 
@@ -946,18 +946,26 @@ function funcSelectAttr(type,val,attr,pad) {
     });
 }
 
-function hasilEvaluasi(hasil_evaluasi){
+function hasilEvaluasi(wfcat,hasil_evaluasi){
+
+    if(wfcat == 'WF01'){
+        var name = 'Gubernur';
+    }
+
+    if(wfcat == 'WF02'){
+        var name = 'Mendagri';
+    }
 
     if(hasil_evaluasi == 'S' || hasil_evaluasi == 'n'){
-        $('#provH4').text('Persetujuan Gubernur dalam bentuk Keputusan Gubernur');
-        $('#no_kepgub_label').text('No. Keputusan Gubernur');
-        $('#tgl_kepgub_label').text('Tanggal Keputusan Gubernur');
-        $('#file_kepgub_label').text('File Keputusan Gubernur'); 
+        $('#provH4').text('Persetujuan '+name+' dalam bentuk Keputusan '+name);
+        $('#no_kepgub_label').text('No. Keputusan '+name);
+        $('#tgl_kepgub_label').text('Tanggal Keputusan '+name);
+        $('#file_kepgub_label').text('File Keputusan '+name); 
         $('#divRevisi').hide();
     }
 
     if(hasil_evaluasi == 'P'){
-        $('#provH4').text('Penolakan Gubernur dalam bentuk Surat Rekomendasi Perbaikan');
+        $('#provH4').text('Penolakan '+name+' dalam bentuk Surat Rekomendasi Perbaikan');
         $('#no_kepgub_label').text('No. Surat Rekomendasi');
         $('#tgl_kepgub_label').text('Tanggal Surat Rekomendasi');
         $('#file_kepgub_label').text('File Surat Rekomendasi');

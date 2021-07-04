@@ -8,6 +8,7 @@ class Ranperda extends CI_Controller {
 		$this->auth->checkLogin();
 		$this->load->model('Global_model');
 		$this->load->model('Ranperda_model');
+		$this->load->helper('url');
 	}
 
 	public function index() {
@@ -17,6 +18,17 @@ class Ranperda extends CI_Controller {
 
 	public function kabkot() {
 		$data['wfnum'] = $this->uri->segment(3);
+
+		if($this->session->userdata('user_type') == 'KAB' || $this->session->userdata('user_type') == 'PRO'){
+
+			$header = $this->db->get_where('ranperda', array('wfnum' => $data['wfnum']));
+			if($this->session->userdata('usrcd') != $header->row()->zuser){
+				header("Status: 403 Not Found");
+				echo '403 Access denied, Anda tidak mempunyai akses pada data ini';
+				exit;
+			}
+		}
+
 		$data['content'] = 'ranperda/kabkot';
 		$this->load->view('layout2',$data);
 	}

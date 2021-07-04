@@ -18,7 +18,7 @@ class Login_model extends CI_Model
 		{
 
 			$row = $cek_login->row();
-
+			//print_r($cek_login->row()); exit;
 			if($row->nama_lengkap == '' || $row->jabatan == '' || $row->email == '' || $row->telepon ==''){
 				$this->session->set_userdata(array('regis'=>TRUE, 'usrcd'=>$row->usrcd));
 				$status = 2;
@@ -33,12 +33,16 @@ class Login_model extends CI_Model
 				$sess_data['user_type']    = $row->user_type;
 				$sess_data['level']    	   = $row->superadmin;
 				$sess_data['login']        = TRUE;
-				if($row->group_user == '0'){
-					$sess_data['whoami'] = 'Kemendagri';
-				}else{
+				if($sess_data['user_type'] == 'KAB' || $sess_data['user_type'] == 'PRO'){
 					$where = array("id"=>$row->group_user);
 					$row = $this->db->get_where('hirarki', $where)->row();
 					$sess_data['whoami'] = $row->namakab;
+				}
+				if($sess_data['user_type'] == 'KEM'){
+					$sess_data['whoami'] = 'Kemendagri';
+				}
+				if($sess_data['user_type'] == 'KEU'){
+					$sess_data['whoami'] = 'Kemenkeu';
 				}
 				$this->session->set_userdata($sess_data);
 				

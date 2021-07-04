@@ -89,7 +89,7 @@
         });
 
         $('#hasil_evaluasi').on('change', function() {
-            hasilEvaluasi($(this).val());
+            hasilEvaluasi('WF01',$(this).val());
         });
 
         
