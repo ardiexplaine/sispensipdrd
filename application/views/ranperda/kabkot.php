@@ -178,7 +178,7 @@
                                 
                                 <div class="panel-group" id="accordion">
 
-                                    <div id="accRancanganPerda" class="panel panel-default">
+                                    <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapsekab1">Penyampaian Rancangan Perda atau Perubahan Perda Kab/Kota</a>
@@ -332,10 +332,10 @@
                                     <div id="divRevisi" class="panel panel-default">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsekab2">Revisi</a>
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseRevisi">Revisi</a>
                                             </h4>
                                         </div>
-                                        <div id="collapsekab4" class="panel-collapse collapse in">
+                                        <div id="collapseRevisi" class="panel-collapse collapse in">
                                             <div class="panel-body">
 
                                                 <div class="form-group">

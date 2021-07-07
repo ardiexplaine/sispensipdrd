@@ -19,10 +19,30 @@ class Ranperda extends CI_Controller {
 	public function kabkot() {
 		$data['wfnum'] = $this->uri->segment(3);
 
-		if($this->session->userdata('user_type') == 'KAB' || $this->session->userdata('user_type') == 'PRO'){
+		if($data['wfnum'] != ""){
+			$conds = '';
+			$usrty = $this->session->userdata('user_type');
+			$group = $this->session->userdata('group_user');
+			$usrcd = $this->session->userdata('usrcd');
+			if($usrty == 'KAB'){ // 
+				$conds .= "AND b.zuser='$usrcd' ";
+			}
+	
+			if($usrty == 'PRO'){
+				$dataOtorisasi = $this->Global_model->otorisasiUserPRO($group);
+				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
+			}
+	
+			if($usrty == 'KEM'){
+				$dataOtorisasi = $this->Global_model->otorisasiUserKEM($usrcd);
+				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
+			}
+	
+			$SQL = "SELECT * FROM ranperda b WHERE 1=1 AND wfnum='$data[wfnum]' $conds";
+			//echo $SQL; exit;
+			$query = $this->db->query($SQL);
 
-			$header = $this->db->get_where('ranperda', array('wfnum' => $data['wfnum']));
-			if($this->session->userdata('usrcd') != $header->row()->zuser){
+			if($query->num_rows() == 0){
 				header("Status: 403 Not Found");
 				echo '403 Access denied, Anda tidak mempunyai akses pada data ini';
 				exit;
@@ -35,6 +55,37 @@ class Ranperda extends CI_Controller {
 
 	public function provin() {
 		$data['wfnum'] = $this->uri->segment(3);
+
+		if($data['wfnum'] != ""){
+			$conds = '';
+			$usrty = $this->session->userdata('user_type');
+			$group = $this->session->userdata('group_user');
+			$usrcd = $this->session->userdata('usrcd');
+			if($usrty == 'KAB'){ // 
+				$conds .= "AND b.zuser='$usrcd' ";
+			}
+	
+			if($usrty == 'PRO'){
+				$dataOtorisasi = $this->Global_model->otorisasiUserPRO($group);
+				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
+			}
+	
+			if($usrty == 'KEM'){
+				$dataOtorisasi = $this->Global_model->otorisasiUserKEM($usrcd);
+				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
+			}
+	
+			$SQL = "SELECT * FROM ranperda b WHERE 1=1 AND wfnum='$data[wfnum]' $conds";
+			//echo $SQL; exit;
+			$query = $this->db->query($SQL);
+
+			if($query->num_rows() == 0){
+				header("Status: 403 Not Found");
+				echo '403 Access denied, Anda tidak mempunyai akses pada data ini';
+				exit;
+			}
+		}
+
 		$data['content'] = 'ranperda/provin';
 		$this->load->view('layout2',$data);
 	}
@@ -220,6 +271,7 @@ class Ranperda extends CI_Controller {
 
 			$cek = $this->db->get_where('ranperda', array('wfnum' => $wfnum));
 			if($cek->num_rows() == 0){
+				$this->middleware_cekinput24jam();
 
 				$ranperda = array(
 					"wfnum"=> $wfnum,
@@ -444,6 +496,27 @@ class Ranperda extends CI_Controller {
 		// 	);
 		// }
 		echo json_encode($ranperdaObj);
+	}
+
+	public function middleware_cekinput24jam(){
+
+		$cek = $this->db->get_where('ranperda', array('zuser' => $this->session->userdata('usrcd'), 'zdate' => date('Y-m-d')));
+		if($cek->num_rows() > 0){
+			
+			$ranperdaObj = array(
+				"status" => 1,
+				"message" => "",
+				"zdate" => date('Y-m-d'),
+				"ztime" => date('H:i:s'),
+				"zuser" => $this->session->userdata('usrcd'),
+				"curst"=> $this->input->post("curst"),
+				"group_user" => $this->session->userdata('group_user'),
+				"iscls"=> '',
+				"notif" => $this->Global_model->getNotif(1,"Ranperda hanya bisa diinput 1 hari sekali")
+			);
+			echo json_encode($ranperdaObj);
+			exit;
+		}
 	}
 
 	public function rejectData(){
