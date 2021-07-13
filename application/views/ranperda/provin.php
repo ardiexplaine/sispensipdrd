@@ -105,7 +105,7 @@
         <div id="zbtnAction" class="form-actions"></div>
     </div>
     <div class="col-sm-3 col-md-3">
-        <div id="ztxtAppsMsg"></div>
+        <div id="ztxtAppsMsg" class="AppsMsg"></div>
     </div>
 </div>
 
@@ -448,7 +448,8 @@
                                                     <label class="col-lg-2 control-label">Hasil Evaluasi</label>
                                                     <div class="col-lg-4">
                                                         <select  class="input-sm form-control" name="hasil_evaluasi" id="hasil_evaluasi" >
-                                                            <option value="S" selected="selected">Persetujuan Mendagri</option>
+                                                            <option value="" selected disabled hidden>Choose here</option>
+                                                            <option value="S">Persetujuan Mendagri</option>
                                                             <option value="P">Penolakan Mendagri</option>
                                                         </select>
                                                     </div>

@@ -956,7 +956,7 @@ function hasilEvaluasi(wfcat,hasil_evaluasi){
         var name = 'Mendagri';
     }
 
-    if(hasil_evaluasi == 'S' || hasil_evaluasi == 'n'){
+    if(hasil_evaluasi == 'S' || hasil_evaluasi == ''){
         $('#provH4').text('Persetujuan '+name+' dalam bentuk Keputusan '+name);
         $('#no_kepgub_label').text('No. Keputusan '+name);
         $('#tgl_kepgub_label').text('Tanggal Keputusan '+name);

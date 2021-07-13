@@ -9,6 +9,8 @@ class Ranperda extends CI_Controller {
 		$this->load->model('Global_model');
 		$this->load->model('Ranperda_model');
 		$this->load->helper('url');
+		$this->load->library('form_validation');
+		$this->load->helper('security');
 	}
 
 	public function index() {
@@ -134,128 +136,182 @@ class Ranperda extends CI_Controller {
 		return $wfcat;
 	}
 
+	function checkDateFormat($date) {
+		if($date == "0000-00-00"){
+			$this->form_validation->set_message( __FUNCTION__ , '%s wajib diisi');
+        	return FALSE;
+		}else{
+			return TRUE;
+		}
+	} 
+
+
 	function validationData($wfnum, $nexst){
 		$res = true;
 
-		if($nexst == 'RNB1' || $nexst == 'PVB1'){
-			
+
+
+		if (in_array($nexst, array("RNB1", "RNXX", "PVB1", "PVXX"))) {
+			$this->form_validation->set_rules('wfnum', 'wfnum', 'required');
 		}
 
-		if($nexst == 'RNC1' || $nexst == 'PVC1'){
 
-			$fcode = array('FL01', 'FL02');
-			$this->db->where_in('fcode', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('item_files');
-			if($cek->num_rows() == 2){
-				$res = true;
-			}else{
-				$res = false;
-			}
+		if($nexst == 'RNC1' || $nexst == 'RNC2'){
+			$this->form_validation->set_rules('no_surat_ke_gubernur', 'No. Surat Permohonan Ke Gubernur', 'required');
+			$this->form_validation->set_rules('no_surat_ke_mendagri', 'No. Surat Permohonan Ke Mendagri', 'required');
+			$this->form_validation->set_rules('no_surat_ke_menkeu', 'No. Surat Permohonan Ke Menkeu', 'required');
 
-			$fcode = array('KP01');
-			$this->db->where_in('filetype', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('ranperda_files');
-			if($cek->num_rows() > 0){
-				$res = true;
-			}else{
-				$res = false;
+			$this->form_validation->set_rules('tgl_surat_ke_gubernur', 'Tgl Surat Permohonan Ke Gubernur', 'required|callback_checkDateFormat');
+			$this->form_validation->set_rules('tgl_surat_ke_mendagri', 'Tgl Surat Permohonan Ke Mendagri', 'required|callback_checkDateFormat');
+			$this->form_validation->set_rules('tgl_surat_ke_menkeu', 'Tgl Surat Permohonan Ke Menkeu', 'required|callback_checkDateFormat');
+		}
+
+		if($nexst == 'RND1'){
+
+			if ($this->session->userdata('user_type') == 'PRO') {
+
+				// kemenkeu
+				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
+
+
+				// Kemendagri
+				$this->form_validation->set_rules('no_surat_mendagri_kegub', 'No. Surat Pengantar Mendagri', 'required');
+				$this->form_validation->set_rules('tgl_surat_mendagri_kegub', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepmendagri', 'No. Surat Keputusan Mendagri', 'required');
+				$this->form_validation->set_rules('tgl_kepmendagri', 'Tanggal Keputusan Mendagri', 'required|callback_checkDateFormat');
+
 			}
+			
 		}
 
 		if($nexst == 'RNF1'){
 
-			$fcode = array('FL03');
-			$this->db->where_in('fcode', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('item_files');
-			if($cek->num_rows() == 1){
-				$res = true;
-			}else{
-				$res = false;
+			if ($this->session->userdata('user_type') == 'PRO') {
+				// Provinsi
+				$this->form_validation->set_rules('hasil_evaluasi', 'Hasil Evaluasi', 'required');
+				$this->form_validation->set_rules('no_surat_gub_ke_kabkota', 'No. Surat Pengantar Gubernur', 'required');
+				$this->form_validation->set_rules('tgl_surat_gub_ke_kabkota', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepgub', 'No. Keputusan Gubernur/ Provinsi', 'required');
+				$this->form_validation->set_rules('tgl_kepgub', 'Tanggal Keputusan Gubernur/ Provinsi', 'required|callback_checkDateFormat');
+
+				// kemenkeu
+				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
+
+				// Kemendagri
+				$this->form_validation->set_rules('no_surat_mendagri_kegub', 'No. Surat Pengantar Mendagri', 'required');
+				$this->form_validation->set_rules('tgl_surat_mendagri_kegub', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepmendagri', 'No. Surat Keputusan Mendagri', 'required');
+				$this->form_validation->set_rules('tgl_kepmendagri', 'Tanggal Keputusan Mendagri', 'required|callback_checkDateFormat');
+
 			}
 
-			$fcode = array('PR01');
-			$this->db->where_in('filetype', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('ranperda_files');
-			if($cek->num_rows() > 0){
-				$res = true;
-			}else{
-				$res = false;
-			}
 		}
 
-		if($nexst == 'RNH1' || $nexst == 'PVE1'){
-
-			$fcode = array('FL04');
-			$this->db->where_in('fcode', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('item_files');
-			if($cek->num_rows() == 1){
-				$res = true;
-			}else{
-				$res = false;
-			}
-
-			$fcode = array('KM01');
-			$this->db->where_in('filetype', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('ranperda_files');
-			if($cek->num_rows() > 0){
-				$res = true;
-			}else{
-				$res = false;
-			}
-		}
-
-		if($nexst == 'RNI1'){
-
-			$fcode = array('FL05');
-			$this->db->where_in('fcode', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('item_files');
-			if($cek->num_rows() == 1){
-				$res = true;
-			}else{
-				$res = false;
-			}
-
-			$fcode = array('PR02');
-			$this->db->where_in('filetype', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('ranperda_files');
-			if($cek->num_rows() > 0){
-				$res = true;
-			}else{
-				$res = false;
-			}
-		}
-
-		if($nexst == 'RNJ1' || $nexst == 'PVF1'){
-
-			$fcode = array('KP02');
-			$this->db->where_in('filetype', $fcode);
-			$this->db->where('wfnum', $wfnum);
-			$cek = $this->db->get('ranperda_files');
-			if($cek->num_rows() == 1){
-				$res = true;
-			}else{
-				$res = false;
-			}
+		if($nexst == 'RNG1' || $nexst == 'PVF1'){
 
 			$fcode = array('KP02');
 			$this->db->where_in('filetype', $fcode);
 			$this->db->where('wfnum', $wfnum);
 			$cek = $this->db->get('ranperda_files');
 			if($cek->num_rows() > 0){
-				$res = true;
+				return true;
+				exit;
 			}else{
-				$res = false;
+				$ranperdaObj = array(
+					"status" => 1,
+					"message" => "Data masih belum lengkap, harap periksa kembali.",
+					"wfnum"=> $wfnum,
+					"zdate" => date('Y-m-d'),
+					"ztime" => date('H:i:s'),
+					"zuser" => $this->session->userdata('usrcd'),
+					"curst"=> $this->input->post("curst"),
+					//"desc"=> $this->input->post("txtTentang"),
+					"group_user" => $this->session->userdata('group_user'),
+					"iscls"=> '',
+					"notif" => $this->Global_model->getNotif(1,'Penyampaian Penetapan Perda Pajak & Retribusi masih kosong!!')
+				);
+	
+				echo json_encode($ranperdaObj);
+				exit;
 			}
 		}
+
+		// provinsi
+
+		if($nexst == 'PVC1' || $nexst == 'PVD1'){
+			$this->form_validation->set_rules('no_surat_ke_mendagri', 'No. Surat Permohonan Ke Mendagri', 'required');
+			$this->form_validation->set_rules('no_surat_ke_menkeu', 'No. Surat Permohonan Ke Menkeu', 'required');
+
+			$this->form_validation->set_rules('tgl_surat_ke_mendagri', 'Tgl Surat Permohonan Ke Mendagri', 'required|callback_checkDateFormat');
+			$this->form_validation->set_rules('tgl_surat_ke_menkeu', 'Tgl Surat Permohonan Ke Menkeu', 'required|callback_checkDateFormat');
+		}
+
+		if($nexst == 'PVE1'){
+
+			if ($this->session->userdata('user_type') == 'KEM') {
+
+				// Kemendagri
+				$this->form_validation->set_rules('hasil_evaluasi', 'Hasil Evaluasi', 'required');
+				$this->form_validation->set_rules('no_surat_gub_ke_kabkota', 'No. Surat Pengantar Gubernur', 'required');
+				$this->form_validation->set_rules('tgl_surat_gub_ke_kabkota', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepgub', 'No. Keputusan Gubernur/ Provinsi', 'required');
+				$this->form_validation->set_rules('tgl_kepgub', 'Tanggal Keputusan Gubernur/ Provinsi', 'required|callback_checkDateFormat');
+
+				// kemenkeu
+				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
+
+			}
+			
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		
+		if ($this->form_validation->run() == FALSE)
+		{
+
+			$ranperdaObj = array(
+				"status" => 1,
+				"message" => "Data masih belum lengkap, harap periksa kembali.",
+				"wfnum"=> $wfnum,
+				"zdate" => date('Y-m-d'),
+				"ztime" => date('H:i:s'),
+				"zuser" => $this->session->userdata('usrcd'),
+				"curst"=> $this->input->post("curst"),
+				//"desc"=> $this->input->post("txtTentang"),
+				"group_user" => $this->session->userdata('group_user'),
+				"iscls"=> '',
+				"notif" => $this->Global_model->getNotif(1,validation_errors())
+			);
+
+            echo json_encode($ranperdaObj);
+			exit;
+		}
+		else
+		{
+			$res = true;
+		}
 
 		return $res;
 	}
@@ -267,7 +323,10 @@ class Ranperda extends CI_Controller {
 		$wfnum = $this->input->post('wfnum');
 		$nexst = $this->input->post('nexst');
 
-		//if($this->validationData($wfnum, $nexst)) { // Blok Role Vlidasi Form
+		//var_dump($this->validationData($wfnum, $nexst)); exit;
+
+
+		if($this->validationData($wfnum, $nexst)) { // Blok Role Vlidasi Form
 
 			$cek = $this->db->get_where('ranperda', array('wfnum' => $wfnum));
 			if($cek->num_rows() == 0){
@@ -480,26 +539,27 @@ class Ranperda extends CI_Controller {
 				"group_user" => $this->session->userdata('group_user'),
 				"iscls"=> ''
 			);
-		// }else{
-		// 	$ranperdaObj = array(
-		// 		"status" => 1,
-		// 		"message" => "Data masih belum lengkap, harap periksa kembali.",
-		// 		"wfnum"=> $wfnum,
-		// 		"zdate" => date('Y-m-d'),
-		// 		"ztime" => date('H:i:s'),
-		// 		"zuser" => $this->session->userdata('usrcd'),
-		// 		"curst"=> $this->input->post("curst"),
-		// 		//"desc"=> $this->input->post("txtTentang"),
-		// 		"group_user" => $this->session->userdata('group_user'),
-		// 		"iscls"=> '',
-		// 		"notif" => $this->Global_model->getNotif(1,"Data masih belum lengkap, harap periksa kembali.")
-		// 	);
-		// }
+		}else{
+			$ranperdaObj = array(
+				"status" => 1,
+				"message" => "Data masih belum lengkap, harap periksa kembali.",
+				"wfnum"=> $wfnum,
+				"zdate" => date('Y-m-d'),
+				"ztime" => date('H:i:s'),
+				"zuser" => $this->session->userdata('usrcd'),
+				"curst"=> $this->input->post("curst"),
+				//"desc"=> $this->input->post("txtTentang"),
+				"group_user" => $this->session->userdata('group_user'),
+				"iscls"=> '',
+				"notif" => $this->Global_model->getNotif(1,"Data masih belum lengkap, harap periksa kembali.")
+			);
+		}
 		echo json_encode($ranperdaObj);
 	}
 
 	public function middleware_cekinput24jam(){
 
+		$this->db->where_not_in('curst', array('RNXX', 'PVXX'));
 		$cek = $this->db->get_where('ranperda', array('zuser' => $this->session->userdata('usrcd'), 'zdate' => date('Y-m-d')));
 		if($cek->num_rows() > 0){
 			

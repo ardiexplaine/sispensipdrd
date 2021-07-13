@@ -56,6 +56,10 @@
 					z-index: 9999;
 					background: url(http://keuda.kemendagri.go.id/asset/themes/pemda/img/Preloader_3.gif) center no-repeat #fff;
 				}
+				.AppsMsg {
+					position: fixed;
+					z-index: 9999;
+				}
 			</style>
 
 			<script>
