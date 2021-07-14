@@ -63,10 +63,7 @@ class Ranperda extends CI_Controller {
 			$usrty = $this->session->userdata('user_type');
 			$group = $this->session->userdata('group_user');
 			$usrcd = $this->session->userdata('usrcd');
-			if($usrty == 'KAB'){ // 
-				$conds .= "AND b.zuser='$usrcd' ";
-			}
-	
+
 			if($usrty == 'PRO'){
 				$dataOtorisasi = $this->Global_model->otorisasiUserPRO($group);
 				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
@@ -81,7 +78,7 @@ class Ranperda extends CI_Controller {
 			//echo $SQL; exit;
 			$query = $this->db->query($SQL);
 
-			if($query->num_rows() == 0){
+			if($query->num_rows() == 0 || $usrty == 'KAB'){
 				header("Status: 403 Not Found");
 				echo '403 Access denied, Anda tidak mempunyai akses pada data ini';
 				exit;
