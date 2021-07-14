@@ -40,7 +40,7 @@ class Ranperda extends CI_Controller {
 				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
 			}
 	
-			$SQL = "SELECT * FROM ranperda b WHERE 1=1 AND wfnum='$data[wfnum]' $conds";
+			$SQL = "SELECT * FROM ranperda b WHERE 1=1 AND wfcat='WF01' AND wfnum='$data[wfnum]' $conds";
 			//echo $SQL; exit;
 			$query = $this->db->query($SQL);
 
@@ -74,7 +74,7 @@ class Ranperda extends CI_Controller {
 				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
 			}
 	
-			$SQL = "SELECT * FROM ranperda b WHERE 1=1 AND wfnum='$data[wfnum]' $conds";
+			$SQL = "SELECT * FROM ranperda b WHERE 1=1 AND wfcat='WF01' AND wfnum='$data[wfnum]' $conds";
 			//echo $SQL; exit;
 			$query = $this->db->query($SQL);
 
