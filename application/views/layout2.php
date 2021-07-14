@@ -59,6 +59,7 @@
 				.AppsMsg {
 					position: fixed;
 					z-index: 9999;
+					width: 20%;
 				}
 			</style>
 

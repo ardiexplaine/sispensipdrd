@@ -572,7 +572,7 @@ class Ranperda extends CI_Controller {
 				"curst"=> $this->input->post("curst"),
 				"group_user" => $this->session->userdata('group_user'),
 				"iscls"=> '',
-				"notif" => $this->Global_model->getNotif(1,"Penyampaian Pengajuan Dokumen Evaluasi Rancangan Perda dapat dilakukan 1 kali dalam 1 hari, selanjutnya pengajuan berikut dapat dilakukan 24 jam kemudian. Terima Kasih")
+				"notif" => $this->Global_model->getNotif(1,"Penyampaian Dokumen Elektronik dapat dilakukan 1 kali dalam 1 hari, selanjutnya dapat dilakukan 24 jam kemudian. Terima Kasih")
 			);
 			echo json_encode($ranperdaObj);
 			exit;
