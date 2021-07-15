@@ -142,6 +142,31 @@ class Ranperda extends CI_Controller {
 		}
 	} 
 
+	function cekSudahUplodas($wfnum,$kolom){
+		$this->db->select($kolom);
+		$this->db->where('wfnum', $wfnum);
+		$cek = $this->db->get('ranperda')->row();
+
+		$wordReplc = array("_","Gubernur","Mendagri","gub ke kabkota","ttd matrik ev provinsi","ev provinsi");
+
+		if($cek->$kolom == ""){
+			$ranperdaObj = array(
+				"status" => 1,
+				"message" => "Data masih belum lengkap, harap periksa kembali.",
+				"wfnum"=> $wfnum,
+				"zdate" => date('Y-m-d'),
+				"ztime" => date('H:i:s'),
+				"zuser" => $this->session->userdata('usrcd'),
+				"curst"=> $this->input->post("curst"),
+				"group_user" => $this->session->userdata('group_user'),
+				"iscls"=> '',
+				"notif" => $this->Global_model->getNotif(1,ucfirst(str_replace($wordReplc," ",$kolom)).' wajib diupload')
+			);
+			echo json_encode($ranperdaObj);
+			exit;
+		}
+	}
+
 
 	function validationData($wfnum, $nexst){
 		$res = true;
@@ -161,6 +186,12 @@ class Ranperda extends CI_Controller {
 			$this->form_validation->set_rules('tgl_surat_ke_gubernur', 'Tgl Surat Permohonan Ke Gubernur', 'required|callback_checkDateFormat');
 			$this->form_validation->set_rules('tgl_surat_ke_mendagri', 'Tgl Surat Permohonan Ke Mendagri', 'required|callback_checkDateFormat');
 			$this->form_validation->set_rules('tgl_surat_ke_menkeu', 'Tgl Surat Permohonan Ke Menkeu', 'required|callback_checkDateFormat');
+
+			$mandatory_field = array('file_surat_ke_gubernur','file_surat_ke_mendagri','file_surat_ke_menkeu','file_ltr_blkng','file_berita_acara','file_ranperda','file_lampiran_ranperda');
+			foreach($mandatory_field as $row){
+				$this->cekSudahUplodas($wfnum,$row);
+			}
+
 		}
 
 		if($nexst == 'RND1'){
@@ -179,6 +210,11 @@ class Ranperda extends CI_Controller {
 				$this->form_validation->set_rules('tgl_surat_mendagri_kegub', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
 				$this->form_validation->set_rules('no_kepmendagri', 'No. Surat Keputusan Mendagri', 'required');
 				$this->form_validation->set_rules('tgl_kepmendagri', 'Tanggal Keputusan Mendagri', 'required|callback_checkDateFormat');
+
+				$mandatory_field = array('file_surat_mendagri_kegub','file_kepmendagri','file_ttd_matrik_ev_mendagri','file_edited_matrik_ev_mendagri','file_surat_menkeu_ke_mendagri','file_kepmenkeu','file_ttd_matrik_ev_menkeu','file_edited_matrik_ev_menkeu');
+				foreach($mandatory_field as $row){
+					$this->cekSudahUplodas($wfnum,$row);
+				}
 
 			}
 			
@@ -206,11 +242,69 @@ class Ranperda extends CI_Controller {
 				$this->form_validation->set_rules('no_kepmendagri', 'No. Surat Keputusan Mendagri', 'required');
 				$this->form_validation->set_rules('tgl_kepmendagri', 'Tanggal Keputusan Mendagri', 'required|callback_checkDateFormat');
 
+				$mandatory_field = array('file_surat_gub_ke_kabkota','file_kepgub','file_ttd_matrik_ev_provinsi','file_edited_matrik_ev_provinsi');
+				foreach($mandatory_field as $row){
+					$this->cekSudahUplodas($wfnum,$row);
+				}
+
 			}
 
 		}
 
+		// provinsi
+
+		if($nexst == 'PVC1' || $nexst == 'PVD1'){
+			$this->form_validation->set_rules('no_surat_ke_mendagri', 'No. Surat Permohonan Ke Mendagri', 'required');
+			$this->form_validation->set_rules('no_surat_ke_menkeu', 'No. Surat Permohonan Ke Menkeu', 'required');
+
+			$this->form_validation->set_rules('tgl_surat_ke_mendagri', 'Tgl Surat Permohonan Ke Mendagri', 'required|callback_checkDateFormat');
+			$this->form_validation->set_rules('tgl_surat_ke_menkeu', 'Tgl Surat Permohonan Ke Menkeu', 'required|callback_checkDateFormat');
+
+			$mandatory_field = array('file_surat_ke_mendagri','file_surat_ke_menkeu','file_ltr_blkng','file_berita_acara','file_ranperda','file_lampiran_ranperda');
+			foreach($mandatory_field as $row){
+				$this->cekSudahUplodas($wfnum,$row);
+			}
+		}
+
+		if($nexst == 'PVE1'){
+
+			if ($this->session->userdata('user_type') == 'KEM') {
+
+				// Kemendagri
+				$this->form_validation->set_rules('hasil_evaluasi', 'Hasil Evaluasi', 'required');
+				$this->form_validation->set_rules('no_surat_gub_ke_kabkota', 'No. Surat Pengantar Gubernur', 'required');
+				$this->form_validation->set_rules('tgl_surat_gub_ke_kabkota', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepgub', 'No. Keputusan Gubernur/ Provinsi', 'required');
+				$this->form_validation->set_rules('tgl_kepgub', 'Tanggal Keputusan Gubernur/ Provinsi', 'required|callback_checkDateFormat');
+
+				// kemenkeu
+				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
+				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
+				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
+
+
+				$mandatory_field = array('file_surat_menkeu_ke_mendagri','file_kepmenkeu','file_edited_matrik_ev_menkeu','file_surat_gub_ke_kabkota','file_ttd_matrik_ev_provinsi','file_edited_matrik_ev_provinsi');
+				foreach($mandatory_field as $row){
+					$this->cekSudahUplodas($wfnum,$row);
+				}
+
+			}
+			
+		}
+
+
 		if($nexst == 'RNG1' || $nexst == 'PVF1'){
+
+			$cek = $this->db->get_where('ranperda', array('wfnum' => $wfnum, 'hasil_evaluasi' => 'P' ));
+			if($cek->num_rows() > 0){
+				$mandatory_field = array('file_revisi_ranperda','file_revisi_lampiran_ranperda');
+				foreach($mandatory_field as $row){
+					$this->cekSudahUplodas($wfnum,$row);
+				}
+			}
+
+			
 
 			$fcode = array('KP02');
 			$this->db->where_in('filetype', $fcode);
@@ -238,39 +332,6 @@ class Ranperda extends CI_Controller {
 				exit;
 			}
 		}
-
-		// provinsi
-
-		if($nexst == 'PVC1' || $nexst == 'PVD1'){
-			$this->form_validation->set_rules('no_surat_ke_mendagri', 'No. Surat Permohonan Ke Mendagri', 'required');
-			$this->form_validation->set_rules('no_surat_ke_menkeu', 'No. Surat Permohonan Ke Menkeu', 'required');
-
-			$this->form_validation->set_rules('tgl_surat_ke_mendagri', 'Tgl Surat Permohonan Ke Mendagri', 'required|callback_checkDateFormat');
-			$this->form_validation->set_rules('tgl_surat_ke_menkeu', 'Tgl Surat Permohonan Ke Menkeu', 'required|callback_checkDateFormat');
-		}
-
-		if($nexst == 'PVE1'){
-
-			if ($this->session->userdata('user_type') == 'KEM') {
-
-				// Kemendagri
-				$this->form_validation->set_rules('hasil_evaluasi', 'Hasil Evaluasi', 'required');
-				$this->form_validation->set_rules('no_surat_gub_ke_kabkota', 'No. Surat Pengantar Gubernur', 'required');
-				$this->form_validation->set_rules('tgl_surat_gub_ke_kabkota', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
-				$this->form_validation->set_rules('no_kepgub', 'No. Keputusan Gubernur/ Provinsi', 'required');
-				$this->form_validation->set_rules('tgl_kepgub', 'Tanggal Keputusan Gubernur/ Provinsi', 'required|callback_checkDateFormat');
-
-				// kemenkeu
-				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
-				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
-
-			}
-			
-		}
-
-
 
 
 
