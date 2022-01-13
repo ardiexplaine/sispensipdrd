@@ -29,8 +29,12 @@ class Ranperda_model extends CI_Model
 	function getdesc($table,$cols,$where){
 		if(is_array($where)){
 			$data = $this->db->get_where($table, $where);
-			$row = $data->row();
-			return $row->$cols;
+			if($data->num_rows()>0){
+				$row = $data->row();
+				return $row->$cols;
+			}else{
+				return '';
+			}
 		}
 		return '';
 	}

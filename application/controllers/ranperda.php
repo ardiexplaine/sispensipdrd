@@ -173,7 +173,7 @@ class Ranperda extends CI_Controller {
 
 
 
-		if (in_array($nexst, array("RNB1", "RNXX", "PVB1", "PVXX"))) {
+		if (in_array($nexst, array("RNB1", "RNXX", "PVB1", "PVXX",""))) {
 			$this->form_validation->set_rules('wfnum', 'wfnum', 'required');
 		}
 
@@ -187,7 +187,7 @@ class Ranperda extends CI_Controller {
 			$this->form_validation->set_rules('tgl_surat_ke_mendagri', 'Tgl Surat Permohonan Ke Mendagri', 'required|callback_checkDateFormat');
 			$this->form_validation->set_rules('tgl_surat_ke_menkeu', 'Tgl Surat Permohonan Ke Menkeu', 'required|callback_checkDateFormat');
 
-			$mandatory_field = array('file_surat_ke_gubernur','file_surat_ke_mendagri','file_surat_ke_menkeu','file_ltr_blkng','file_berita_acara','file_ranperda','file_lampiran_ranperda');
+			$mandatory_field = array('file_surat_ke_gubernur','file_surat_ke_mendagri','file_surat_ke_menkeu','file_ltr_blkng','file_berita_acara','file_ranperda','file_lampiran_ranperda','file_draft_matrik_ranperda');
 			foreach($mandatory_field as $row){
 				$this->cekSudahUplodas($wfnum,$row);
 			}
@@ -260,7 +260,7 @@ class Ranperda extends CI_Controller {
 			$this->form_validation->set_rules('tgl_surat_ke_mendagri', 'Tgl Surat Permohonan Ke Mendagri', 'required|callback_checkDateFormat');
 			$this->form_validation->set_rules('tgl_surat_ke_menkeu', 'Tgl Surat Permohonan Ke Menkeu', 'required|callback_checkDateFormat');
 
-			$mandatory_field = array('file_surat_ke_mendagri','file_surat_ke_menkeu','file_ltr_blkng','file_berita_acara','file_ranperda','file_lampiran_ranperda');
+			$mandatory_field = array('file_surat_ke_mendagri','file_surat_ke_menkeu','file_ltr_blkng','file_berita_acara','file_ranperda','file_lampiran_ranperda','file_draft_matrik_ranperda');
 			foreach($mandatory_field as $row){
 				$this->cekSudahUplodas($wfnum,$row);
 			}
@@ -756,6 +756,11 @@ class Ranperda extends CI_Controller {
 					"fcode" => "file_lampiran_ranperda",
 					"oriname" => $fls->file_lampiran_ranperda,
 					"path" => $fls->file_lampiran_ranperda_path
+				),
+				array(
+					"fcode" => "file_draft_matrik_ranperda",
+					"oriname" => $fls->file_draft_matrik_ranperda,
+					"path" => $fls->file_draft_matrik_ranperda_path
 				),	
 				array(
 					"fcode" => "file_surat_menkeu_ke_mendagri",

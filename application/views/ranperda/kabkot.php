@@ -40,6 +40,7 @@
         $('#file_berita_acara').on("change", function(){ doUploads('file_berita_acara', ["pdf"]); });
         $('#file_ranperda').on("change", function(){ doUploads('file_ranperda', ["doc", "docx"]); });
         $('#file_lampiran_ranperda').on("change", function(){ doUploads('file_lampiran_ranperda', ["doc", "docx"]); });
+        $('#file_draft_matrik_ranperda').on("change", function(){ doUploads('file_draft_matrik_ranperda', ["doc", "docx"]); });
         $('#file_revisi_ranperda').on("change", function(){ doUploads('file_revisi_ranperda', ["doc", "docx"]); });
         $('#file_revisi_lampiran_ranperda').on("change", function(){ doUploads('file_revisi_lampiran_ranperda', ["doc", "docx"]); });
         
@@ -306,6 +307,17 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <div id="btn_file_lampiran_ranperda"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="divfileFL01" class="form-group">
+                                                    <label for="fileFL01" class="col-lg-2 control-label">Draft Matrik Ranperda</label>
+                                                    <div class="col-lg-2">
+                                                        <input type="file" class="input-sm form-control" name="file_draft_matrik_ranperda" id="file_draft_matrik_ranperda">
+                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .doc, docx</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div id="btn_file_draft_matrik_ranperda"></div>
                                                     </div>
                                                 </div>
                                                 
