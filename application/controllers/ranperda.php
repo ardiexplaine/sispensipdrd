@@ -192,6 +192,36 @@ class Ranperda extends CI_Controller {
 				$this->cekSudahUplodas($wfnum,$row);
 			}
 
+
+			$pp_only = $this->db->get_where('ranperda',array("wfnum" => $wfnum, "kategori" => "PP"));
+			if($pp_only->num_rows() > 0){
+				$fcode = array('KP01');
+				$this->db->where_in('filetype', $fcode);
+				$this->db->where('wfnum', $wfnum);
+				$cek = $this->db->get('ranperda_files');
+				if($cek->num_rows() > 0){
+					return true;
+					exit;
+				}else{
+					$ranperdaObj = array(
+						"status" => 1,
+						"message" => "Data masih belum lengkap, harap periksa kembali.",
+						"wfnum"=> $wfnum,
+						"zdate" => date('Y-m-d'),
+						"ztime" => date('H:i:s'),
+						"zuser" => $this->session->userdata('usrcd'),
+						"curst"=> $this->input->post("curst"),
+						//"desc"=> $this->input->post("txtTentang"),
+						"group_user" => $this->session->userdata('group_user'),
+						"iscls"=> '',
+						"notif" => $this->Global_model->getNotif(1,'Induk Perda dan Lampiran tidak boleh kosong!!')
+					);
+		
+					echo json_encode($ranperdaObj);
+					exit;
+				}
+			}
+
 		}
 
 		if($nexst == 'RND1'){
@@ -332,18 +362,6 @@ class Ranperda extends CI_Controller {
 				exit;
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
 
 		
 		if ($this->form_validation->run() == FALSE)

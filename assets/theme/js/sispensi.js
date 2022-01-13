@@ -593,6 +593,13 @@ function authField(curst,user_type){
                     $('#tab3 *').prop('disabled', true);
                     $('#tab4 *').prop('disabled', false);
                     break;
+
+                case "PUU":
+                    $('#tab1 *').prop('disabled', true);
+                    $('#tab2 *').prop('disabled', true);
+                    $('#tab3 *').prop('disabled', true);
+                    $('#tab4 *').prop('disabled', true);
+                    break;
             
                 default:
                     break;
