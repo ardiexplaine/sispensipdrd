@@ -743,6 +743,57 @@ function userprofile(mode) {
     });
 }
 
+function userprofilePIC(mode) {
+
+    // hapus datatable
+    var table = $('#tblListUsers').DataTable();
+    table.destroy();
+
+    var formData = {
+        'mode': mode,
+    };
+
+    if(mode == 'KAB'){
+        var cols = [
+            { "data": "usrcd" },
+            { "data": "daerah" },
+            { "data": "nama_lengkap" },
+            { "data": "username" },
+            { "data": "jabatan" },
+            { "data": "email" },
+            { "data": "telepon" },
+            { "data": "status" }
+        ];
+    }
+
+    if(mode == 'PUSAT'){
+        var cols = [
+            { "data": "usrcd" },
+            { "data": "nama_lengkap" },
+            { "data": "username" },
+            { "data": "jabatan" },
+            { "data": "email" },
+            { "data": "telepon" },
+            { "data": "status" }
+        ];
+    }    
+
+    $('#tblListUsersPIC').DataTable({
+        "ajax": {
+            "url": baseurl+"profile/loadAllUsers",
+            "type": "POST",
+            "deferLoading": 57,
+            "data": formData,
+            "scrollY": "200px",
+            "scrollCollapse": true,
+            "paging": false,
+            "dataSrc": ""
+        },
+        "columns": cols
+    });
+
+}
+
 function loadDetailUsers(){
     var formData = {
         'txtusrcd': $('#txtusrcd').val(),

@@ -56,6 +56,8 @@
                         }
                 ?>
                 
+    
+
                 <?php if($this->session->userdata('level') == 'Y') { ?>
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="splashy-sprocket_light"></i> 4. Laporan <b class="caret"></b></a>
@@ -71,6 +73,13 @@
                         <li><a href="<?php echo base_url('profile/pusat');?>"><i class="splashy-contact_blue_add"></i> Admin Pusat</a></li>
                     </ul>
                 </li>
+                <?php } ?>
+
+                <?php                                                   
+                    if($this->session->userdata('user_type') == 'KEM' || $this->session->userdata('user_type') == 'PUU')
+                    {
+                ?>
+                    <li><a href="<?php echo base_url('profile/pic');?>"><i class="splashy-group_blue"></i> PIC daerah</a></li>
                 <?php } ?>
             </ul>
             <ul class="nav navbar-nav user_menu pull-right">
