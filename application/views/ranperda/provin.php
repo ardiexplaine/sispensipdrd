@@ -85,9 +85,9 @@
 
         
 
-        $('#jns_pad').on('change', function() {
-            funcSelectAttr('PAD','','jns_pajak',$(this).val());
-        });
+        // $('#jns_pad').on('change', function() {
+        //     funcSelectAttr('PAD','','jns_pajak',$(this).val());
+        // });
 
         $('#hasil_evaluasi').on('change', function() {
             hasilEvaluasi('WF02',$(this).val());
@@ -134,7 +134,7 @@
                     </select>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td><h4>Kelompok PAD</h4></td>
                 <td>
                     <select  class="input-sm form-control" name="jns_pad" id="jns_pad" >
@@ -153,7 +153,13 @@
                 <td>
                     <select  class="input-sm form-control" name="jns_pajak" id="jns_pajak"></select>
                 </td>
-            </tr>
+            </tr> -->
+
+            <?php echo $this->Global_model->listCheckList('Kelompok PAD',1,$ischecked); ?>
+            <?php echo $this->Global_model->listCheckList('Jenis Pajak',3,$ischecked); ?>
+            <?php echo $this->Global_model->listCheckList('Jenis Retribusi Jasa Umum',4,$ischecked); ?>
+            <?php echo $this->Global_model->listCheckList('Jenis Retribusi Jasa Usaha',5,$ischecked); ?>
+            <?php echo $this->Global_model->listCheckList('Jenis Retribusi Perizinan Tertentu',6,$ischecked); ?>
 
         </table> 
     </div>	

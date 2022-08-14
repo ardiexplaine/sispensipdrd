@@ -20,12 +20,13 @@ class Ranperda extends CI_Controller {
 
 	public function kabkot() {
 		$data['wfnum'] = $this->uri->segment(3);
-
+		$data['ischecked'] = array();
 		if($data['wfnum'] != ""){
 			$conds = '';
 			$usrty = $this->session->userdata('user_type');
 			$group = $this->session->userdata('group_user');
 			$usrcd = $this->session->userdata('usrcd');
+			$data['ischecked'] =  $this->db->get_where('trx_checklist', array('wfnum' => $data['wfnum']))->result();
 			if($usrty == 'KAB'){ // 
 				$conds .= "AND b.zuser='$usrcd' ";
 			}
@@ -57,13 +58,13 @@ class Ranperda extends CI_Controller {
 
 	public function provin() {
 		$data['wfnum'] = $this->uri->segment(3);
-
+		$data['ischecked'] = array();
 		if($data['wfnum'] != ""){
 			$conds = '';
 			$usrty = $this->session->userdata('user_type');
 			$group = $this->session->userdata('group_user');
 			$usrcd = $this->session->userdata('usrcd');
-
+			$data['ischecked'] =  $this->db->get_where('trx_checklist', array('wfnum' => $data['wfnum']))->result();
 			if($usrty == 'PRO'){
 				$dataOtorisasi = $this->Global_model->otorisasiUserPRO($group);
 				$conds .= "AND b.group_user IN ('".implode("','",$dataOtorisasi)."') ";
@@ -417,9 +418,9 @@ class Ranperda extends CI_Controller {
 					"curst"=> $this->input->post("curst"),
 					"iscls"=> '',
 					"group_user" => $this->session->userdata('group_user'),
-					"kategori"=> $this->input->post('kategori'),
-					"jns_pad"=> $this->input->post('jns_pad'),
-					"jns_pajak"=> $this->input->post('jns_pajak')	
+					"kategori"=> $this->input->post('kategori')
+					// "jns_pad"=> $this->input->post('jns_pad'),
+					// "jns_pajak"=> $this->input->post('jns_pajak')	
 				);
 				$this->db->insert('ranperda',$ranperda);
 			}else{
@@ -603,6 +604,20 @@ class Ranperda extends CI_Controller {
 				$this->db->update('ranperda',array("curst"=>$this->input->post('nexst')), array("wfnum"=>$wfnum));
 			}
 
+			// update checklist
+			parse_str($_POST['ceklist'], $output);
+			if(count($output)>0){
+				$this->db->delete('trx_checklist', array("wfnum"=>$wfnum));
+				for($i = 0; $i<count($output['optCheckBox']); $i++) {
+					$cl = array(
+						"wfnum"=> $wfnum,
+						"checklist_id"=> $output['optCheckBox'][$i]	
+					);
+					$this->db->insert('trx_checklist',$cl);
+				}
+			}
+
+
 			$ranperdaObj = array(
 				"status" => 0,
 				"message" => 'Ok',
@@ -702,6 +717,11 @@ class Ranperda extends CI_Controller {
 	}
 
 	public function single_upload($ext_allow,$objName) {
+		ob_get_contents();
+		ob_end_clean();
+		ini_set('post_max_size', '1000M');
+		ini_set('upload_max_filesize', '1000M');
+
 		$fdate = './assets/uploads/'.date('Ym').'/';
 
 		$config['upload_path']   = $fdate.$this->input->post('wfnum').'/'; 
@@ -725,7 +745,12 @@ class Ranperda extends CI_Controller {
 			}
 			
 		}else { 
-		   $status = array('status'=>0, 'message' => 'ok', 'upload_data' => $this->upload->data()); 
+			$upf = $this->upload->data();
+		   	$status = array('status'=>0, 'message' => 'ok', 'upload_data' => array(
+					"orig_name" => $upf['orig_name'],
+					"full_path" => $config['upload_path'].$upf['file_name']
+			   ) 
+			); 
 		}
 		return $status;
 	}
@@ -1455,6 +1480,7 @@ class Ranperda extends CI_Controller {
 		$attr_name = $this->input->post('attr_name');
 		$fileext = $this->input->post('fileext');
 		$file1 = $this->single_upload(explode(",",$fileext),$attr_name);
+		echo '<pre/>';print_r($file1); exit;
 		if($file1["status"]==0) {
 			$data = array(
 				$attr_name => $file1["upload_data"]["orig_name"],

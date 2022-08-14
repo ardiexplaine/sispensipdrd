@@ -112,8 +112,8 @@ function authButton(butmo,curst,nexst,iscls,isrea){
             $('#redLabel').text('> '+ data.redlabel);
 
             $("#kategori").val(head.kategori);
-            $("#jns_pad").val(head.jns_pad);
-            funcSelectAttr('PAD',head.jns_pajak,'jns_pajak',head.jns_pad);
+            // $("#jns_pad").val(head.jns_pad);
+            // funcSelectAttr('PAD',head.jns_pajak,'jns_pajak',head.jns_pad);
 
             loadItem('KP01',wfnum);
 
@@ -204,13 +204,14 @@ function saveData(butmo,curst,nexst,iscls,isrea){
     data.append('nexst', nexst);
     data.append('iscls', iscls);
     data.append('isrea', isrea);
+    data.append('ceklist', $('.optCheckBox:checked').serialize());
     
 
     //if(nexst.substring(0, 2) == 'RN'){
         data.append('wfnum', $('#txtWfnum').val());
         data.append('kategori', $('#kategori').val());
-        data.append('jns_pad', $("#jns_pad").val()); 
-        data.append('jns_pajak', $("#jns_pajak").val()); 
+        // data.append('jns_pad', $("#jns_pad").val()); 
+        // data.append('jns_pajak', $("#jns_pajak").val()); 
 
         data.append('no_surat_ke_gubernur', $('#no_surat_ke_gubernur').val());
         data.append('tgl_surat_ke_gubernur', $('#tgl_surat_ke_gubernur').val());

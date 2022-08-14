@@ -143,4 +143,47 @@ class Global_model extends CI_Model
 		return $bookingDays;
 	}
 
+	function listCheckList($label,$ktg,$ischecked){
+		$html = '';
+		$html .= '<tr>
+			<td><h4>'.$label.'</h4></td>
+			<td>
+				<div class="col-sm-12 col-md-12">';
+
+					$SQL = "SELECT * FROM t_checklist WHERE ktg='$ktg' Order By id";
+					$query = $this->db->query($SQL);
+					$cekAda = FALSE;
+					foreach($query->result() as $row) {
+
+						$html .= '<div class="checkbox">
+									<label>
+										'.form_checkbox(array(
+											'name'          => 'optCheckBox[]',
+											'class'         => 'optCheckBox',
+											'value'         => $row->id,
+											'checked'       => $this->adaKahDIChecklist($row->id,$ischecked),
+											'style'         => ''
+										)).'
+										'.$row->name.'
+									</label>
+								</div>';
+					}
+				
+				$html .= '</div>
+			</td>
+		</tr>';
+
+		return $html;
+	}
+
+	function adaKahDIChecklist($id,$data){
+		for($i = 0; $i<count($data); $i++) {
+			if($id == $data[$i]->checklist_id){
+				return TRUE;
+				die();
+			}
+		}
+		return FALSE;
+	}
+
 }
