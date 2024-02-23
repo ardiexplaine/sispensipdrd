@@ -229,20 +229,13 @@ class Ranperda extends CI_Controller {
 
 			if ($this->session->userdata('user_type') == 'PRO') {
 
-				// kemenkeu
-				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
-				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
-
-
 				// Kemendagri
 				$this->form_validation->set_rules('no_surat_mendagri_kegub', 'No. Surat Pengantar Mendagri', 'required');
 				$this->form_validation->set_rules('tgl_surat_mendagri_kegub', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
 				$this->form_validation->set_rules('no_kepmendagri', 'No. Surat Keputusan Mendagri', 'required');
 				$this->form_validation->set_rules('tgl_kepmendagri', 'Tanggal Keputusan Mendagri', 'required|callback_checkDateFormat');
 
-				$mandatory_field = array('file_surat_mendagri_kegub','file_kepmendagri','file_ttd_matrik_ev_mendagri','file_edited_matrik_ev_mendagri','file_surat_menkeu_ke_mendagri','file_kepmenkeu','file_ttd_matrik_ev_menkeu','file_edited_matrik_ev_menkeu');
+				$mandatory_field = array('file_surat_mendagri_kegub','file_kepmendagri','file_ttd_matrik_ev_mendagri','file_edited_matrik_ev_mendagri');
 				foreach($mandatory_field as $row){
 					$this->cekSudahUplodas($wfnum,$row);
 				}
@@ -260,12 +253,6 @@ class Ranperda extends CI_Controller {
 				$this->form_validation->set_rules('tgl_surat_gub_ke_kabkota', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
 				$this->form_validation->set_rules('no_kepgub', 'No. Keputusan Gubernur/ Provinsi', 'required');
 				$this->form_validation->set_rules('tgl_kepgub', 'Tanggal Keputusan Gubernur/ Provinsi', 'required|callback_checkDateFormat');
-
-				// kemenkeu
-				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
-				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
 
 				// Kemendagri
 				$this->form_validation->set_rules('no_surat_mendagri_kegub', 'No. Surat Pengantar Mendagri', 'required');
@@ -308,14 +295,8 @@ class Ranperda extends CI_Controller {
 				$this->form_validation->set_rules('no_kepgub', 'No. Keputusan Gubernur/ Provinsi', 'required');
 				$this->form_validation->set_rules('tgl_kepgub', 'Tanggal Keputusan Gubernur/ Provinsi', 'required|callback_checkDateFormat');
 
-				// kemenkeu
-				$this->form_validation->set_rules('no_surat_menkeu_ke_mendagri', 'No. Surat Pengantar Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_surat_menkeu_ke_mendagri', 'Tanggal Surat Pengantar', 'required|callback_checkDateFormat');
-				$this->form_validation->set_rules('no_kepmenkeu', 'No. Surat Keputusan Menkeu', 'required');
-				$this->form_validation->set_rules('tgl_kepmenkeu', 'Tanggal Keputusan Menkeu', 'required|callback_checkDateFormat');
 
-
-				$mandatory_field = array('file_surat_menkeu_ke_mendagri','file_kepmenkeu','file_edited_matrik_ev_menkeu','file_surat_gub_ke_kabkota','file_ttd_matrik_ev_provinsi','file_edited_matrik_ev_provinsi');
+				$mandatory_field = array('file_surat_gub_ke_kabkota','file_ttd_matrik_ev_provinsi','file_edited_matrik_ev_provinsi');
 				foreach($mandatory_field as $row){
 					$this->cekSudahUplodas($wfnum,$row);
 				}
@@ -437,10 +418,6 @@ class Ranperda extends CI_Controller {
 					"tgl_surat_ke_mendagri"=> $this->input->post('tgl_surat_ke_mendagri'),
 					"no_surat_ke_menkeu"=> $this->input->post('no_surat_ke_menkeu'),
 					"tgl_surat_ke_menkeu"=> $this->input->post('tgl_surat_ke_menkeu'),
-					"no_surat_menkeu_ke_mendagri"=> $this->input->post('no_surat_menkeu_ke_mendagri'),
-					"tgl_surat_menkeu_ke_mendagri"=> $this->input->post('tgl_surat_menkeu_ke_mendagri'),
-					"no_kepmenkeu"=> $this->input->post('no_kepmenkeu'),
-					"tgl_kepmenkeu"=> $this->input->post('tgl_kepmenkeu'),
 					"no_surat_gub_ke_kabkota"=> $this->input->post('no_surat_gub_ke_kabkota'),
 					"tgl_surat_gub_ke_kabkota"=> $this->input->post('tgl_surat_gub_ke_kabkota'),
 					"hasil_evaluasi"=> $this->input->post('hasil_evaluasi'),
@@ -806,26 +783,6 @@ class Ranperda extends CI_Controller {
 					"path" => $fls->file_draft_matrik_ranperda_path
 				),	
 				array(
-					"fcode" => "file_surat_menkeu_ke_mendagri",
-					"oriname" => $fls->file_surat_menkeu_ke_mendagri,
-					"path" => $fls->file_surat_menkeu_ke_mendagri_path
-				),	
-				array(
-					"fcode" => "file_kepmenkeu",
-					"oriname" => $fls->file_kepmenkeu,
-					"path" => $fls->file_kepmenkeu_path
-				),	
-				array(
-					"fcode" => "file_ttd_matrik_ev_menkeu",
-					"oriname" => $fls->file_ttd_matrik_ev_menkeu,
-					"path" => $fls->file_ttd_matrik_ev_menkeu_path
-				),	
-				array(
-					"fcode" => "file_edited_matrik_ev_menkeu",
-					"oriname" => $fls->file_edited_matrik_ev_menkeu,
-					"path" => $fls->file_edited_matrik_ev_menkeu_path
-				),	
-				array(
 					"fcode" => "file_surat_gub_ke_kabkota",
 					"oriname" => $fls->file_surat_gub_ke_kabkota,
 					"path" => $fls->file_surat_gub_ke_kabkota_path
@@ -1020,8 +977,7 @@ class Ranperda extends CI_Controller {
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
 						"sp_kab_kota" => $row->no_surat_ke_gubernur.'</br>'.$row->no_surat_ke_mendagri.'</br>'.$row->no_surat_ke_menkeu,
 						"sp_provinsi" => $row->no_surat_gub_ke_kabkota.'</br>'.$row->tgl_surat_gub_ke_kabkota,
-						"sp_kemendagri" => $row->no_surat_mendagri_kegub.'</br>'.$row->tgl_surat_mendagri_kegub,
-						"sp_kemenkeu" => $row->no_surat_menkeu_ke_mendagri.'</br>'.$row->tgl_surat_menkeu_ke_mendagri
+						"sp_kemendagri" => $row->no_surat_mendagri_kegub.'</br>'.$row->tgl_surat_mendagri_kegub
 					);
 				}else{
 					$data[] = array(
@@ -1031,8 +987,7 @@ class Ranperda extends CI_Controller {
 						"stsnm" => $this->Ranperda_model->getdesc('wf_status','stsnm',array("stscd"=>$row->curst)),
 						"sp_kab_kota" => $row->no_surat_ke_gubernur.'</br>'.$row->no_surat_ke_mendagri.'</br>'.$row->no_surat_ke_menkeu,
 						"sp_provinsi" => $row->no_surat_gub_ke_kabkota.'</br>'.$row->tgl_surat_gub_ke_kabkota,
-						"sp_kemendagri" => $row->no_surat_mendagri_kegub.'</br>'.$row->tgl_surat_mendagri_kegub,
-						"sp_kemenkeu" => $row->no_surat_menkeu_ke_mendagri.'</br>'.$row->tgl_surat_menkeu_ke_mendagri
+						"sp_kemendagri" => $row->no_surat_mendagri_kegub.'</br>'.$row->tgl_surat_mendagri_kegub
 					);
 				}
 				
@@ -1480,7 +1435,7 @@ class Ranperda extends CI_Controller {
 		$attr_name = $this->input->post('attr_name');
 		$fileext = $this->input->post('fileext');
 		$file1 = $this->single_upload(explode(",",$fileext),$attr_name);
-		echo '<pre/>';print_r($file1); exit;
+		//echo '<pre/>';print_r($file1); exit;
 		if($file1["status"]==0) {
 			$data = array(
 				$attr_name => $file1["upload_data"]["orig_name"],

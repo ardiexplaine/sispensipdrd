@@ -302,6 +302,10 @@
                     <?php if($this->session->userdata('user_type') != "KAB" ){ ?>
                     <li><a href="#tab2" data-toggle="tab">Provinsi</a></li>
                     <?php } ?>
+                    <div class="pull-right">
+						<button class="btn btn-primary"><i class="splashy-document_a4_marked"></i> Kirim Dokumen Ranperda</button>
+						<button class="btn btn-primary"><i class="splashy-document_a4_marked"></i> Tambah Evaluasi Perda</button>
+					</div>
                 </ul>
 
                 <div class="tab-content">

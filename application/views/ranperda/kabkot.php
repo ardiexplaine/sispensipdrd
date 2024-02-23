@@ -52,10 +52,10 @@
         $('#file_edited_matrik_ev_provinsi').on("change", function(){ doUploads('file_edited_matrik_ev_provinsi', ["doc", "docx"]); });
 
         // kemenkeu
-        $('#file_surat_menkeu_ke_mendagri').on("change", function(){ doUploads('file_surat_menkeu_ke_mendagri', ["pdf"]); });
-        $('#file_kepmenkeu').on("change", function(){ doUploads('file_kepmenkeu', ["pdf"]); });
-        $('#file_ttd_matrik_ev_menkeu').on("change", function(){ doUploads('file_ttd_matrik_ev_menkeu', ["pdf"]); });
-        $('#file_edited_matrik_ev_menkeu').on("change", function(){ doUploads('file_edited_matrik_ev_menkeu', ["doc", "docx"]); });
+        // $('#file_surat_menkeu_ke_mendagri').on("change", function(){ doUploads('file_surat_menkeu_ke_mendagri', ["pdf"]); });
+        // $('#file_kepmenkeu').on("change", function(){ doUploads('file_kepmenkeu', ["pdf"]); });
+        // $('#file_ttd_matrik_ev_menkeu').on("change", function(){ doUploads('file_ttd_matrik_ev_menkeu', ["pdf"]); });
+        // $('#file_edited_matrik_ev_menkeu').on("change", function(){ doUploads('file_edited_matrik_ev_menkeu', ["doc", "docx"]); });
 
         // Mendagri
         $('#file_surat_mendagri_kegub').on("change", function(){ doUploads('file_surat_mendagri_kegub', ["pdf"]); });
@@ -155,11 +155,11 @@
                 </td>
             </tr> -->
             <?php //echo '<pre/>'; print_r($ischecked); ?>
-            <?php echo $this->Global_model->listCheckList('Kelompok PAD',1,$ischecked); ?>
-            <?php echo $this->Global_model->listCheckList('Jenis Pajak',2,$ischecked); ?>
-            <?php echo $this->Global_model->listCheckList('Jenis Retribusi Jasa Umum',4,$ischecked); ?>
-            <?php echo $this->Global_model->listCheckList('Jenis Retribusi Jasa Usaha',5,$ischecked); ?>
-            <?php echo $this->Global_model->listCheckList('Jenis Retribusi Perizinan Tertentu',6,$ischecked); ?>
+            <?php //echo $this->Global_model->listCheckList('Kelompok PAD',1,$ischecked); ?>
+            <?php //echo $this->Global_model->listCheckList('Jenis Pajak',2,$ischecked); ?>
+            <?php //echo $this->Global_model->listCheckList('Jenis Retribusi Jasa Umum',4,$ischecked); ?>
+            <?php //echo $this->Global_model->listCheckList('Jenis Retribusi Jasa Usaha',5,$ischecked); ?>
+            <?php //echo $this->Global_model->listCheckList('Jenis Retribusi Perizinan Tertentu',6,$ischecked); ?>
 
         </table> 
     </div>	
@@ -171,7 +171,6 @@
             <ul class="nav nav-tabs">
                 <li id="tabkab" class="active"><a href="#tab1" data-toggle="tab">Kabupaten / Kota</a></li>
                 <li id="tabpro"><a href="#tab2" data-toggle="tab">Provinsi</a></li>
-                <li id="tabkeu"><a href="#tab3" data-toggle="tab">Kemenkeu</a></li>
                 <li id="tabkem"><a href="#tab4" data-toggle="tab">Kemendagri</a></li>
                 <li id="tabhistory"><a href="#tab5" data-toggle="tab">Riwayat</a></li>
             </ul>
@@ -562,132 +561,6 @@
                                     </div>
                                 </div>           
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tab3">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12">
-                            <div class="form-horizontal" role="form">
-
-                                <div class="panel-group" id="accordion">
-
-                                    <div id="accKepmen" class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsekem1">Penyampaian Hasil Evaluasi Menkeu</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapsekem1" class="panel-collapse collapse in">
-                                            <div class="panel-body">
-
-                                                <div class="form-group">
-                                                    <label class="col-lg-2 control-label">No. Surat Pengantar Menkeu</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="input-sm form-control" name="no_surat_menkeu_ke_mendagri" id="no_surat_menkeu_ke_mendagri">
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <label for="tgl_surat_menkeu_ke_mendagri" class="col-lg-2 control-label">Tanggal Surat Pengantar</label>
-                                                    <div class="col-lg-2">
-                                                        <div class="input-group date" id="tgl_surat_menkeu_ke_mendagri_date" data-date-format="yyyy-mm-dd">
-                                                            <input class="input-sm form-control" id="tgl_surat_menkeu_ke_mendagri" type="text">
-                                                            <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>                           
-
-
-                                                <div class="form-group">
-                                                    <label  class="col-lg-2 control-label">File Surat Pengantar</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="file_surat_menkeu_ke_mendagri" id="file_surat_menkeu_ke_mendagri">
-                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div id="btn_file_surat_menkeu_ke_mendagri"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="formSep"></div>
-                                                <h4>Dokumen Hasil Evaluasi Rancangan Perda atau Perubahan Perda oleh Menkeu </h4><br/>
-
-                                                <div class="form-group">
-                                                    <label for="no_kepmenkeu" class="col-lg-2 control-label">No. Surat Keputusan Menkeu</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="input-sm form-control" name="no_kepmenkeu" id="no_kepmenkeu" >
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <label for="tgl_kepmenkeu" class="col-lg-2 control-label">Tanggal Keputusan Menkeu</label>
-                                                    <div class="col-lg-2">
-                                                        <div class="input-group date" id="tgl_kepmenkeu_date" data-date-format="yyyy-mm-dd">
-                                                            <input class="input-sm form-control" id="tgl_kepmenkeu" type="text">
-                                                            <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>                           
-
-
-                                                <div class="form-group">
-                                                    <label for="file_kepmenkeu" class="col-lg-2 control-label">File Keputusan Menkeu</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="file_kepmenkeu" id="file_kepmenkeu">
-                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div id="btn_file_kepmenkeu"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="file_ttd_matrik_ev_menkeu" class="col-lg-2 control-label">File Matrik Evaluasi bertandatangan</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="file_ttd_matrik_ev_menkeu" id="file_ttd_matrik_ev_menkeu">
-                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div id="btn_file_ttd_matrik_ev_menkeu"></div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <label for="file_edited_matrik_ev_menkeu" class="col-lg-2 control-label">File Matrik Evaluasi</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="file_edited_matrik_ev_menkeu" id="file_edited_matrik_ev_menkeu">
-                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .doc "untuk mempermudah proses selanjutnya"</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <div id="btn_file_edited_matrik_ev_menkeu"></div>
-                                                    </div>
-                                                </div>
-
-
-                                                <!-- <div id="divfileRancanganPerdaKM01" class="form-group">
-                                                    <label for="fileRancanganPerdaKM01" class="col-lg-2 control-label">Upload File </label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="fileRancanganPerdaKM01" id="fileRancanganPerdaKM01">
-                                                        <span class="help-block" style="color:#FF0000;">* Wajib isi, File yang diperbolehkan hanya .pdf</span>
-                                                    </div>
-                                                    <div class="col-lg-3">
-                                                        <button class="btn btn-sm btn-default" id="BTN_ADDITEM_KEM01"><i class="splashy-add_small"></i> Tambah Data</button>
-                                                    </div>
-                                                </div>
-
-                                                <div id="tblKM01"></div> -->
-
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-
-                                </div>
                             </div>
                         </div>
                     </div>
