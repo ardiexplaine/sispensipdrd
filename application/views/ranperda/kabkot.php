@@ -435,6 +435,188 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div id="divPenetapanPerda2"  class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsekab3">Provinsi</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapsekab3" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label"><div id="no_kepgub_label_2"></div></label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" class="input-sm form-control" name="no_kepgub_2" id="no_kepgub_2" >
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label"><div id="tgl_kepgub_label_2"></div></label>
+                                                    <div class="col-lg-2">
+                                                        <div class="input-group date" id="tgl_kepgub_date_2" data-date-format="yyyy-mm-dd">
+                                                            <input class="input-sm form-control" id="tgl_kepgub_2" type="text" placeholder="yyyy-mm-dd">
+                                                            <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>  
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label"><div id="file_kepgub_label_2"></div></label>
+                                                    <div class="col-lg-4">
+                                                        <input type="file" class="input-sm form-control" name="file_kepgub_2" id="file_kepgub_2">
+                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div id="btn_file_kepgub_2"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label">File Matrik Evaluasi bertandatangan</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="file" class="input-sm form-control" name="file_ttd_matrik_ev_provinsi_2" id="file_ttd_matrik_ev_provinsi_2">
+                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div id="btn_file_ttd_matrik_ev_provinsi_2"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label">File Matrik Evaluasi</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="file" class="input-sm form-control" name="file_edited_matrik_ev_provinsi_2" id="file_edited_matrik_ev_provinsi_2">
+                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .doc "untuk mempermudah proses selanjutnya"</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div id="btn_file_edited_matrik_ev_provinsi_2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="divPenetapanPerda3"  class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsekab4">Kemenkeu</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapsekab4" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+                                                
+                                                    <div id="divtxtSPGubernur" class="form-group">
+                                                        <label for="txtSPGubernur" class="col-lg-2 control-label">No. Surat Keputusan Menkeu</label>
+                                                        <div class="col-lg-4">
+                                                            <input type="text" class="input-sm form-control" id="txtSPGubernur-kem" disabled>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div id="divdatetglSP3" class="form-group">
+                                                        <label for="datetglSP3" class="col-lg-2 control-label">Tanggal Keputusan Menkeu</label>
+                                                        <div class="col-lg-2">
+                                                            <div class="input-group date" id="tglSP3" data-date-format="yyyy-mm-dd">
+                                                                <input class="input-sm form-control" id="datetglSP3" type="text">
+                                                                <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>                           
+
+
+                                                    <div id="divfileRancanganPerdaPR02" class="form-group">
+                                                        <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Keputusan Menkeu</label>
+                                                        <div class="col-lg-4">
+                                                            <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
+                                                            <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                                        </div>
+                                                    </div>
+                                                    <div id="divfileRancanganPerdaPR02" class="form-group">
+                                                        <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Matrik Evaluasi bertandatangan</label>
+                                                        <div class="col-lg-4">
+                                                            <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
+                                                            <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                                        </div>
+                                                    </div>
+                                                    <div id="divfileRancanganPerdaPR02" class="form-group">
+                                                        <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Matrik Evaluasi</label>
+                                                        <div class="col-lg-4">
+                                                            <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
+                                                            <span class="help-block" style="color:#FF0000;">* Jenis file .doc "untuk mempermudah proses selanjutnya"</span>
+                                                        </div>
+                                                    </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="divPenetapanPerda4"  class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapsekab5">Kemendagri</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapsekab5" class="panel-collapse collapse in">
+                                            <div class="panel-body">
+
+                                                <div class="form-group">
+                                                    <label class="col-lg-2 control-label">No. Surat Keputusan Mendagri</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="text" class="input-sm form-control" name="no_kepmendagri_2" id="no_kepmendagri_2" >
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label for="tgl_kepmendagri_2" class="col-lg-2 control-label">Tanggal Keputusan Mendagri</label>
+                                                    <div class="col-lg-2">
+                                                        <div class="input-group date" id="tgl_kepmendagri_date_2" data-date-format="yyyy-mm-dd">
+                                                            <input class="input-sm form-control" id="tgl_kepmendagri_2" type="text">
+                                                            <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>                           
+
+
+                                                <div class="form-group">
+                                                    <label for="file_kepmendagri" class="col-lg-2 control-label">File Keputusan Mendagri</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="file" class="input-sm form-control" name="file_kepmendagri_2" id="file_kepmendagri_2">
+                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div id="btn_file_kepmendagri_2"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="file_ttd_matrik_ev_mendagri" class="col-lg-2 control-label">File Matrik Evaluasi bertandatangan</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="file" class="input-sm form-control" name="file_ttd_matrik_ev_mendagri_2" id="file_ttd_matrik_ev_mendagri_2">
+                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div id="btn_file_ttd_matrik_ev_mendagri_2"></div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label for="file_edited_matrik_ev_mendagri_2" class="col-lg-2 control-label">File Matrik Evaluasi</label>
+                                                    <div class="col-lg-4">
+                                                        <input type="file" class="input-sm form-control" name="file_edited_matrik_ev_mendagri_2" id="file_edited_matrik_ev_mendagri_2">
+                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .doc "untuk mempermudah proses selanjutnya"</span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div id="btn_file_edited_matrik_ev_mendagri_2"></div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 
                                 </div>
 

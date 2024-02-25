@@ -308,6 +308,38 @@ function doUploads(attrs,fileext){
     });
 }
 
+function doUploads2(attrs,fileext){
+    var data = new FormData();
+
+    data.append('wfnum', $('#txtWfnum').val());
+    data.append('attr_name', attrs);
+    data.append('fileext', fileext);
+    data.append(attrs, $("#"+attrs)[0].files[0]);
+    
+    $.ajax({
+        url: baseurl+"ranperda/douploads2",
+        type: 'POST', 
+        data: data, 
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        beforeSend: function() {
+			$('#btn_'+attrs).html("<img src='"+baseurl+"/assets/theme/img/upload-wait.gif' />");
+		},
+        success: function(data){
+            if(data.status == 0){
+                $('#'+attrs).val('');
+                $('#btn_'+attrs).html('<button onclick="singlelink('+"'"+data.full_path+"'"+','+"'"+data.orig_name+"'"+');" class="btn btn-sm btn-default"><i class="splashy-document_a4_download"></i> '+data.orig_name+'</button>');
+            }else{
+                $('#btn_'+attrs).html("<span class='help-block' style='color:#FF0000;'>"+data.message+"</span>");
+                $('#'+attrs).val('');
+                $('#'+attrs).focus();
+            }
+            
+        }
+    });
+}
+
 //function validation
 
 function rejectData(){

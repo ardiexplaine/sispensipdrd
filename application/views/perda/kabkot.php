@@ -270,52 +270,47 @@
                 <div id="collapsekab4" class="panel-collapse collapse in">
                     <div class="panel-body">
                         
-                    <div id="divtxtSPGubernur" class="form-group">
-                                                    <label for="txtSPGubernur" class="col-lg-2 control-label">No. Surat Keputusan Menkeu</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="input-sm form-control" id="txtSPGubernur-kem" disabled>
-                                                    </div>
-                                                </div>
-
-                                                <!-- <div id="divtxtSpMdn" class="form-group">
-                                                    <label for="txtSpMdn" class="col-lg-2 control-label">No. Surat Pengantar MDN</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="input-sm form-control" id="txtSpMdn">
-                                                    </div>
-                                                </div> -->
-
-                                                <div id="divdatetglSP3" class="form-group">
-                                                    <label for="datetglSP3" class="col-lg-2 control-label">Tanggal Keputusan Menkeu</label>
-                                                    <div class="col-lg-2">
-                                                        <div class="input-group date" id="tglSP3" data-date-format="yyyy-mm-dd">
-                                                            <input class="input-sm form-control" id="datetglSP3" type="text">
-                                                            <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>                           
+                            <div id="divtxtSPGubernur" class="form-group">
+                                <label for="txtSPGubernur" class="col-lg-2 control-label">No. Surat Keputusan Menkeu</label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="input-sm form-control" id="txtSPGubernur-kem" disabled>
+                                </div>
+                            </div>
 
 
-                                                <div id="divfileRancanganPerdaPR02" class="form-group">
-                                                    <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Keputusan Menkeu</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
-                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
-                                                    </div>
-                                                </div>
-                                                <div id="divfileRancanganPerdaPR02" class="form-group">
-                                                    <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Matrik Evaluasi bertandatangan</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
-                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
-                                                    </div>
-                                                </div>
-                                                <div id="divfileRancanganPerdaPR02" class="form-group">
-                                                    <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Matrik Evaluasi</label>
-                                                    <div class="col-lg-4">
-                                                        <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
-                                                        <span class="help-block" style="color:#FF0000;">* Jenis file .doc "untuk mempermudah proses selanjutnya"</span>
-                                                    </div>
-                                                </div>
+
+                            <div id="divdatetglSP3" class="form-group">
+                                <label for="datetglSP3" class="col-lg-2 control-label">Tanggal Keputusan Menkeu</label>
+                                <div class="col-lg-2">
+                                    <div class="input-group date" id="tglSP3" data-date-format="yyyy-mm-dd">
+                                        <input class="input-sm form-control" id="datetglSP3" type="text">
+                                        <span class="input-group-addon"><i class="splashy-calendar_day"></i></span>
+                                    </div>
+                                </div>
+                            </div>                           
+
+
+                            <div id="divfileRancanganPerdaPR02" class="form-group">
+                                <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Keputusan Menkeu</label>
+                                <div class="col-lg-4">
+                                    <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
+                                    <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                </div>
+                            </div>
+                            <div id="divfileRancanganPerdaPR02" class="form-group">
+                                <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Matrik Evaluasi bertandatangan</label>
+                                <div class="col-lg-4">
+                                    <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
+                                    <span class="help-block" style="color:#FF0000;">* Jenis file .pdf</span>
+                                </div>
+                            </div>
+                            <div id="divfileRancanganPerdaPR02" class="form-group">
+                                <label for="fileRancanganPerdaPR02" class="col-lg-2 control-label">File Matrik Evaluasi</label>
+                                <div class="col-lg-4">
+                                    <input type="file" class="input-sm form-control" name="fileRancanganPerdaPR02" id="fileRancanganPerdaPR02">
+                                    <span class="help-block" style="color:#FF0000;">* Jenis file .doc "untuk mempermudah proses selanjutnya"</span>
+                                </div>
+                            </div>
 
                     </div>
                 </div>
